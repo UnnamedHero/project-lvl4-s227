@@ -1,6 +1,6 @@
 {
-  "name": "frontend_l4_chat_project",
-  "version": "0.0.1",
+  "name": "eem_frontend_l4_chat_project",
+  "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
   "bin": {
@@ -25,13 +25,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:hexlet/frontend_l4_chat_project.git"
+    "url": "https://github.com/UnnamedHero/project-lvl4-s227"
   },
-  "author": "Kirill Mokevnin",
+  "author": "Eugene 'EEM' Mikhaylov",
   "license": "ISC",
-  "bugs": {
-    "url": ""
-  },
   "homepage": "",
   "dependencies": {
     "@babel/cli": "^7.0.0-beta.46",
