@@ -2,9 +2,9 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: [
-    `${__dirname}/src/index.js`,
-  ],
+  entry: {
+    'application': `${__dirname}/src/index.js`,
+  },
   externals: {
     gon: 'gon',
   },
