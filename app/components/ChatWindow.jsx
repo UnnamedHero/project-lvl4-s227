@@ -2,6 +2,12 @@ import React from 'react';
 
 export default class ChatWindow extends React.Component {
   render() {
-    return;
+    return (
+      <div id='chat-window'>
+        chat
+        chat
+        chat
+      </div>
+    );
   }
 };
