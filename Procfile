@@ -1,1 +1,1 @@
-web: npm run babel-node -- src/bin/slack.js
+web: npm run babel-node -- bin/slack.js
