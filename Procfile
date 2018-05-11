@@ -1,0 +1,1 @@
+web: npm run babel-node -- dist/bin/slack.js
