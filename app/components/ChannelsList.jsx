@@ -9,7 +9,6 @@ export default class ChannelsList extends React.Component {
       'list-group-item-action': true,
     };
     return channels.map(channel => {
-//      const channelClasses = { ...commonClasses, 'active': channel.id === currentChannelId };
       return (<a key={channel.id} href='#' className={cn(commonClasses)}>{channel.name}</a>);
     });
   }
