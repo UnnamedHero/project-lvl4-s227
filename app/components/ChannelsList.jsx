@@ -8,16 +8,14 @@ export default class ChannelsList extends React.Component {
       'list-group-item': true,
       'list-group-item-action': true,
     };
-    return channels.map(channel => {
-      return (<a key={channel.id} href='#' className={cn(commonClasses)}>{channel.name}</a>);
-    });
+    return channels.map(channel => (<a key={channel.id} href="#" className={cn(commonClasses)}>{channel.name}</a>));
   }
 
-  render() {    
+  render() {
     return (
-<div className='list-group'>
-  {this.renderChannelsList()}
-</div>
+      <div className="list-group">
+        {this.renderChannelsList()}
+      </div>
     );
   }
-};
+}
