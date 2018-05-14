@@ -1,10 +1,8 @@
 import React from 'react';
 
 const ChannelInput = () => (
-  <form>
-    <div className="form-group">
-      <input type="text" className="form-control" />
-    </div>
+  <form className="form">
+    <input type="text" className="form-control" />
   </form>);
 
 export default ChannelInput;
