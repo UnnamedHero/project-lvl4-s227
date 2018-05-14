@@ -1,10 +1,8 @@
 import React from 'react';
 
-export default class ChatWindow extends React.Component {
-  render() {
-    return (
-      <div id='chat-window'>
-      </div>
-    );
-  }
-};
+const ChatWindow = () => (
+  <form>
+    <textarea className="form-control bg-light" rows="3" />
+  </form>);
+
+export default ChatWindow;

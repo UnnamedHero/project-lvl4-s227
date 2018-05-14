@@ -1,23 +1,22 @@
 import React from 'react';
-import cn from 'classnames';
+// import cn from 'classnames';
 
 export default class ChannelsList extends React.Component {
   renderChannelsList() {
     const { channels } = this.props;
-    const commonClasses = {
-      'list-group-item': true,
-      'list-group-item-action': true,
-    };
-    return channels.map(channel => {
-      return (<a key={channel.id} href='#' className={cn(commonClasses)}>{channel.name}</a>);
-    });
+    // const commonClasses = {
+    //   'nav-item': true,
+    // };
+    return channels.map(channel => (<li key={channel.id}>{channel.name}</li>));
   }
 
-  render() {    
+  render() {
     return (
-<div className='list-group'>
-  {this.renderChannelsList()}
-</div>
+      <div>
+        <ul>
+          {this.renderChannelsList()}
+        </ul>
+      </div>
     );
   }
-};
+}
