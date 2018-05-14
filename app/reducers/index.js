@@ -3,12 +3,12 @@ import { handleActions } from 'redux-actions';
 
 import * as actions from '../actions';
 
-const channels = handleActions({
+const channelsList = handleActions({
   [actions.getChannelsList](state, { payload: { channels } }) {
     return { ...state, channels };
-  }
+  },
 }, {});
 
 export default combineReducers({
-  channels,
+  channelsList,
 });
