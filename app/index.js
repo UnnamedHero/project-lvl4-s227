@@ -39,5 +39,5 @@ ReactDOM.render(
 <Provider store={store}>
   <App />
 </Provider>,
- document.getElementById('chat')
+ document.getElementById('application')
 );
