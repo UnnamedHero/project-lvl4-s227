@@ -1,6 +1,8 @@
 import React from 'react';
 
 const ChatWindow = () => (
-  <div id="chat-window" />);
+  <form>
+    <textarea className="form-control" rows="3" />
+  </form>);
 
 export default ChatWindow;
