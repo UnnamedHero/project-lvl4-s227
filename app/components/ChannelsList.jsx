@@ -12,10 +12,11 @@ export default class ChannelsList extends React.Component {
 
   render() {
     return (
-
-      <ul>
-        {this.renderChannelsList()}
-      </ul>
+      <div>
+        <ul>
+          {this.renderChannelsList()}
+        </ul>
+      </div>
     );
   }
 }
