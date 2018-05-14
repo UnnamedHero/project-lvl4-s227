@@ -7,7 +7,7 @@ import ChatInput from './ChatInput';
 const App = () => (
   <div className="container-fluid d-flex">
     <div className="row flex-fill">
-      <div className="col-2 flex-fill bg-dark text-white">
+      <div className="col-2 flex-fill bg-dark text-white-50">
         <div className="row">
           <UserPanelContainer />
         </div>
@@ -15,7 +15,7 @@ const App = () => (
           <ChannelsListContainer />
         </div>
       </div>
-      <div className="col-10">
+      <div className="col-10 bg-light">
         <div className="row">
           <div className="col">
             <ChatWindow />
