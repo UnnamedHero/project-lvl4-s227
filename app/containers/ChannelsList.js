@@ -5,7 +5,7 @@ import Component from '../components/ChannelsList';
 const mapStateToProps = () => {
   const props = {
     channels: gon.channels,
-    currentChannel: gon.currentChannelId,
+    currentChannelId: gon.currentChannelId,
   };
   return props;
 };
