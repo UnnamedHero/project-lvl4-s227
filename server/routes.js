@@ -24,7 +24,7 @@ const dummyMessages = [
   },
   {
     messageId: 'messageId4',
-    channelId: 2,
+    channelId: 1,
     author: 'dummy 1',
     body: 'message id 4 body',
   },
