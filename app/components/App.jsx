@@ -1,7 +1,7 @@
 import React from 'react';
 import ChannelsListContainer from '../containers/ChannelsList';
 import UserPanelContainer from '../containers/UserPanel';
-import ChatWindow from './ChatWindow';
+import ChatWindowContainer from '../containers/ChatWindow';
 import ChatInput from './ChatInput';
 
 const App = () => (
@@ -18,7 +18,7 @@ const App = () => (
       <div className="col-10 bg-light">
         <div className="row">
           <div className="col">
-            <ChatWindow />
+            <ChatWindowContainer />
           </div>
         </div>
         <div className="row">
