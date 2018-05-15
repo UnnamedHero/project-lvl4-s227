@@ -2,7 +2,7 @@ import React from 'react';
 import ChannelsListContainer from '../containers/ChannelsList';
 import UserPanelContainer from '../containers/UserPanel';
 import ChatWindowContainer from '../containers/ChatWindow';
-import ChatInput from './ChatInput';
+import NewMessageForm from '../containers/NewMessageForm';
 
 const App = () => (
   <div className="container-fluid d-flex">
@@ -23,7 +23,7 @@ const App = () => (
         </div>
         <div className="row">
           <div className="col">
-            <ChatInput />
+            <NewMessageForm />
           </div>
         </div>
       </div>
