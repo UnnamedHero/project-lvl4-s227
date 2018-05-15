@@ -1,11 +1,10 @@
 import gon from 'gon';
 import { connect } from 'react-redux';
-import Component from '../components/ChannelsList';
+import Component from '../components/ChatWindow';
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   const props = {
-    channels: gon.channels,
-    currentChannelId: gon.currentChannelId,
+    messages: state.messages || gon.messages,
   };
   return props;
 };

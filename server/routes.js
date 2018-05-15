@@ -3,6 +3,33 @@ import Router from 'koa-router';
 
 const getNextId = () => Number(_.uniqueId());
 
+const dummyMessages = [
+  {
+    messageId: 'messageId1',
+    channelId: 1,
+    author: 'dummy 1',
+    body: 'message id 1 body',
+  },
+  {
+    messageId: 'messageId2',
+    channelId: 1,
+    author: 'dummy 2',
+    body: 'message id 2 body',
+  },
+  {
+    messageId: 'messageId3',
+    channelId: 1,
+    author: 'dummy 1',
+    body: 'message id 3 body',
+  },
+  {
+    messageId: 'messageId4',
+    channelId: 1,
+    author: 'dummy 1',
+    body: 'message id 4 body',
+  },
+];
+
 export default (router, io) => {
   const generalChannelId = getNextId();
   const randomChannelId = getNextId();
@@ -11,7 +38,7 @@ export default (router, io) => {
       { id: generalChannelId, name: 'general', removable: false },
       { id: randomChannelId, name: 'random', removable: false },
     ],
-    messages: [],
+    messages: dummyMessages,
     currentChannelId: generalChannelId,
   };
 
