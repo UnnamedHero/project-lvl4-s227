@@ -6,6 +6,7 @@ export const sendMessageSuccess = createAction('MESSAGE_SEND_SUCCESS');
 export const sendMessageFailure = createAction('MESSAGE_SEND_FAILURE');
 
 export const sendMessage = (messageText, channelId, userName) => async (dispatch) => {
+  console.log(messageText);
   dispatch(sendMessageRequest());
   try {
     const resp = await axios.post(`/channels/${channelId}/messages`, { author: userName, body: messageText });
