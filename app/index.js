@@ -5,8 +5,9 @@ import Cookie from 'js-cookie';
 import faker from 'faker';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { createStore, /* applyMiddleware, */ compose } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import App from '../app/components/App';
 import reducers from './reducers';
 
@@ -18,6 +19,7 @@ const devtoolMiddleware = ext && ext();
 const store = createStore(
   reducers,
   compose(    
+    applyMiddleware(thunk),
     devtoolMiddleware,    
   ),
 );
