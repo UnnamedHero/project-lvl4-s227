@@ -17,7 +17,7 @@ const App = () => (
       </div>
       <div className="col-10 bg-light">
         <div className="row">
-          <div className="col">
+          <div className="col scrollable">
             <ChatWindowContainer />
           </div>
         </div>
