@@ -1,9 +1,11 @@
 // const webpack = require('webpack');
+const mode = process.env.NODE_ENV || 'development';
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
+  mode,
+  devtool: mode === 'development' ? 'cheap-module-source-map' : 'none',
   entry: {
-    vendor: ['./src/index.js'],
+    vendor: ['babel-polyfill', './src/index.js'],
     application: ['./app/index.js'],
   },
   externals: {
