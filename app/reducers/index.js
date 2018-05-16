@@ -17,15 +17,10 @@ const messageSendingState = handleActions({
 }, 'none');
 
 const messages = handleActions({
-  [actions.sendMessageSuccess](state, { payload: { message } }) {
+  [actions.addMessageSocket](state, { payload: { message } }) {
     return [...state, message];
   },
 }, gon.messages);
-// const channelsList = handleActions({
-//   [actions.getChannelsList](state, { payload: { channels } }) {
-//     return { ...state, channels };
-//   },
-// }, {});
 
 export default combineReducers({
   form: formReducer,
