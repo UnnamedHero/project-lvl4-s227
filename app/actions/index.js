@@ -5,11 +5,13 @@ export const sendMessageRequest = createAction('MESSAGE_SEND_REQUEST');
 export const sendMessageSuccess = createAction('MESSAGE_SEND_SUCCESS');
 export const sendMessageFailure = createAction('MESSAGE_SEND_FAILURE');
 
+export const addMessageSocket = createAction('MESSAGE_ADD_SOCKET');
+
 export const sendMessage = (messageText, channelId, userName) => async (dispatch) => {
-  console.log(messageText);
   dispatch(sendMessageRequest());
   try {
-    const resp = await axios.post(`/channels/${channelId}/messages`, { author: userName, body: messageText });
+    const attributes = { author: userName, body: messageText.messageText };
+    const resp = await axios.post(`/api/v1/channels/${channelId}/messages`, { data: { attributes } });
     dispatch(sendMessageSuccess({ message: resp.data.attributes }));
   } catch (e) {
     dispatch(sendMessageFailure());
