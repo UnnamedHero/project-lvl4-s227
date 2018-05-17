@@ -17,6 +17,15 @@ const user = handleActions({
   },
 }, 'anon');
 
+const channelsList = handleActions({
+  [actions.initChannelsList]() {
+    return {
+      channels: gon.channels,
+      currentChannelId: gon.currentChannelId,
+    };
+  },
+}, {});
+
 const messageSendingState = handleActions({
   [actions.sendMessageRequest]() {
     return 'requested';
@@ -37,6 +46,7 @@ const messages = handleActions({
 
 export default combineReducers({
   user,
+  channelsList,
   form: formReducer,
   messageSendingState,
   messages,
