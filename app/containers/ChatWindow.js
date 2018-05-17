@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import Component from '../components/ChannelsList';
+import Component from '../components/ChatWindow';
 
-const mapStateToProps = ({ channelsList: { channels, currentChannelId } }) => {
+const mapStateToProps = (state) => {
   const props = {
-    channels, currentChannelId,
+    messages: state.messages,
   };
   return props;
 };

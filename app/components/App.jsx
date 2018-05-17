@@ -1,30 +1,26 @@
 import React from 'react';
 import ChannelsListContainer from '../containers/ChannelsList';
 import UserPanelContainer from '../containers/UserPanel';
-import ChatWindow from './ChatWindow';
-import ChatInput from './ChatInput';
+import ChatWindowContainer from '../containers/ChatWindow';
+import NewMessageForm from '../containers/NewMessageForm';
 
 const App = () => (
-  <div className="container-fluid d-flex">
-    <div className="row flex-fill">
-      <div className="col-2 flex-fill bg-dark text-white-50">
-        <div className="row">
+  <div className="container-fluid">
+    <div className="row d-flex vh-100">
+      <div className="col-2 d-flex flex-column bg-dark text-white-50 vh-100">
+        <div>
           <UserPanelContainer />
         </div>
-        <div className="row">
+        <div className="scrollable">
           <ChannelsListContainer />
         </div>
       </div>
-      <div className="col-10 bg-light">
-        <div className="row">
-          <div className="col">
-            <ChatWindow />
-          </div>
+      <div className="d-flex col flex-column justify-content-between vh-100">
+        <div className="scrollable">
+          <ChatWindowContainer />
         </div>
-        <div className="row">
-          <div className="col">
-            <ChatInput />
-          </div>
+        <div>
+          <NewMessageForm />
         </div>
       </div>
     </div>

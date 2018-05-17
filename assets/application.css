@@ -1,3 +1,11 @@
 .fade.in {
   opacity: 1;
 }
+
+.scrollable {
+  overflow-y: auto;  
+}
+
+.vh-100 {  
+  max-height: 100vh;  
+}
