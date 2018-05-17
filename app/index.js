@@ -28,7 +28,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 store.dispatch(initUserName());
 
-const socket = io(`http://localhost:${process.env.PORT || 4000}`);
+const socket = io();
 
 socket.on('newMessage', ( { data : { attributes : message } }) => {  
   store.dispatch(addMessageSocket({ message }));
