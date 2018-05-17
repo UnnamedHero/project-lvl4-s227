@@ -1,10 +1,9 @@
-import gon from 'gon';
 import { connect } from 'react-redux';
 import Component from '../components/ChatWindow';
 
 const mapStateToProps = (state) => {
   const props = {
-    messages: state.messages || gon.messages,
+    messages: state.messages,
   };
   return props;
 };
