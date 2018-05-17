@@ -6,6 +6,7 @@ const mapStateToProps = (state) => {
   const props = {
     currentChannelId: state.channelsList.currentChannelId,
     userName: state.user.name,
+    sendingState: state.messageSendingState,
   };
   return props;
 };
