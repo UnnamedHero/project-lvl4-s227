@@ -1,11 +1,9 @@
-import gon from 'gon';
 import { connect } from 'react-redux';
 import Component from '../components/ChannelsList';
 
-const mapStateToProps = () => {
+const mapStateToProps = ({ channelsList: { channels, currentChannelId } }) => {
   const props = {
-    channels: gon.channels,
-    currentChannelId: gon.currentChannelId,
+    channels, currentChannelId,
   };
   return props;
 };
