@@ -1,11 +1,10 @@
-import gon from 'gon';
 import { connect } from 'react-redux';
 import Component from '../components/NewMessageForm';
 import * as actionCreators from '../actions';
 
 const mapStateToProps = (state) => {
   const props = {
-    currentChannelId: gon.currentChannelId,
+    currentChannelId: state.channelsList.currentChannelId,
     userName: state.user.name,
   };
   return props;
