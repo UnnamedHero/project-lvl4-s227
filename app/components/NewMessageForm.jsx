@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import cn from 'classnames';
 
 class NewMessageForm extends React.Component {
   sendMessage = (values) => {
@@ -8,10 +9,17 @@ class NewMessageForm extends React.Component {
   }
 
   render() {
+    const { sendingState } = this.props;
+    const canSend = sendingState !== 'requested';
+    const buttonClasses = {
+      btn: true,
+      'btn-primary': true,
+      disabled: !canSend,
+    };
     return (
       <form onSubmit={this.props.handleSubmit(this.sendMessage)}>
         <Field name="messageText" component="input" required type="text" className="form-control" />
-        <button type="submit" className="btn btn-primary">Send</button>
+        <button type="submit" className={cn(buttonClasses)}>Send</button>
       </form>);
   }
 }

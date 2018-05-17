@@ -1,13 +1,12 @@
-import gon from 'gon';
-import Cookie from 'js-cookie';
 import { connect } from 'react-redux';
 import Component from '../components/NewMessageForm';
 import * as actionCreators from '../actions';
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   const props = {
-    currentChannelId: gon.currentChannelId,
-    userName: Cookie.get('userName'),
+    currentChannelId: state.channelsList.currentChannelId,
+    userName: state.user.name,
+    sendingState: state.messageSendingState,
   };
   return props;
 };

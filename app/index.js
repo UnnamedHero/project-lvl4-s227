@@ -1,8 +1,4 @@
-
 import io from 'socket.io-client';
-// import gon from 'gon';
-import Cookie from 'js-cookie';
-import faker from 'faker';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import thunk from 'redux-thunk';
@@ -10,7 +6,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import App from './components/App';
 import reducers from './reducers';
-import { addMessageSocket } from './actions';
+import { addMessageSocket, initUserName } from './actions';
 
 /* eslint-disable no-underscore-dangle */
 const identity = p => p;
@@ -26,18 +22,11 @@ const store = createStore(
   ),
 );
 
-const initUserName = () => {
-  const cookieName = Cookie.get('userName');  
-  if (!cookieName) {
-    Cookie.set('userName', faker.name.findName());
-  }
-};
-
-initUserName();
-
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
+
+store.dispatch(initUserName());
 
 const socket = io(`http://localhost:${process.env.PORT || 4000}`);
 
