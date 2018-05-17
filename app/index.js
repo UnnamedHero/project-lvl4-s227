@@ -1,4 +1,3 @@
-
 import io from 'socket.io-client';
 import ReactDOM from 'react-dom';
 import React from 'react';
@@ -7,7 +6,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import App from './components/App';
 import reducers from './reducers';
-import { addMessageSocket, initUserName } from './actions';
+import { addMessageSocket, initUserName, initChannelsList } from './actions';
 
 /* eslint-disable no-underscore-dangle */
 const identity = p => p;
@@ -28,6 +27,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 store.dispatch(initUserName());
+store.dispatch(initChannelsList());
 
 const socket = io(`http://localhost:${process.env.PORT || 4000}`);
 
