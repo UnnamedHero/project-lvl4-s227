@@ -2,10 +2,6 @@
   opacity: 1;
 }
 
-.h-0 {
-  min-height: 0;
-}
-
 .scrollable {
   overflow-y: auto;  
 }
