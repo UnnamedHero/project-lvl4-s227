@@ -16,12 +16,12 @@ const ext = window.__REDUX_DEVTOOLS_EXTENSION__;
 const devtoolMiddleware = (ext && ext()) || identity;
 /* eslint-disable */
 
-const userNameKey = 'userName';
+const cookieNameKey = 'userName';
 
 const initUserName = () => {
-  const cookieName = Cookie.get(userNameKey);
+  const cookieName = Cookie.get(cookieNameKey);
   if (!cookieName) {
-    Cookie.set(userNameKey, faker.name.findName());
+    Cookie.set(cookieNameKey, faker.name.findName());
   }
 }
 
@@ -39,9 +39,9 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-store.dispatch(setUserName({ name: Cookie.get(userNameKey) }));
+store.dispatch(setUserName({ name: Cookie.get(cookieNameKey) }));
 
-const socket = io();
+const socket = io(window.location.origin);
 
 socket.on('newMessage', ( { data : { attributes : message } }) => {  
   store.dispatch(addMessageSocket({ message }));
