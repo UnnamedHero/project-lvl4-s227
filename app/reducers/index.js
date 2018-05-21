@@ -1,4 +1,4 @@
-import gon from 'gon';
+import gon from 'gon'; // eslint-disable-line
 import Cookie from 'js-cookie';
 import faker from 'faker';
 import { combineReducers } from 'redux';
