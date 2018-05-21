@@ -1,5 +1,8 @@
 ---
 
+settings:
+  import/resolver: webpack
+
 extends:
   - airbnb
   - "plugin:jest/recommended"
@@ -11,8 +14,3 @@ env:
   browser: true
   node: true
   jest: true
-
-rules:
-  import/no-unresolved: 0
-  import/extensions: 0
-  react/prop-types: 0
