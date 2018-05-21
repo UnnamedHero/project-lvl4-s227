@@ -1,6 +1,6 @@
 {
   "name": "eem_frontend_l4_chat_project",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "dist/index.js",
   "bin": {
@@ -60,6 +60,7 @@
     "lodash": "^4.17.10",
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
+    "react-bs-notifier": "^5.0.0",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
@@ -81,6 +82,7 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-import-resolver-webpack": "^0.10.0",
     "eslint-plugin-flowtype": "^2.46.3",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jest": "^21.15.1",

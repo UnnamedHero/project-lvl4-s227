@@ -18,8 +18,8 @@ class NewMessageForm extends React.Component {
     };
     return (
       <form onSubmit={this.props.handleSubmit(this.sendMessage)} className="d-flex">
-        <Field name="messageText" component="input" required type="text" className="form-control mr-2" />
-        <button type="submit" className={cn(buttonClasses)}>Send</button>
+        <Field name="messageText" component="input" required type="text" className="form-control" />
+        <button type="submit" className={cn(buttonClasses)} hidden>Send</button>
       </form>);
   }
 }

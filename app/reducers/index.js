@@ -1,24 +1,16 @@
-import gon from 'gon';
-import Cookie from 'js-cookie';
-import faker from 'faker';
+import gon from 'gon'; //eslint-disable-line
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { reducer as formReducer } from 'redux-form';
 import * as actions from '../actions';
 
 const user = handleActions({
-  [actions.initUserName]() {
-    const cookieName = Cookie.get('userName');
-    const name = cookieName || faker.name.findName();
-    if (!cookieName) {
-      Cookie.set('userName', name);
-    }
+  [actions.setUserName](state, { payload: { name } }) {
     return { name };
   },
-}, 'anon');
+}, '');
 
 const channelsList = handleActions({
-
 }, {
   channels: gon.channels,
   currentChannelId: gon.currentChannelId,
@@ -42,11 +34,26 @@ const messages = handleActions({
   },
 }, gon.messages);
 
+const notification = handleActions({
+  [actions.dismissNotification]() {
+    const info = null;
+    return info;
+  },
+  [actions.sendMessageSuccess]() {
+    const info = null;
+    return info;
+  },
+  [actions.sendMessageFailure](state, { payload: { error } }) {
+    return { type: 'warning', headline: error, message: 'Message was not delivered to server' };
+  },
+}, null);
+
 export default combineReducers({
   user,
   channelsList,
   form: formReducer,
   messageSendingState,
   messages,
+  notification,
 });
 
