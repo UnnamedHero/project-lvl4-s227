@@ -1,24 +1,16 @@
 import gon from 'gon'; // eslint-disable-line
-import Cookie from 'js-cookie';
-import faker from 'faker';
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { reducer as formReducer } from 'redux-form';
 import * as actions from '../actions';
 
 const user = handleActions({
-  [actions.initUserName]() {
-    const cookieName = Cookie.get('userName');
-    const name = cookieName || faker.name.findName();
-    if (!cookieName) {
-      Cookie.set('userName', name);
-    }
+  [actions.setUserName](state, { payload: { name } }) {
     return { name };
   },
-}, 'anon');
+}, '');
 
 const channelsList = handleActions({
-
 }, {
   channels: gon.channels,
   currentChannelId: gon.currentChannelId,
