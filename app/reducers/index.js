@@ -1,4 +1,4 @@
-import gon from 'gon'; // eslint-disable-line
+import gon from 'gon'; //eslint-disable-line
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { reducer as formReducer } from 'redux-form';
@@ -34,11 +34,26 @@ const messages = handleActions({
   },
 }, gon.messages);
 
+const notification = handleActions({
+  [actions.dismissNotification]() {
+    const info = null;
+    return info;
+  },
+  [actions.sendMessageSuccess]() {
+    const info = null;
+    return info;
+  },
+  [actions.sendMessageFailure](state, { payload: { error } }) {
+    return { type: 'warning', headline: error, message: 'Message was not delivered to server' };
+  },
+}, null);
+
 export default combineReducers({
   user,
   channelsList,
   form: formReducer,
   messageSendingState,
   messages,
+  notification,
 });
 
