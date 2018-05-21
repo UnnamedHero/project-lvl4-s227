@@ -3,6 +3,7 @@ import ChannelsListContainer from '../containers/ChannelsList';
 import UserPanelContainer from '../containers/UserPanel';
 import ChatWindowContainer from '../containers/ChatWindow';
 import NewMessageForm from '../containers/NewMessageForm';
+import AlertNotifierContainer from '../containers/AlertNotifier';
 
 const App = () => (
   <div className="container-fluid">
@@ -15,11 +16,12 @@ const App = () => (
           <ChannelsListContainer />
         </div>
       </div>
-      <div className="d-flex col flex-column justify-content-between vh-100">
-        <div className="scrollable">
+      <div className="d-flex col-10 flex-column justify-content-between vh-100 bg-secondary">
+        <div className="scrollable word-wrap-bw">
           <ChatWindowContainer />
         </div>
         <div>
+          <AlertNotifierContainer />
           <NewMessageForm />
         </div>
       </div>

@@ -2,10 +2,14 @@
   opacity: 1;
 }
 
+.word-wrap-bw {
+  word-wrap: break-word;
+}
+
 .scrollable {
-  overflow-y: auto;  
+  overflow-y: auto;
 }
 
 .vh-100 {  
-  max-height: 100vh;  
+  height: 100vh;  
 }
