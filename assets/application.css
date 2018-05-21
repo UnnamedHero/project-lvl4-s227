@@ -2,9 +2,12 @@
   opacity: 1;
 }
 
+.word-wrap-bw {
+  word-wrap: break-word;
+}
+
 .scrollable {
   overflow-y: auto;
-  word-wrap: break-word;
 }
 
 .vh-100 {  
