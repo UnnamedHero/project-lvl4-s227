@@ -3,7 +3,8 @@
 }
 
 .scrollable {
-  overflow-y: auto;  
+  overflow-y: auto;
+  word-wrap: break-word;
 }
 
 .vh-100 {  
