@@ -1,6 +1,6 @@
 {
   "name": "eem_frontend_l4_chat_project",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "",
   "main": "dist/index.js",
   "bin": {
