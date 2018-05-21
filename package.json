@@ -60,6 +60,7 @@
     "lodash": "^4.17.10",
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
+    "react-bs-notifier": "^5.0.0",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
