@@ -15,7 +15,7 @@ const App = () => (
           <ChannelsListContainer />
         </div>
       </div>
-      <div className="d-flex col flex-column justify-content-between vh-100">
+      <div className="d-flex col-10 flex-column justify-content-between vh-100 bg-secondary">
         <div className="scrollable">
           <ChatWindowContainer />
         </div>
