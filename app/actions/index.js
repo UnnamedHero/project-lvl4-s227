@@ -8,6 +8,8 @@ export const sendMessageRequest = createAction('MESSAGE_SEND_REQUEST');
 export const sendMessageSuccess = createAction('MESSAGE_SEND_SUCCESS');
 export const sendMessageFailure = createAction('MESSAGE_SEND_FAILURE');
 
+export const dismissNotification = createAction('NOTIFICATION_DISMISS');
+
 export const addMessageSocket = createAction('MESSAGE_ADD_SOCKET');
 
 export const sendMessage = (messageText, channelId, userName) => async (dispatch) => {
@@ -17,7 +19,6 @@ export const sendMessage = (messageText, channelId, userName) => async (dispatch
     await axios.post(routes.addMessageToChannelUrl(channelId), { data: { attributes } });
     dispatch(sendMessageSuccess());
   } catch (e) {
-    console.log(`Something happend: ${e.message}`);
-    dispatch(sendMessageFailure());
+    dispatch(sendMessageFailure({ error: e.message }));
   }
 };
