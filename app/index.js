@@ -41,7 +41,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 store.dispatch(setUserName({ name: Cookie.get(cookieNameKey) }));
 
-const socket = io(window.location.origin);
+const socket = io();
 
 socket.on('newMessage', ( { data : { attributes : message } }) => {  
   store.dispatch(addMessageSocket({ message }));
