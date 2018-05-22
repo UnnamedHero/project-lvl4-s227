@@ -1,8 +1,7 @@
 import React from 'react';
 import ChannelsList from './ChannelsList';
-// import UserPanelContainer from '../containers/UserPanel';
 import UserPanel from './UserPanel';
-import ChatWindowContainer from '../containers/ChatWindow';
+import ChatWindow from './ChatWindow';
 import NewMessageForm from '../containers/NewMessageForm';
 import AlertNotifier from './AlertNotifier';
 
@@ -19,7 +18,7 @@ const App = () => (
       </div>
       <div className="d-flex col-10 flex-column justify-content-between vh-100 bg-secondary">
         <div className="scrollable word-wrap-bw">
-          <ChatWindowContainer />
+          <ChatWindow />
         </div>
         <div>
           <AlertNotifier />
