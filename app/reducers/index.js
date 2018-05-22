@@ -11,6 +11,9 @@ const user = handleActions({
 }, '');
 
 const channelsList = handleActions({
+  [actions.changeCurrentChannel](state, { payload: { id } }) {
+    return { ...state, currentChannelId: id };
+  },
 }, {
   channels: gon.channels,
   currentChannelId: gon.currentChannelId,
@@ -50,10 +53,10 @@ const notification = handleActions({
 
 export default combineReducers({
   user,
+  messages,
   channelsList,
   form: formReducer,
   messageSendingState,
-  messages,
   notification,
 });
 

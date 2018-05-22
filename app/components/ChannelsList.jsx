@@ -1,23 +1,32 @@
 import React from 'react';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import cn from 'classnames';
 
 const ChannelsList = (props) => {
   const renderChannelsList = () => {
-    const { channels, currentChannelId } = props;
+    const { channels, currentChannelId, changeCurrentChannel } = props;
     return channels.map((channel) => {
-      const listClass = {
-        'text-white-50': currentChannelId !== channel.id,
-        'text-white': currentChannelId === channel.id,
+      const isCurrentChannel = currentChannelId === channel.id;
+      const itemClass = {
+        'text-white': isCurrentChannel,
+        'text-body': !isCurrentChannel,
+        active: isCurrentChannel,
       };
-      return <li key={channel.id} className={cn(listClass)}>{channel.name}</li>;
+      const changeChannel = isCurrentChannel ?
+        null :
+        changeCurrentChannel.bind(null, { id: channel.id });
+      return (
+        <ListGroupItem key={channel.id} tag="button" action onClick={changeChannel} className={cn(itemClass)}>
+          {channel.name}
+        </ListGroupItem>);
     });
   };
   return (
     <div>
-      <p>Channels:</p>
-      <ul>
+      <span>Channels:</span>
+      <ListGroup>
         {renderChannelsList()}
-      </ul>
+      </ListGroup>
     </div>
   );
 };
