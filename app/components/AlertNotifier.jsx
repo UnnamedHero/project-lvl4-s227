@@ -1,5 +1,13 @@
 import React from 'react';
 import { AlertContainer, Alert } from 'react-bs-notifier';
+import connect from '../connect';
+
+const mapStateToProps = ({ notification }) => {
+  const props = {
+    ...notification,
+  };
+  return props;
+};
 
 const AlertNotifier = (props) => {
   const {
@@ -16,4 +24,4 @@ const AlertNotifier = (props) => {
     </AlertContainer>);
 };
 
-export default AlertNotifier;
+export default connect(mapStateToProps)(AlertNotifier);
