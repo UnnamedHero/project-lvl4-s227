@@ -4,7 +4,7 @@ import ChannelsListContainer from '../containers/ChannelsList';
 import UserPanel from './UserPanel';
 import ChatWindowContainer from '../containers/ChatWindow';
 import NewMessageForm from '../containers/NewMessageForm';
-import AlertNotifierContainer from '../containers/AlertNotifier';
+import AlertNotifier from './AlertNotifier';
 
 const App = () => (
   <div className="container-fluid">
@@ -22,7 +22,7 @@ const App = () => (
           <ChatWindowContainer />
         </div>
         <div>
-          <AlertNotifierContainer />
+          <AlertNotifier />
           <NewMessageForm />
         </div>
       </div>
