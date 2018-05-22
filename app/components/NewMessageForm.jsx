@@ -1,7 +1,18 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import cn from 'classnames';
+import connect from '../connect';
 
+const mapStateToProps = (state) => {
+  const props = {
+    currentChannelId: state.channelsList.currentChannelId,
+    userName: state.user.name,
+    sendingState: state.messageSendingState,
+  };
+  return props;
+};
+
+@connect(mapStateToProps)
 class NewMessageForm extends React.Component {
   sendMessage = (values) => {
     this.props.sendMessage(values, this.props.currentChannelId, this.props.userName);

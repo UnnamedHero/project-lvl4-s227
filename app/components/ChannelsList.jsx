@@ -1,6 +1,14 @@
 import React from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import cn from 'classnames';
+import connect from '../connect';
+
+const mapStateToProps = ({ channelsList: { channels, currentChannelId } }) => {
+  const props = {
+    channels, currentChannelId,
+  };
+  return props;
+};
 
 const ChannelsList = (props) => {
   const renderChannelsList = () => {
@@ -31,4 +39,4 @@ const ChannelsList = (props) => {
   );
 };
 
-export default ChannelsList;
+export default connect(mapStateToProps)(ChannelsList);
