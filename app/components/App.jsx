@@ -2,7 +2,7 @@ import React from 'react';
 import ChannelsList from './ChannelsList';
 import UserPanel from './UserPanel';
 import ChatWindow from './ChatWindow';
-import NewMessageForm from '../containers/NewMessageForm';
+import NewMessageForm from './NewMessageForm';
 import AlertNotifier from './AlertNotifier';
 
 const App = () => (
