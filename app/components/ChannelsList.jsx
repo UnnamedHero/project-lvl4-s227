@@ -3,12 +3,8 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 import cn from 'classnames';
 
 const ChannelsList = (props) => {
-  const handleClick = (id, e) => {
-    e.preventDefault();
-    props.changeCurrentChannel(id);
-  };
   const renderChannelsList = () => {
-    const { channels, currentChannelId } = props;
+    const { channels, currentChannelId, changeCurrentChannel } = props;
     return channels.map((channel) => {
       const isCurrentChannel = currentChannelId === channel.id;
       const itemClass = {
@@ -18,7 +14,7 @@ const ChannelsList = (props) => {
       };
       const changeChannel = isCurrentChannel ?
         null :
-        handleClick.bind(null, { id: channel.id });
+        changeCurrentChannel.bind(null, { id: channel.id });
       return (
         <ListGroupItem key={channel.id} tag="button" action onClick={changeChannel} className={cn(itemClass)}>
           {channel.name}
