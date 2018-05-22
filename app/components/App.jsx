@@ -1,5 +1,5 @@
 import React from 'react';
-import ChannelsListContainer from '../containers/ChannelsList';
+import ChannelsList from './ChannelsList';
 // import UserPanelContainer from '../containers/UserPanel';
 import UserPanel from './UserPanel';
 import ChatWindowContainer from '../containers/ChatWindow';
@@ -14,7 +14,7 @@ const App = () => (
           <UserPanel />
         </div>
         <div className="scrollable">
-          <ChannelsListContainer />
+          <ChannelsList />
         </div>
       </div>
       <div className="d-flex col-10 flex-column justify-content-between vh-100 bg-secondary">
