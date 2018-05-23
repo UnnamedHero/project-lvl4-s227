@@ -19,6 +19,10 @@ class ChannelsListEditor extends React.Component {
     innerProps: {},
   }
 
+  addChannel = ({ modalEditorInput: name }) => {
+    this.props.addChannel(name);
+  }
+
   validateNewChannel = (name) => {
     const isExists = find(this.props.channels, ch => ch.name === name);
     return isExists ? { error: 'channel already exist' } : null;
@@ -29,7 +33,7 @@ class ChannelsListEditor extends React.Component {
       headerLabel: 'Add channel',
       submitLabel: 'Add',
       cancelLabel: 'Cancel',
-      submitHandler: null,
+      submitHandler: this.addChannel,
       cancelHandler: this.toggleInner,
       validate: this.validateNewChannel,
       enableReinitialize: true,

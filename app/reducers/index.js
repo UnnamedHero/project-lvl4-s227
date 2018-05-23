@@ -14,6 +14,10 @@ const channelsList = handleActions({
   [actions.changeCurrentChannel](state, { payload: { id } }) {
     return { ...state, currentChannelId: id };
   },
+  [actions.addChannelSocket](state, { payload: { channel } }) {
+    const newChannels = [...state.channels, channel];
+    return { ...state, channels: newChannels };
+  },
 }, {
   channels: gon.channels,
   currentChannelId: gon.currentChannelId,
@@ -27,6 +31,18 @@ const messageSendingState = handleActions({
     return 'success';
   },
   [actions.sendMessageFailure]() {
+    return 'failure';
+  },
+}, 'none');
+
+const channelAddState = handleActions({
+  [actions.addChannelRequest]() {
+    return 'requested';
+  },
+  [actions.addChannelSuccess]() {
+    return 'success';
+  },
+  [actions.addChannelFailure]() {
     return 'failure';
   },
 }, 'none');
@@ -49,6 +65,9 @@ const notification = handleActions({
   [actions.sendMessageFailure](state, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Message was not delivered to server' };
   },
+  [actions.addChannelFailure](state, { payload: { error } }) {
+    return { type: 'warning', headline: error, message: 'Channel was not added, request failed' };
+  },
 }, null);
 
 export default combineReducers({
@@ -57,6 +76,7 @@ export default combineReducers({
   channelsList,
   form: formReducer,
   messageSendingState,
+  channelAddState,
   notification,
 });
 
