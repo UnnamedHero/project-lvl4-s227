@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
   return props;
 };
 
+@connect(mapStateToProps)
 class ModalEditor extends React.Component {
   static getDerivedStateFromProps(nextProps) {
     return { errorPopover: has(nextProps.inputState, 'ModalEditor.syncErrors') };
@@ -19,12 +20,18 @@ class ModalEditor extends React.Component {
 
   state = { errorPopover: false };
 
+  modalSubmit = (values) => {
+    this.props.submitHandler(values);
+    this.props.reset();
+  }
+
   render() {
     const {
       isOpen,
       headerLabel,
       submitLabel, cancelLabel,
-      submitHandler, cancelHandler,
+      cancelHandler,
+      handleSubmit,
       validate, inputState,
     } = this.props;
     const hasError = has(inputState, 'ModalEditor.syncErrors');
@@ -42,9 +49,9 @@ class ModalEditor extends React.Component {
       <Modal isOpen={isOpen} fade={false} toggle={cancelHandler} backdrop="static">
         <ModalHeader toggle={cancelHandler}>{headerLabel}</ModalHeader>
         <ModalBody>
-          <form onSubmit={submitHandler} className="d-flex">
+          <form onSubmit={handleSubmit(this.modalSubmit)} className="d-flex">
             <Field {...inputFieldProps} />
-            <Button type="submit" color="success" disabled={hasError}>{submitLabel}</Button>
+            <button type="submit" disabled={hasError}>{submitLabel}</button>
             <Button color="secondary" onClick={cancelHandler}>{cancelLabel}</Button>
           </form>
           <Popover placement="top" isOpen={this.state.errorPopover} target="PopoverTarget">
@@ -57,6 +64,6 @@ class ModalEditor extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(reduxForm({
+export default reduxForm({
   form: 'ModalEditor',
-})(ModalEditor));
+})(ModalEditor);
