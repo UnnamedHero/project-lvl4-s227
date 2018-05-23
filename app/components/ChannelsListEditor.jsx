@@ -3,10 +3,11 @@ import find from 'lodash/find';
 import { Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import connect from '../connect';
 import ModalEditor from './ModalEditor';
+import { getEditableChannels } from '../selectors';
 
 const mapStateToProps = (state) => {
   const props = {
-    channels: state.channelsList.channels,
+    channels: getEditableChannels(state),
   };
   return props;
 };
