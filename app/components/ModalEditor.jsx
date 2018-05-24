@@ -3,6 +3,7 @@ import has from 'lodash/has';
 import { Field, reduxForm } from 'redux-form';
 import { Modal, ModalHeader, ModalBody, Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import connect from '../connect';
+import InputField from './InputField';
 
 
 const mapStateToProps = (state) => {
@@ -36,21 +37,13 @@ class ModalEditor extends React.Component {
     } = this.props;
     const hasError = has(inputState, 'ModalEditor.syncErrors');
     const errorText = hasError ? inputState.ModalEditor.syncErrors.modalEditorInput.error : null;
-    const inputFieldProps = {
-      id: 'PopoverTarget',
-      name: 'modalEditorInput',
-      component: 'input',
-      required: true,
-      type: 'text',
-      validate,
-      className: 'form-control',
-    };
+    const canSend = true;
     return (
       <Modal isOpen={isOpen} fade={false} toggle={cancelHandler} backdrop="static">
         <ModalHeader toggle={cancelHandler}>{headerLabel}</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(this.modalSubmit)} className="d-flex">
-            <Field {...inputFieldProps} />
+            <Field id="PopoverTarget" name="modalEditorInput" canSend={canSend} validate={validate} component={InputField} />
             <button type="submit" disabled={hasError}>{submitLabel}</button>
             <Button color="secondary" onClick={cancelHandler}>{cancelLabel}</Button>
           </form>
