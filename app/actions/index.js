@@ -4,20 +4,24 @@ import routes from '../routes';
 
 export const setUserName = createAction('USER_SET_NAME');
 
-export const changeCurrentChannel = createAction('CHANNEL_CHANGE');
-
 export const sendMessageRequest = createAction('MESSAGE_SEND_REQUEST');
 export const sendMessageSuccess = createAction('MESSAGE_SEND_SUCCESS');
 export const sendMessageFailure = createAction('MESSAGE_SEND_FAILURE');
+export const addMessageSocket = createAction('MESSAGE_ADD_SOCKET');
+
+export const changeCurrentChannel = createAction('CHANNEL_CHANGE');
 
 export const addChannelRequest = createAction('CHANNEL_ADD_REQUEST');
 export const addChannelSuccess = createAction('CHANNEL_ADD_SUCCESS');
 export const addChannelFailure = createAction('CHANNEL_ADD_FAILURE');
+export const addChannelSocket = createAction('CHANNEL_ADD_SOCKET');
+
+export const removeChannelRequest = createAction('CHANNEL_DELETE_REQUEST');
+export const removeChannelSuccess = createAction('CHANNEL_DELETE_SUCCESS');
+export const removeChannelFailure = createAction('CHANNEL_DELETE_FAILURE');
+export const removeChannelSocket = createAction('CHANNEL_DELETE_SOCKET');
 
 export const dismissNotification = createAction('NOTIFICATION_DISMISS');
-
-export const addMessageSocket = createAction('MESSAGE_ADD_SOCKET');
-export const addChannelSocket = createAction('CHANNEL_ADD_SOCKET');
 
 export const sendMessage = (messageText, channelId, userName) => async (dispatch) => {
   dispatch(sendMessageRequest());
@@ -38,5 +42,15 @@ export const addChannel = name => async (dispatch) => {
     dispatch(addChannelSuccess());
   } catch (e) {
     dispatch(addChannelFailure({ error: e.message }));
+  }
+};
+
+export const removeChannel = id => async (dispatch) => {
+  dispatch(removeChannelRequest());
+  try {
+    await axios.delete(routes.editChannelUrl(id), { data: { id } });
+    dispatch(removeChannelSuccess());
+  } catch (e) {
+    dispatch(removeChannelFailure({ error: e.message }));
   }
 };
