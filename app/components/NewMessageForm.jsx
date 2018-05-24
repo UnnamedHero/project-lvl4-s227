@@ -14,22 +14,42 @@ const mapStateToProps = (state) => {
 
 @connect(mapStateToProps)
 class NewMessageForm extends React.Component {
+  componentDidUpdate(prevProps) {
+    const { sendingState: prevState } = prevProps;
+    const { sendingState: currState } = this.props;
+    if (prevState !== currState && currState === 'success') {
+      this.props.reset();
+    }
+  }
+
   sendMessage = (values) => {
     this.props.sendMessage(values, this.props.currentChannelId, this.props.userName);
-    this.props.reset();
   }
 
   render() {
     const { sendingState } = this.props;
     const canSend = sendingState !== 'requested';
+    const disabledProp = {
+      disabled: !canSend,
+    };
+    const animationClass = {
+      'request-sending': !canSend,
+    };
     const buttonClasses = {
       btn: true,
       'btn-primary': true,
-      disabled: !canSend,
+      ...disabledProp,
     };
     return (
       <form onSubmit={this.props.handleSubmit(this.sendMessage)} className="d-flex">
-        <Field name="messageText" component="input" required type="text" className="form-control" />
+        <div className="input-group">
+          <div className="input-group-prepend">
+            <div className="input-group-text">
+              <span className={cn(animationClass)}>#</span>
+            </div>
+          </div>
+          <Field name="messageText" component="input" required type="text" className="form-control" {...disabledProp} />
+        </div>
         <button type="submit" className={cn(buttonClasses)} hidden>Send</button>
       </form>);
   }

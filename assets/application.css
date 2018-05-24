@@ -13,3 +13,18 @@
 .vh-100 {  
   height: 100vh;  
 }
+
+.request-sending {
+  animation-name: request-animation;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes request-animation {
+  0% {
+    transform: rotate(0deg);
+  }  
+  100% {
+    transform: rotate(360deg);
+  }
+}
