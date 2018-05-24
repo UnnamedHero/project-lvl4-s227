@@ -8,7 +8,7 @@ import { getEditableChannels } from '../selectors';
 const mapStateToProps = (state) => {
   const props = {
     channels: getEditableChannels(state),
-    // channelAddState: state.requestStates.channelAddState,
+    removeChannelState: state.requestStates.channelRemoveState,
   };
   return props;
 };
@@ -24,19 +24,19 @@ class ChannelsListEditor extends React.Component {
     this.props.addChannel(name);
   }
 
-  validateNewChannel = (name) => {
+  validateChannelName = (name) => {
     const isExists = find(this.props.channels, ch => ch.name === name);
-    return isExists ? { error: 'channel already exist' } : null;
+    return isExists ? { error: 'channel name already exist' } : null;
   }
 
   toggleAddChannel = () => {
     const addProps = {
       headerLabel: 'Add channel',
       submitLabel: 'Add',
-      cancelLabel: 'Cancel',
+      cancelLabel: 'Close',
       submitHandler: this.addChannel,
       cancelHandler: this.toggleInner,
-      validate: this.validateNewChannel,
+      validate: this.validateChannelName,
       enableReinitialize: true,
       initialValues: {},
       requestType: 'channelAddState',
@@ -50,6 +50,10 @@ class ChannelsListEditor extends React.Component {
     this.toggleInner();
   }
 
+  removeChannel = id => () => {
+    this.props.removeChannel(id);
+  }
+
   toggleInner = () => {
     this.setState({ innerModal: !this.state.innerModal });
   }
@@ -60,19 +64,20 @@ class ChannelsListEditor extends React.Component {
       const renameModalProps = {
         headerLabel: 'Rename channel',
         submitLabel: 'Rename',
-        cancelLabel: 'Cancel',
+        cancelLabel: 'Close',
         submitHandler: null,
         cancelHandler: this.toggleInner,
-        validate: this.validateNewChannel,
+        validate: this.validateChannelName,
         enableReinitialize: true,
         initialValues: { modalEditorInput: channel.name },
       };
+      const btnState = this.props.removeChannelState === 'requested';
       return (
         <li key={channel.id}>
           {channel.name}
           <ButtonGroup size="sm">
-            <Button onClick={this.toggleRenameChannel(renameModalProps)} color="link">rename</Button>
-            <Button color="link">remove</Button>
+            <Button onClick={this.toggleRenameChannel(renameModalProps)} color="link" disabled={btnState}>rename</Button>
+            <Button onClick={this.removeChannel(channel.id)} color="link" disabled={btnState}>remove</Button>
           </ButtonGroup>
         </li>
       );

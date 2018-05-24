@@ -18,6 +18,13 @@ const channelsList = handleActions({
     const newChannels = [...state.channels, channel];
     return { ...state, channels: newChannels };
   },
+  [actions.removeChannelSocket](state, { payload: { id } }) {
+    const newChannels = state.channels.filter(ch => ch.id !== id);
+    const newCurrentChannelId = state.currentChannelId === id ?
+      gon.currentChannelId :
+      state.currentChannelId;
+    return { channels: newChannels, currentChannelId: newCurrentChannelId };
+  },
 }, {
   channels: gon.channels,
   currentChannelId: gon.currentChannelId,
@@ -42,14 +49,27 @@ const requestStates = handleActions({
   [actions.addChannelFailure](state) {
     return { ...state, channelAddState: 'failure' };
   },
+  [actions.removeChannelRequest](state) {
+    return { ...state, channelRemoveState: 'requested' };
+  },
+  [actions.removeChannelSuccess](state) {
+    return { ...state, channelRemoveState: 'success' };
+  },
+  [actions.removeChannelFailure](state) {
+    return { ...state, channelRemoveState: 'failure' };
+  },
 }, {
   messageSendingState: 'none',
   channelAddState: 'none',
+  channelRemoveState: 'none',
 });
 
 const messages = handleActions({
   [actions.addMessageSocket](state, { payload: { message } }) {
     return [...state, message];
+  },
+  [actions.removeChannelSocket](state, { payload: { id } }) {
+    return state.filter(m => m.id !== id);
   },
 }, gon.messages);
 
