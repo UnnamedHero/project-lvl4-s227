@@ -9,6 +9,7 @@ import InputField from './InputField';
 const mapStateToProps = (state) => {
   const props = {
     inputState: state.form,
+    requestStates: state.requestStates,
   };
   return props;
 };
@@ -21,9 +22,17 @@ class ModalEditor extends React.Component {
 
   state = { errorPopover: false };
 
+  componentDidUpdate(prevProps) {
+    const { requestType } = this.props;
+    const prevState = prevProps.requestStates[requestType];
+    const currState = this.props.requestStates[requestType];
+    if (prevState !== currState && currState === 'success') {
+      this.props.reset();
+    }
+  }
+
   modalSubmit = (values) => {
     this.props.submitHandler(values);
-    this.props.reset();
   }
 
   render() {
@@ -33,19 +42,21 @@ class ModalEditor extends React.Component {
       submitLabel, cancelLabel,
       cancelHandler,
       handleSubmit,
-      validate, inputState,
+      validate,
+      inputState,
+      requestStates, requestType,
     } = this.props;
     const hasError = has(inputState, 'ModalEditor.syncErrors');
     const errorText = hasError ? inputState.ModalEditor.syncErrors.modalEditorInput.error : null;
-    const canSend = true;
+    const canSend = requestStates[requestType] !== 'requested';
     return (
       <Modal isOpen={isOpen} fade={false} toggle={cancelHandler} backdrop="static">
-        <ModalHeader toggle={cancelHandler}>{headerLabel}</ModalHeader>
+        <ModalHeader>{headerLabel}</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(this.modalSubmit)} className="d-flex">
             <Field id="PopoverTarget" name="modalEditorInput" canSend={canSend} validate={validate} component={InputField} />
-            <button type="submit" disabled={hasError}>{submitLabel}</button>
-            <Button color="secondary" onClick={cancelHandler}>{cancelLabel}</Button>
+            <button type="submit" disabled={hasError || !canSend}>{submitLabel}</button>
+            <Button color="secondary" disabled={!canSend} onClick={cancelHandler}>{cancelLabel}</Button>
           </form>
           <Popover placement="top" isOpen={this.state.errorPopover} target="PopoverTarget">
             <PopoverHeader className="bg-danger text-white">Error!</PopoverHeader>
