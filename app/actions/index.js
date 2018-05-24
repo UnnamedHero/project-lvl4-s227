@@ -21,6 +21,11 @@ export const removeChannelSuccess = createAction('CHANNEL_DELETE_SUCCESS');
 export const removeChannelFailure = createAction('CHANNEL_DELETE_FAILURE');
 export const removeChannelSocket = createAction('CHANNEL_DELETE_SOCKET');
 
+export const renameChannelRequest = createAction('CHANNEL_RENAME_REQUEST');
+export const renameChannelSuccess = createAction('CHANNEL_RENAME_SUCCESS');
+export const renameChannelFailure = createAction('CHANNEL_RENAME_FAILURE');
+export const renameChannelSocket = createAction('CHANNEL_RENAME_SOCKET');
+
 export const dismissNotification = createAction('NOTIFICATION_DISMISS');
 
 export const sendMessage = (messageText, channelId, userName) => async (dispatch) => {
@@ -54,3 +59,15 @@ export const removeChannel = id => async (dispatch) => {
     dispatch(removeChannelFailure({ error: e.message }));
   }
 };
+
+export const renameChannel = (id, newName) => async (dispatch) => {
+  dispatch(renameChannelRequest());
+  try {
+    const attributes = { name: newName };
+    await axios.patch(routes.editChannelUrl(id), { data: { id, attributes } });
+    dispatch(renameChannelSuccess());
+  } catch (e) {
+    dispatch(renameChannelFailure({ error: e.message }));
+  }
+};
+
