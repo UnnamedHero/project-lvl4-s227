@@ -25,6 +25,15 @@ const channelsList = handleActions({
       state.currentChannelId;
     return { channels: newChannels, currentChannelId: newCurrentChannelId };
   },
+  [actions.renameChannelSocket](state, { payload: { channel: { id, name: newName } } }) {
+    const newChannels = state.channels.map((ch) => {
+      if (ch.id === id) {
+        return { ...ch, name: newName };
+      }
+      return ch;
+    });
+    return { ...state, channels: newChannels };
+  },
 }, {
   channels: gon.channels,
   currentChannelId: gon.currentChannelId,
@@ -57,6 +66,15 @@ const requestStates = handleActions({
   },
   [actions.removeChannelFailure](state) {
     return { ...state, channelRemoveState: 'failure' };
+  },
+  [actions.renameChannelRequest](state) {
+    return { ...state, channelRenameState: 'requested' };
+  },
+  [actions.renameChannelSuccess](state) {
+    return { ...state, channelRenameState: 'success' };
+  },
+  [actions.renameChannelFailure](state) {
+    return { ...state, channelRenameState: 'failure' };
   },
 }, {
   messageSendingState: 'none',
