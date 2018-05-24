@@ -3,11 +3,11 @@ import find from 'lodash/find';
 import { Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import connect from '../connect';
 import ModalEditor from './ModalEditor';
-import { getEditableChannels } from '../selectors';
 
 const mapStateToProps = (state) => {
   const props = {
-    channels: getEditableChannels(state),
+    channels: state.channelsList.channels,
+    // editableChannels: getEditableChannels(state),
     removeChannelState: state.requestStates.channelRemoveState,
   };
   return props;
@@ -26,7 +26,7 @@ class ChannelsListEditor extends React.Component {
 
   validateChannelName = (name) => {
     const isExists = find(this.props.channels, ch => ch.name === name);
-    return isExists ? { error: 'channel name already exist' } : null;
+    return isExists ? { error: 'Channel name already exist' } : null;
   }
 
   toggleAddChannel = () => {
@@ -40,6 +40,7 @@ class ChannelsListEditor extends React.Component {
       enableReinitialize: true,
       initialValues: {},
       requestType: 'channelAddState',
+      closeOnSuccess: false,
     };
     this.setState({ innerProps: { ...addProps } });
     this.toggleInner();
@@ -54,6 +55,10 @@ class ChannelsListEditor extends React.Component {
     this.props.removeChannel(id);
   }
 
+  renameChannel = (id, { modalEditorInput: name }) => {
+    this.props.renameChannel(id, name);
+  }
+
   toggleInner = () => {
     this.setState({ innerModal: !this.state.innerModal });
   }
@@ -61,15 +66,21 @@ class ChannelsListEditor extends React.Component {
   renderChannelsList() {
     const { channels } = this.props;
     return channels.map((channel) => {
+      if (!channel.removable) {
+        return null;
+      }
+      const bindedRenameChannel = this.renameChannel.bind(null, channel.id);
       const renameModalProps = {
         headerLabel: 'Rename channel',
         submitLabel: 'Rename',
         cancelLabel: 'Close',
-        submitHandler: null,
+        submitHandler: bindedRenameChannel,
         cancelHandler: this.toggleInner,
         validate: this.validateChannelName,
         enableReinitialize: true,
         initialValues: { modalEditorInput: channel.name },
+        requestType: 'channelRenameState',
+        closeOnSuccess: true,
       };
       const btnState = this.props.removeChannelState === 'requested';
       return (
