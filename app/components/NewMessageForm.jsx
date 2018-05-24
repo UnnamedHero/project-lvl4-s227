@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import cn from 'classnames';
 import connect from '../connect';
+import InputField from './InputField';
 
 const mapStateToProps = (state) => {
   const props = {
@@ -32,9 +33,7 @@ class NewMessageForm extends React.Component {
     const disabledProp = {
       disabled: !canSend,
     };
-    const animationClass = {
-      'request-sending': !canSend,
-    };
+
     const buttonClasses = {
       btn: true,
       'btn-primary': true,
@@ -42,14 +41,7 @@ class NewMessageForm extends React.Component {
     };
     return (
       <form onSubmit={this.props.handleSubmit(this.sendMessage)} className="d-flex">
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <div className="input-group-text">
-              <span className={cn(animationClass)}>#</span>
-            </div>
-          </div>
-          <Field name="messageText" component="input" required type="text" className="form-control" {...disabledProp} />
-        </div>
+        <Field name="messageText" component={InputField} canSend={canSend} />
         <button type="submit" className={cn(buttonClasses)} hidden>Send</button>
       </form>);
   }
