@@ -23,11 +23,14 @@ class ModalEditor extends React.Component {
   state = { errorPopover: false };
 
   componentDidUpdate(prevProps) {
-    const { requestType } = this.props;
+    const { requestType, closeOnSuccess, cancelHandler } = this.props;
     const prevState = prevProps.requestStates[requestType];
     const currState = this.props.requestStates[requestType];
     if (prevState !== currState && currState === 'success') {
       this.props.reset();
+      if (closeOnSuccess) {
+        cancelHandler();
+      }
     }
   }
 
