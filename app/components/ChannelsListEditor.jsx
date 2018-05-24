@@ -8,6 +8,7 @@ import { getEditableChannels } from '../selectors';
 const mapStateToProps = (state) => {
   const props = {
     channels: getEditableChannels(state),
+    // channelAddState: state.requestStates.channelAddState,
   };
   return props;
 };
@@ -38,6 +39,7 @@ class ChannelsListEditor extends React.Component {
       validate: this.validateNewChannel,
       enableReinitialize: true,
       initialValues: {},
+      requestType: 'channelAddState',
     };
     this.setState({ innerProps: { ...addProps } });
     this.toggleInner();

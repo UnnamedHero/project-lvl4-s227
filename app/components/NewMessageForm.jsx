@@ -8,7 +8,7 @@ const mapStateToProps = (state) => {
   const props = {
     currentChannelId: state.channelsList.currentChannelId,
     userName: state.user.name,
-    sendingState: state.messageSendingState,
+    sendingState: state.requestStates.messageSendingState,
   };
   return props;
 };
@@ -30,14 +30,11 @@ class NewMessageForm extends React.Component {
   render() {
     const { sendingState } = this.props;
     const canSend = sendingState !== 'requested';
-    const disabledProp = {
-      disabled: !canSend,
-    };
 
     const buttonClasses = {
       btn: true,
       'btn-primary': true,
-      ...disabledProp,
+      disabled: !canSend,
     };
     return (
       <form onSubmit={this.props.handleSubmit(this.sendMessage)} className="d-flex">

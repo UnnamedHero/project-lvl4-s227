@@ -23,29 +23,29 @@ const channelsList = handleActions({
   currentChannelId: gon.currentChannelId,
 });
 
-const messageSendingState = handleActions({
-  [actions.sendMessageRequest]() {
-    return 'requested';
+const requestStates = handleActions({
+  [actions.sendMessageRequest](state) {
+    return { ...state, messageSendingState: 'requested' };
   },
-  [actions.sendMessageSuccess]() {
-    return 'success';
+  [actions.sendMessageSuccess](state) {
+    return { ...state, messageSendingState: 'success' };
   },
-  [actions.sendMessageFailure]() {
-    return 'failure';
+  [actions.sendMessageFailure](state) {
+    return { ...state, messageSendingState: 'failure' };
   },
-}, 'none');
-
-const channelAddState = handleActions({
-  [actions.addChannelRequest]() {
-    return 'requested';
+  [actions.addChannelRequest](state) {
+    return { ...state, channelAddState: 'requested' };
   },
-  [actions.addChannelSuccess]() {
-    return 'success';
+  [actions.addChannelSuccess](state) {
+    return { ...state, channelAddState: 'success' };
   },
-  [actions.addChannelFailure]() {
-    return 'failure';
+  [actions.addChannelFailure](state) {
+    return { ...state, channelAddState: 'failure' };
   },
-}, 'none');
+}, {
+  messageSendingState: 'none',
+  channelAddState: 'none',
+});
 
 const messages = handleActions({
   [actions.addMessageSocket](state, { payload: { message } }) {
@@ -75,8 +75,7 @@ export default combineReducers({
   messages,
   channelsList,
   form: formReducer,
-  messageSendingState,
-  channelAddState,
+  requestStates,
   notification,
 });
 
