@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button, ListGroup, ListGroupItem } from 'reactstrap';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import cn from 'classnames';
-import ChannelsListEditor from './ChannelsListEditor';
 import connect from '../connect';
 
 const mapStateToProps = ({ channelsList: { channels, currentChannelId } }) => {
@@ -13,14 +12,16 @@ const mapStateToProps = ({ channelsList: { channels, currentChannelId } }) => {
 
 @connect(mapStateToProps)
 class ChannelsList extends React.Component {
-  state = { isEditorOpen: false }
-
-  toggleEditor = () => {
-    this.setState({ isEditorOpen: !this.state.isEditorOpen });
+  onChannelClick = id => () => {
+    const { currentChannelId, changeCurrentChannel } = this.props;
+    if (currentChannelId === id) {
+      return;
+    }
+    changeCurrentChannel({ id });
   }
 
   renderChannelsList = () => {
-    const { channels, currentChannelId, changeCurrentChannel } = this.props;
+    const { channels, currentChannelId } = this.props;
     return channels.map((channel) => {
       const isCurrentChannel = currentChannelId === channel.id;
       const itemClass = {
@@ -28,11 +29,8 @@ class ChannelsList extends React.Component {
         'text-body': !isCurrentChannel,
         active: isCurrentChannel,
       };
-      const changeChannel = isCurrentChannel ?
-        null :
-        changeCurrentChannel.bind(null, { id: channel.id });
       return (
-        <ListGroupItem key={channel.id} tag="button" action onClick={changeChannel} className={cn(itemClass)}>
+        <ListGroupItem key={channel.id} tag="button" action onClick={this.onChannelClick(channel.id)} className={cn(itemClass)}>
           {channel.name}
         </ListGroupItem>);
     });
@@ -41,12 +39,7 @@ class ChannelsList extends React.Component {
   render() {
     return (
       <div>
-        <span>
-          Channels:
-          <Button color="link" onClick={this.toggleEditor}>edit</Button>
-          <ChannelsListEditor isOpen={this.state.isEditorOpen} toggle={this.toggleEditor} />
-        </span>
-        <ListGroup>
+        <ListGroup className="word-wrap-bw">
           {this.renderChannelsList()}
         </ListGroup>
       </div>
