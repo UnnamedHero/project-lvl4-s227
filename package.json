@@ -1,6 +1,6 @@
 {
   "name": "eem_frontend_l4_chat_project",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "",
   "main": "dist/index.js",
   "bin": {
@@ -59,13 +59,12 @@
     "koa-webpack": "^3.0.2",
     "lodash": "^4.17.10",
     "react": "^16.3.2",
-    "react-bootstrap": "^0.32.1",
     "react-bs-notifier": "^5.0.0",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
+    "reactstrap": "^6.0.1",
     "redux": "^4.0.0",
     "redux-actions": "^2.3.0",
-    "redux-bootstrap": "^1.3.0",
     "redux-form": "^7.3.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",

@@ -1,4 +1,13 @@
 import React from 'react';
+import connect from '../connect';
+import { getCurrentChannelMessagesSelector } from '../selectors';
+
+const mapStateToProps = (state) => {
+  const props = {
+    messages: getCurrentChannelMessagesSelector(state),
+  };
+  return props;
+};
 
 const renderMessage = ({ id, author, body }) => (
   <div className="list-group-item flex-column align-items-start w-100 bg-light rounded" key={id}>
@@ -15,4 +24,4 @@ const ChatWindow = props => (
   </div>);
 
 
-export default ChatWindow;
+export default connect(mapStateToProps)(ChatWindow);

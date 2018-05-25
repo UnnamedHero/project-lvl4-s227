@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import App from './components/App';
 import reducers from './reducers';
-import { addMessageSocket, setUserName } from './actions';
+import { addMessageSocket, addChannelSocket, removeChannelSocket, renameChannelSocket, setUserName } from './actions';
 
 /* eslint-disable no-underscore-dangle */
 const identity = p => p;
@@ -45,7 +45,19 @@ const socket = io();
 
 socket.on('newMessage', ( { data : { attributes : message } }) => {  
   store.dispatch(addMessageSocket({ message }));
-})
+});
+
+socket.on('newChannel', ( { data: { attributes :  channel } }) => {
+  store.dispatch(addChannelSocket({ channel }));
+});
+
+socket.on('removeChannel', ( { data: { id } }) => {
+  store.dispatch(removeChannelSocket({ id }));
+});
+
+socket.on('renameChannel', ( { data: { attributes :  channel } }) => {  
+  store.dispatch(renameChannelSocket({ channel }));
+});
 
 ReactDOM.render(
 <Provider store={store}>
