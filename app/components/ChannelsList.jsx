@@ -51,7 +51,7 @@ class ChannelsList extends React.Component {
           <Button color="link" onClick={this.toggleEditor}>edit</Button>
           <ChannelsListEditor isOpen={this.state.isEditorOpen} toggle={this.toggleEditor} />
         </span>
-        <ListGroup>
+        <ListGroup className="word-wrap-bw">
           {this.renderChannelsList()}
         </ListGroup>
       </div>
