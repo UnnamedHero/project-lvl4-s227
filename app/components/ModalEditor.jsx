@@ -58,7 +58,7 @@ class ModalEditor extends React.Component {
         <ModalBody>
           <form onSubmit={handleSubmit(this.modalSubmit)} className="d-flex">
             <Field id="PopoverTarget" name="modalEditorInput" canSend={canSend} validate={validate} component={InputField} />
-            <button type="submit" disabled={hasError || !canSend}>{submitLabel}</button>
+            <button type="submit" className="btn btn-primary" disabled={hasError || !canSend}>{submitLabel}</button>
             <Button color="secondary" disabled={!canSend} onClick={cancelHandler}>{cancelLabel}</Button>
           </form>
           <Popover placement="top" isOpen={this.state.errorPopover} target="PopoverTarget">

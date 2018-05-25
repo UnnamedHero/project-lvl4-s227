@@ -60,7 +60,19 @@ class ChannelsListEditor extends React.Component {
     this.toggleInner();
   }
 
-  toggleRenameChannel = renameModalProps => () => {
+  toggleRenameChannel = channel => () => {
+    const renameModalProps = {
+      headerLabel: 'Rename channel',
+      submitLabel: 'Rename',
+      cancelLabel: 'Close',
+      submitHandler: this.renameChannel.bind(null, channel.id),
+      cancelHandler: this.toggleInner,
+      validate: this.validateChannelName,
+      enableReinitialize: true,
+      initialValues: { modalEditorInput: channel.name },
+      requestType: 'channelRenameState',
+      closeOnSuccess: true,
+    };
     this.setState({ innerProps: { ...renameModalProps } });
     this.toggleInner();
   }
@@ -99,25 +111,12 @@ class ChannelsListEditor extends React.Component {
       if (!channel.removable) {
         return null;
       }
-      const bindedRenameChannel = this.renameChannel.bind(null, channel.id);
-      const renameModalProps = {
-        headerLabel: 'Rename channel',
-        submitLabel: 'Rename',
-        cancelLabel: 'Close',
-        submitHandler: bindedRenameChannel,
-        cancelHandler: this.toggleInner,
-        validate: this.validateChannelName,
-        enableReinitialize: true,
-        initialValues: { modalEditorInput: channel.name },
-        requestType: 'channelRenameState',
-        closeOnSuccess: true,
-      };
       const { buttonsEnabled } = this.state;
       return (
         <li key={channel.id}>
           {channel.name}
           <ButtonGroup size="sm">
-            <Button onClick={this.toggleRenameChannel(renameModalProps)} color="link" disabled={!buttonsEnabled}>rename</Button>
+            <Button onClick={this.toggleRenameChannel(channel)} color="link" disabled={!buttonsEnabled}>rename</Button>
             <Button onClick={this.removeChannelDialog(channel)} color="link" disabled={!buttonsEnabled}>remove</Button>
           </ButtonGroup>
         </li>
