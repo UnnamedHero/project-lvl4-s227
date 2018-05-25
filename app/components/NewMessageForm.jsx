@@ -15,11 +15,21 @@ const mapStateToProps = (state) => {
 
 @connect(mapStateToProps)
 class NewMessageForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.el = React.createRef();
+  }
+
+  componentDidMount() {
+    this.el.current.querySelector('input').focus();
+  }
+
   componentDidUpdate(prevProps) {
     const { sendingState: prevState } = prevProps;
     const { sendingState: currState } = this.props;
     if (prevState !== currState && currState === 'success') {
       this.props.reset();
+      this.el.current.querySelector('input').focus();
     }
   }
 
@@ -37,7 +47,7 @@ class NewMessageForm extends React.Component {
       disabled: !canSend,
     };
     return (
-      <form onSubmit={this.props.handleSubmit(this.sendMessage)} className="d-flex">
+      <form onSubmit={this.props.handleSubmit(this.sendMessage)} className="d-flex" ref={this.el}>
         <Field name="messageText" component={InputField} canSend={canSend} />
         <button type="submit" className={cn(buttonClasses)} hidden>Send</button>
       </form>);
