@@ -1,13 +1,14 @@
 import React from 'react';
 import find from 'lodash/find';
 import { Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import cn from 'classnames';
 import connect from '../connect';
 import ModalEditor from './ModalEditor';
+import DeleteConfirmDialog from './DeleteConfirmDialog';
 
 const mapStateToProps = (state) => {
   const props = {
     channels: state.channelsList.channels,
-    // editableChannels: getEditableChannels(state),
     removeChannelState: state.requestStates.channelRemoveState,
   };
   return props;
@@ -15,9 +16,22 @@ const mapStateToProps = (state) => {
 
 @connect(mapStateToProps)
 class ChannelsListEditor extends React.Component {
+  static getDerivedStateFromProps(nextProps, state) {
+    if ((nextProps.removeChannelState === 'requested') && state.buttonsEnabled) {
+      return { buttonsEnabled: false };
+    }
+    if ((nextProps.removeChannelState !== 'requested') && !state.buttonsEnabled) {
+      return { buttonsEnabled: true };
+    }
+    return null;
+  }
+
   state = {
     innerModal: false,
+    deleteModal: false,
     innerProps: {},
+    deleteModalProps: {},
+    buttonsEnabled: true,
   }
 
   addChannel = ({ modalEditorInput: name }) => {
@@ -51,9 +65,21 @@ class ChannelsListEditor extends React.Component {
     this.toggleInner();
   }
 
+  removeChannelDialog = channel => () => {
+    const deleteModalProps = {
+      okHandler: this.removeChannel(channel.id),
+      cancelHandler: this.toggleDeleteConfirmModal,
+      bodyText: channel.name,
+    };
+    this.setState({ deleteModalProps });
+    this.toggleDeleteConfirmModal();
+  }
+
   removeChannel = id => () => {
     this.props.removeChannel(id);
+    this.toggleDeleteConfirmModal();
   }
+
 
   renameChannel = (id, { modalEditorInput: name }) => {
     this.props.renameChannel(id, name);
@@ -61,6 +87,10 @@ class ChannelsListEditor extends React.Component {
 
   toggleInner = () => {
     this.setState({ innerModal: !this.state.innerModal });
+  }
+
+  toggleDeleteConfirmModal = () => {
+    this.setState({ deleteModal: !this.state.deleteModal });
   }
 
   renderChannelsList() {
@@ -82,13 +112,13 @@ class ChannelsListEditor extends React.Component {
         requestType: 'channelRenameState',
         closeOnSuccess: true,
       };
-      const btnState = this.props.removeChannelState === 'requested';
+      const { buttonsEnabled } = this.state;
       return (
         <li key={channel.id}>
           {channel.name}
           <ButtonGroup size="sm">
-            <Button onClick={this.toggleRenameChannel(renameModalProps)} color="link" disabled={btnState}>rename</Button>
-            <Button onClick={this.removeChannel(channel.id)} color="link" disabled={btnState}>remove</Button>
+            <Button onClick={this.toggleRenameChannel(renameModalProps)} color="link" disabled={!buttonsEnabled}>rename</Button>
+            <Button onClick={this.removeChannelDialog(channel)} color="link" disabled={!buttonsEnabled}>remove</Button>
           </ButtonGroup>
         </li>
       );
@@ -97,21 +127,35 @@ class ChannelsListEditor extends React.Component {
 
   render() {
     const { isOpen, toggle } = this.props;
+    const { buttonsEnabled } = this.state;
+    const deleteDialogProps = {
+      isOpen: this.state.deleteModal,
+      ...this.state.deleteModalProps,
+    };
+    const animationClass = {
+      'text-info': true,
+      invisible: buttonsEnabled,
+    };
     return (
       <Modal isOpen={isOpen} toggle={toggle} backdrop="static">
-        <ModalHeader toggle={toggle}>Edit channel list</ModalHeader>
+        <ModalHeader>
+          Edit channel list<span className={cn(animationClass)}>   [please, wait...]</span>
+        </ModalHeader>
         <ModalBody>
           <ModalEditor isOpen={this.state.innerModal} {...this.state.innerProps} />
           <span>
             Channel list:
-            <Button onClick={this.toggleAddChannel} color="link" size="sm">
+            <Button onClick={this.toggleAddChannel} disabled={!buttonsEnabled} color="link" size="sm">
               add
             </Button>
           </span>
-          {this.renderChannelsList()}
+          <ul className="scrollable">
+            {this.renderChannelsList()}
+          </ul>
+          <DeleteConfirmDialog {...deleteDialogProps} />
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>Close</Button>
+          <Button color="primary" onClick={toggle} disabled={!buttonsEnabled}>Close</Button>
         </ModalFooter>
       </Modal>);
   }
