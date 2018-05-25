@@ -15,12 +15,20 @@ const mapStateToProps = ({ channelsList: { channels, currentChannelId } }) => {
 class ChannelsList extends React.Component {
   state = { isEditorOpen: false }
 
+  onChannelClick = id => () => {
+    const { currentChannelId, changeCurrentChannel } = this.props;
+    if (currentChannelId === id) {
+      return;
+    }
+    changeCurrentChannel({ id });
+  }
+
   toggleEditor = () => {
     this.setState({ isEditorOpen: !this.state.isEditorOpen });
   }
 
   renderChannelsList = () => {
-    const { channels, currentChannelId, changeCurrentChannel } = this.props;
+    const { channels, currentChannelId } = this.props;
     return channels.map((channel) => {
       const isCurrentChannel = currentChannelId === channel.id;
       const itemClass = {
@@ -28,11 +36,8 @@ class ChannelsList extends React.Component {
         'text-body': !isCurrentChannel,
         active: isCurrentChannel,
       };
-      const changeChannel = isCurrentChannel ?
-        null :
-        changeCurrentChannel.bind(null, { id: channel.id });
       return (
-        <ListGroupItem key={channel.id} tag="button" action onClick={changeChannel} className={cn(itemClass)}>
+        <ListGroupItem key={channel.id} tag="button" action onClick={this.onChannelClick(channel.id)} className={cn(itemClass)}>
           {channel.name}
         </ListGroupItem>);
     });
