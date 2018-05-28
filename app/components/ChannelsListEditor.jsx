@@ -8,7 +8,7 @@ import DeleteConfirmDialog from './DeleteConfirmDialog';
 
 const mapStateToProps = (state) => {
   const props = {
-    channels: state.channelsList.channels,
+    channels: state.channels.channelsList,
     removeChannelState: state.requestStates.channelRemoveState,
   };
   return props;

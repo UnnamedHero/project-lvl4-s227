@@ -9,29 +9,29 @@ const user = handleActions({
   },
 }, '');
 
-const channelsList = handleActions({
+const channels = handleActions({
   [actions.changeCurrentChannel](state, { payload: { id } }) {
     return { ...state, currentChannelId: id };
   },
   [actions.addChannelSocket](state, { payload: { channel } }) {
-    const newChannels = [...state.channels, channel];
-    return { ...state, channels: newChannels };
+    const newChannels = [...state.channelsList, channel];
+    return { ...state, channelsList: newChannels };
   },
   [actions.removeChannelSocket](state, { payload: { id } }) {
-    const newChannels = state.channels.filter(ch => ch.id !== id);
+    const newChannels = state.channelsList.filter(ch => ch.id !== id);
     const newCurrentChannelId = state.currentChannelId === id ?
       state.defaultChannelId :
       state.currentChannelId;
-    return { channels: newChannels, currentChannelId: newCurrentChannelId };
+    return { channelsList: newChannels, currentChannelId: newCurrentChannelId };
   },
   [actions.renameChannelSocket](state, { payload: { channel: { id, name: newName } } }) {
-    const newChannels = state.channels.map((ch) => {
+    const newChannels = state.channelsList.map((ch) => {
       if (ch.id === id) {
         return { ...ch, name: newName };
       }
       return ch;
     });
-    return { ...state, channels: newChannels };
+    return { ...state, channelsList: newChannels };
   },
 }, {});
 
@@ -107,7 +107,7 @@ const notification = handleActions({
 export default combineReducers({
   user,
   messages,
-  channelsList,
+  channels,
   form: formReducer,
   requestStates,
   notification,

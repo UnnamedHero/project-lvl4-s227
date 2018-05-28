@@ -32,8 +32,8 @@ const initState = {
   user: {
     name: Cookie.get(cookieNameKey),
   },
-  channelsList: {
-    channels: gon.channels,
+  channels: {
+    channelsList: gon.channels,
     defaultChannelId: gon.currentChannelId,
     currentChannelId: gon.currentChannelId,
   },
