@@ -3,11 +3,7 @@ import { handleActions } from 'redux-actions';
 import { reducer as formReducer } from 'redux-form';
 import * as actions from '../actions';
 
-const user = handleActions({
-  [actions.setUserName](state, { payload: { name } }) {
-    return { name };
-  },
-}, '');
+const user = handleActions({}, {});
 
 const channels = handleActions({
   [actions.changeCurrentChannel](state, { payload: { id } }) {
