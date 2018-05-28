@@ -6,7 +6,7 @@ import InputField from './InputField';
 
 const mapStateToProps = (state) => {
   const props = {
-    currentChannelId: state.channelsList.currentChannelId,
+    currentChannelId: state.channels.currentChannelId,
     userName: state.user.name,
     sendingState: state.requestStates.messageSendingState,
   };
