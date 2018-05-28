@@ -1,3 +1,4 @@
+import gon from 'gon'; //eslint-disable-line
 import Cookie from 'js-cookie';
 import faker from 'faker';
 import io from 'socket.io-client';
@@ -8,7 +9,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import App from './components/App';
 import reducers from './reducers';
-import { addMessageSocket, addChannelSocket, removeChannelSocket, renameChannelSocket, setUserName } from './actions';
+import { addMessageSocket, addChannelSocket, removeChannelSocket, renameChannelSocket } from './actions';
 
 /* eslint-disable no-underscore-dangle */
 const identity = p => p;
@@ -25,21 +26,32 @@ const initUserName = () => {
   }
 }
 
+initUserName();
+
+const initState = {
+  user: {
+    name: Cookie.get(cookieNameKey),
+  },
+  channelsList: {
+    channels: gon.channels,
+    defaultChannelId: gon.currentChannelId,
+    currentChannelId: gon.currentChannelId,
+  },
+  messages: gon.messages,
+}
+
 const store = createStore(
   reducers,
+  initState,
   compose(        
     applyMiddleware(thunk),
     devtoolMiddleware,    
-  ),
+  ),  
 );
-
-initUserName();
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
-
-store.dispatch(setUserName({ name: Cookie.get(cookieNameKey) }));
 
 const socket = io();
 

@@ -1,4 +1,3 @@
-import gon from 'gon'; //eslint-disable-line
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { reducer as formReducer } from 'redux-form';
@@ -21,7 +20,7 @@ const channelsList = handleActions({
   [actions.removeChannelSocket](state, { payload: { id } }) {
     const newChannels = state.channels.filter(ch => ch.id !== id);
     const newCurrentChannelId = state.currentChannelId === id ?
-      gon.currentChannelId :
+      state.defaultChannelId :
       state.currentChannelId;
     return { channels: newChannels, currentChannelId: newCurrentChannelId };
   },
@@ -34,10 +33,7 @@ const channelsList = handleActions({
     });
     return { ...state, channels: newChannels };
   },
-}, {
-  channels: gon.channels,
-  currentChannelId: gon.currentChannelId,
-});
+}, {});
 
 const requestStates = handleActions({
   [actions.sendMessageRequest](state) {
@@ -89,7 +85,7 @@ const messages = handleActions({
   [actions.removeChannelSocket](state, { payload: { id } }) {
     return state.filter(m => m.id !== id);
   },
-}, gon.messages);
+}, []);
 
 const notification = handleActions({
   [actions.dismissNotification]() {
