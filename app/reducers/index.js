@@ -5,6 +5,14 @@ import * as actions from '../actions';
 
 const user = handleActions({}, {});
 
+const UI = handleActions({
+  [actions.toggleEditChannelsUiState]({ editChannels }) {
+    return { editChannels: !editChannels };
+  },
+}, {
+  editChannels: false,
+});
+
 const channels = handleActions({
   [actions.changeCurrentChannel](state, { payload: { id } }) {
     return { ...state, currentChannelId: id };
@@ -101,6 +109,7 @@ const notification = handleActions({
 }, null);
 
 export default combineReducers({
+  UI,
   user,
   messages,
   channels,
