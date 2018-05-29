@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 export const getMessages = state => state.messages;
-export const getCurrentChannel = state => state.channelsList.currentChannelId;
+export const getCurrentChannel = state => state.channels.currentChannelId;
 
 export const getCurrentChannelMessagesSelector = createSelector(
   getMessages,

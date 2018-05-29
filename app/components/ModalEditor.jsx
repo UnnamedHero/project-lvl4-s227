@@ -26,7 +26,7 @@ class ModalEditor extends React.Component {
     const { requestType, closeOnSuccess, cancelHandler } = this.props;
     const prevState = prevProps.requestStates[requestType];
     const currState = this.props.requestStates[requestType];
-    if (prevState !== currState && currState === 'success') {
+    if (prevState !== currState && currState !== 'requested') {
       this.props.reset();
       if (closeOnSuccess) {
         cancelHandler();

@@ -3,9 +3,9 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 import cn from 'classnames';
 import connect from '../connect';
 
-const mapStateToProps = ({ channelsList: { channels, currentChannelId } }) => {
+const mapStateToProps = ({ channels: { channelsList, currentChannelId } }) => {
   const props = {
-    channels, currentChannelId,
+    channelsList, currentChannelId,
   };
   return props;
 };
@@ -21,8 +21,8 @@ class ChannelsList extends React.Component {
   }
 
   renderChannelsList = () => {
-    const { channels, currentChannelId } = this.props;
-    return channels.map((channel) => {
+    const { channelsList, currentChannelId } = this.props;
+    return channelsList.map((channel) => {
       const isCurrentChannel = currentChannelId === channel.id;
       const itemClass = {
         'text-white': isCurrentChannel,
