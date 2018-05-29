@@ -1,6 +1,6 @@
 import React from 'react';
 import ChannelsListHeader from './ChannelsListHeader';
-import ChannelsList from './ChannelsList';
+import ChannelsListRenderer from './ChannelsListRenderer';
 import UserPanel from './UserPanel';
 import ChatWindow from './ChatWindow';
 import NewMessageForm from './NewMessageForm';
@@ -17,7 +17,7 @@ const App = () => (
           <ChannelsListHeader />
         </div>
         <div className="scrollable">
-          <ChannelsList />
+          <ChannelsListRenderer />
         </div>
       </div>
       <div className="d-flex col-9 flex-column justify-content-between vh-100 bg-secondary">
