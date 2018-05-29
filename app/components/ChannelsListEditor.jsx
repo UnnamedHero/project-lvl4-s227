@@ -1,15 +1,15 @@
 import React from 'react';
 import { Button, ButtonGroup } from 'reactstrap';
-// import cn from 'classnames';
 import DeleteConfirmDialog from './DeleteConfirmDialog';
 import ModalEditor from './ModalEditor';
 import validateChannelName from '../formValidators';
 import connect from '../connect';
 
 
-const mapStateToProps = ({ channels: { channelsList } }) => {
+const mapStateToProps = (state) => {
   const props = {
-    channelsList,
+    channelsList: state.channels.channelsList,
+    channelRemoveState: state.requestStates.channelRemoveState,
   };
   return props;
 };
@@ -20,6 +20,14 @@ class ChannelsListEditor extends React.Component {
     deleteModal: false,
     renameModal: false,
     channel: {},
+  }
+
+  componentDidUpdate(prevProps) {
+    const { channelRemoveState } = this.props;
+    const { channelRemoveState: prevChannelRemoveState } = prevProps;
+    if ((channelRemoveState !== prevChannelRemoveState) && (channelRemoveState !== 'requested')) {
+      this.closeDeleteModal();
+    }
   }
 
   openDeleteModal = channel => () => {
@@ -42,7 +50,6 @@ class ChannelsListEditor extends React.Component {
 
   removeChannel = id => () => {
     this.props.removeChannel(id);
-    this.closeDeleteModal();
   }
 
   closeDeleteModal = () => {
@@ -60,8 +67,8 @@ class ChannelsListEditor extends React.Component {
         {channel.name}
         { channel.removable &&
         <ButtonGroup size="sm">
-          <Button onClick={this.openRenameModal(channel)}>edit</Button>
-          <Button onClick={this.openDeleteModal(channel)}>delete</Button>
+          <Button onClick={this.openRenameModal(channel)} >edit</Button>
+          <Button onClick={this.openDeleteModal(channel)} >delete</Button>
         </ButtonGroup> }
       </li>));
   }
