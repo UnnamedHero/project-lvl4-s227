@@ -27,8 +27,8 @@ export default () => {
   // app.use(serve(path.join(__dirname, '..', 'public')));
   app.use(middleware({
     config: webpackConfig,
+    hot: webpackConfig.mode === 'development',
   }));
-
   const router = new Router();
 
   app.use(koaLogger());
