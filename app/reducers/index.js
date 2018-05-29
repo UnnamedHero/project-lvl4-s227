@@ -6,8 +6,8 @@ import * as actions from '../actions';
 const user = handleActions({}, {});
 
 const UI = handleActions({
-  [actions.toggleEditChannelsUiState]({ editChannels }) {
-    return { editChannels: !editChannels };
+  [actions.toggleEditChannelsUiState](state) {
+    return { editChannels: !state.editChannels };
   },
 }, {
   editChannels: false,

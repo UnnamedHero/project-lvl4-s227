@@ -39,7 +39,7 @@ class NewMessageForm extends React.Component {
   }
 
   render() {
-    const { sendingState, uiEditMode } = this.props;
+    const { sendingState, uiEditChannels } = this.props;
     const canSend = sendingState !== 'requested';
 
     const buttonClasses = {
@@ -49,7 +49,7 @@ class NewMessageForm extends React.Component {
     };
     return (
       <form onSubmit={this.props.handleSubmit(this.sendMessage)} className="d-flex" ref={this.el}>
-        <Field name="messageText" component={InputField} canSend={canSend && !uiEditMode} />
+        <Field name="messageText" component={InputField} canSend={canSend && !uiEditChannels} />
         <button type="submit" className={cn(buttonClasses)} hidden>Send</button>
       </form>);
   }
