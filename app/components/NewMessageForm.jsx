@@ -9,6 +9,7 @@ const mapStateToProps = (state) => {
     currentChannelId: state.channels.currentChannelId,
     userName: state.user.name,
     sendingState: state.requestStates.messageSendingState,
+    uiEditChannels: state.UI.editChannels,
   };
   return props;
 };
@@ -38,7 +39,7 @@ class NewMessageForm extends React.Component {
   }
 
   render() {
-    const { sendingState } = this.props;
+    const { sendingState, uiEditMode } = this.props;
     const canSend = sendingState !== 'requested';
 
     const buttonClasses = {
@@ -48,7 +49,7 @@ class NewMessageForm extends React.Component {
     };
     return (
       <form onSubmit={this.props.handleSubmit(this.sendMessage)} className="d-flex" ref={this.el}>
-        <Field name="messageText" component={InputField} canSend={canSend} />
+        <Field name="messageText" component={InputField} canSend={canSend && !uiEditMode} />
         <button type="submit" className={cn(buttonClasses)} hidden>Send</button>
       </form>);
   }
