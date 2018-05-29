@@ -47,10 +47,12 @@ class ChannelsListHeader extends React.Component {
   }
 
   render() {
+    const { uiEditChannels } = this.props;
+    const editStatus = `edit mode ${uiEditChannels ? 'on' : 'off'}`;
     return (
       <span>
         Channels:
-        <Button color="link" onClick={this.toggleEditor}>edit</Button>
+        <Button color="info" size="sm" onClick={this.toggleEditor}>{editStatus}</Button>
         { this.props.uiEditChannels && <Button color="link" onClick={this.toggleAddChannelModal}>Add channel</Button> }
         { this.state.isModalOpen && this.renderAddChannelModal() }
       </span>
