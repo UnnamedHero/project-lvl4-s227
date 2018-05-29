@@ -1,9 +1,11 @@
 // const webpack = require('webpack');
 const mode = process.env.NODE_ENV || 'development';
+// const WebpackBundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const isDevMode = mode === 'development';
 module.exports = {
   mode,
-  devtool: mode === 'development' ? 'cheap-module-source-map' : 'none',
+  devtool: isDevMode ? 'cheap-module-source-map' : 'none',
   entry: {
     vendor: ['babel-polyfill', './src/index.js'],
     application: ['./app/index.js'],
@@ -31,6 +33,7 @@ module.exports = {
     ],
   },
   // plugins: [
+  //   isDevMode ? new WebpackBundleAnalyzer() : () => {},
   // new webpack.ProvidePlugin({
   //   $: 'jquery',
   //   jQuery: 'jquery',
