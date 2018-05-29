@@ -23,7 +23,6 @@ class ChannelsListHeader extends React.Component {
 
   toggleEditor = () => {
     this.props.toggleEditChannelsUiState();
-    // this.setState({ isEditorOpen: !this.state.isEditorOpen });
   }
 
   toggleAddChannelModal = () => {
@@ -46,6 +45,13 @@ class ChannelsListHeader extends React.Component {
     return <ModalEditor isOpen {...addProps} />;
   }
 
+  renderAddChannelButton = () => {
+    if (!this.props.uiEditChannels) {
+      return null;
+    }
+    return <Button color="link" onClick={this.toggleAddChannelModal} >Add channel</Button>;
+  }
+
   render() {
     const { uiEditChannels } = this.props;
     const editStatus = `edit mode ${uiEditChannels ? 'on' : 'off'}`;
@@ -53,7 +59,7 @@ class ChannelsListHeader extends React.Component {
       <span>
         Channels:
         <Button color="info" size="sm" onClick={this.toggleEditor}>{editStatus}</Button>
-        { this.props.uiEditChannels && <Button color="link" onClick={this.toggleAddChannelModal}>Add channel</Button> }
+        { this.renderAddChannelButton() }
         { this.state.isModalOpen && this.renderAddChannelModal() }
       </span>
     );
