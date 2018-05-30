@@ -1,6 +1,6 @@
 // const webpack = require('webpack');
 const mode = process.env.NODE_ENV || 'development';
-const WebpackBundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const WebpackBundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isDevMode = mode === 'development';
 module.exports = {
@@ -32,12 +32,12 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    isDevMode ? new WebpackBundleAnalyzer() : () => {},
+  // plugins: [
+  //   isDevMode ? new WebpackBundleAnalyzer() : () => {},
   // new webpack.ProvidePlugin({
   //   $: 'jquery',
   //   jQuery: 'jquery',
   //   'window.jQuery': 'jquery',
   // }),
-  ],
+  // ],
 };
