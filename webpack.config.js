@@ -1,6 +1,6 @@
 // const webpack = require('webpack');
 const mode = process.env.NODE_ENV || 'development';
-const WebpackBundleAnalyzer = require('webpack-bundle-analyzer/lib/BundleAnalyzerPlugin');
+const WebpackBundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isDevMode = mode === 'development';
 module.exports = {
