@@ -1,6 +1,6 @@
 import gon from 'gon'; //eslint-disable-line
 import Cookie from 'js-cookie';
-import name from 'faker/lib/name';
+import findName from 'faker/lib/name';
 import io from 'socket.io-client';
 import ReactDOM from 'react-dom';
 import React from 'react';
@@ -22,7 +22,7 @@ const cookieNameKey = 'userName';
 const initUserName = () => {
   const cookieName = Cookie.get(cookieNameKey);
   if (!cookieName) {
-    Cookie.set(cookieNameKey, name.findName());
+    Cookie.set(cookieNameKey,findName());
   }
 }
 
