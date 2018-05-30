@@ -91,6 +91,7 @@
     "flow-typed": "^2.4.0",
     "jest": "^22.4.4",
     "jest-cli": "^22.4.4",
-    "nodemon": "^1.17.5"
+    "nodemon": "^1.17.5",
+    "webpack-bundle-analyzer": "^2.13.1"
   }
 }
