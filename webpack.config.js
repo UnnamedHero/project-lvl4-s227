@@ -33,7 +33,7 @@ module.exports = {
     ],
   },
   plugins: [
-    isDevMode && new WebpackBundleAnalyzer(),
+    isDevMode ? new WebpackBundleAnalyzer() : {},
   // new webpack.ProvidePlugin({
   //   $: 'jquery',
   //   jQuery: 'jquery',
