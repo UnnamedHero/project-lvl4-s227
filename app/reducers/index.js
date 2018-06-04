@@ -39,16 +39,7 @@ const channels = handleActions({
   },
 }, {});
 
-const requestStates = handleActions({
-  [actions.sendMessageRequest](state) {
-    return { ...state, messageSendingState: 'requested' };
-  },
-  [actions.sendMessageSuccess](state) {
-    return { ...state, messageSendingState: 'success' };
-  },
-  [actions.sendMessageFailure](state) {
-    return { ...state, messageSendingState: 'failure' };
-  },
+const addChannelRequest = handleActions({
   [actions.addChannelRequest](state) {
     return { ...state, channelAddState: 'requested' };
   },
@@ -58,6 +49,21 @@ const requestStates = handleActions({
   [actions.addChannelFailure](state) {
     return { ...state, channelAddState: 'failure' };
   },
+}, 'none');
+
+const renameChannelRequest = handleActions({
+  [actions.renameChannelRequest](state) {
+    return { ...state, channelRenameState: 'requested' };
+  },
+  [actions.renameChannelSuccess](state) {
+    return { ...state, channelRenameState: 'success' };
+  },
+  [actions.renameChannelFailure](state) {
+    return { ...state, channelRenameState: 'failure' };
+  },
+}, 'none');
+
+const removeChannelRequest = handleActions({
   [actions.removeChannelRequest](state) {
     return { ...state, channelRemoveState: 'requested' };
   },
@@ -67,14 +73,17 @@ const requestStates = handleActions({
   [actions.removeChannelFailure](state) {
     return { ...state, channelRemoveState: 'failure' };
   },
-  [actions.renameChannelRequest](state) {
-    return { ...state, channelRenameState: 'requested' };
+}, 'none');
+
+const requestStates = handleActions({
+  [actions.sendMessageRequest](state) {
+    return { ...state, messageSendingState: 'requested' };
   },
-  [actions.renameChannelSuccess](state) {
-    return { ...state, channelRenameState: 'success' };
+  [actions.sendMessageSuccess](state) {
+    return { ...state, messageSendingState: 'success' };
   },
-  [actions.renameChannelFailure](state) {
-    return { ...state, channelRenameState: 'failure' };
+  [actions.sendMessageFailure](state) {
+    return { ...state, messageSendingState: 'failure' };
   },
 }, {
   messageSendingState: 'none',
@@ -114,6 +123,9 @@ export default combineReducers({
   messages,
   channels,
   form: formReducer,
+  addChannelRequest,
+  renameChannelRequest,
+  removeChannelRequest,
   requestStates,
   notification,
 });
