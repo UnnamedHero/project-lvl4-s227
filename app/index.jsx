@@ -11,20 +11,18 @@ import App from './components/App';
 import reducers from './reducers';
 import { addMessageSocket, addChannelSocket, removeChannelSocket, renameChannelSocket } from './actions';
 
-/* eslint-disable no-underscore-dangle */
 const identity = p => p;
-const ext = window.__REDUX_DEVTOOLS_EXTENSION__;
+const ext = window.__REDUX_DEVTOOLS_EXTENSION__; //eslint-disable-line
 const devtoolMiddleware = (ext && ext()) || identity;
-/* eslint-disable */
 
 const cookieNameKey = 'userName';
 
 const initUserName = () => {
   const cookieName = Cookie.get(cookieNameKey);
   if (!cookieName) {
-    Cookie.set(cookieNameKey,faker.name.findName());
+    Cookie.set(cookieNameKey, faker.name.findName());
   }
-}
+};
 
 initUserName();
 
@@ -38,15 +36,15 @@ const initState = {
     currentChannelId: gon.currentChannelId,
   },
   messages: gon.messages,
-}
+};
 
 const store = createStore(
   reducers,
   initState,
-  compose(        
+  compose(
     applyMiddleware(thunk),
-    devtoolMiddleware,    
-  ),  
+    devtoolMiddleware,
+  ),
 );
 
 if (process.env.NODE_ENV !== 'production') {
@@ -55,25 +53,25 @@ if (process.env.NODE_ENV !== 'production') {
 
 const socket = io();
 
-socket.on('newMessage', ( { data : { attributes : message } }) => {  
+socket.on('newMessage', ({ data: { attributes: message } }) => {
   store.dispatch(addMessageSocket({ message }));
 });
 
-socket.on('newChannel', ( { data: { attributes :  channel } }) => {
+socket.on('newChannel', ({ data: { attributes: channel } }) => {
   store.dispatch(addChannelSocket({ channel }));
 });
 
-socket.on('removeChannel', ( { data: { id } }) => {
+socket.on('removeChannel', ({ data: { id } }) => {
   store.dispatch(removeChannelSocket({ id }));
 });
 
-socket.on('renameChannel', ( { data: { attributes :  channel } }) => {  
+socket.on('renameChannel', ({ data: { attributes: channel } }) => {
   store.dispatch(renameChannelSocket({ channel }));
 });
 
 ReactDOM.render(
-<Provider store={store}>
-  <App />
-</Provider>,
- document.getElementById('application')
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('application'),
 );
