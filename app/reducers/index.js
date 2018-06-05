@@ -52,14 +52,14 @@ const addChannelState = handleActions({
 }, 'none');
 
 const renameChannelState = handleActions({
-  [actions.renameChannelRequest](state) {
-    return { ...state, channelRenameState: 'requested' };
+  [actions.renameChannelRequest]() {
+    return 'requested';
   },
-  [actions.renameChannelSuccess](state) {
-    return { ...state, channelRenameState: 'success' };
+  [actions.renameChannelSuccess]() {
+    return 'success';
   },
-  [actions.renameChannelFailure](state) {
-    return { ...state, channelRenameState: 'failure' };
+  [actions.renameChannelFailure]() {
+    return 'failure';
   },
 }, 'none');
 
