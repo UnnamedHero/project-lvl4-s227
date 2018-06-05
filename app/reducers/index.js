@@ -64,14 +64,14 @@ const renameChannelState = handleActions({
 }, 'none');
 
 const removeChannelState = handleActions({
-  [actions.removeChannelRequest](state) {
-    return { ...state, channelRemoveState: 'requested' };
+  [actions.removeChannelRequest]() {
+    return 'requested';
   },
-  [actions.removeChannelSuccess](state) {
-    return { ...state, channelRemoveState: 'success' };
+  [actions.removeChannelSuccess]() {
+    return 'success';
   },
-  [actions.removeChannelFailure](state) {
-    return { ...state, channelRemoveState: 'failure' };
+  [actions.removeChannelFailure]() {
+    return 'failure';
   },
 }, 'none');
 
