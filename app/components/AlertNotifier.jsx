@@ -19,7 +19,7 @@ const AlertNotifier = (props) => {
   return (
     <AlertContainer>
       <Alert type={type} onDismiss={dismissNotification} headline={headline} timeout={5000}>
-        Oops! {message}
+        {message}
       </Alert>
     </AlertContainer>);
 };
