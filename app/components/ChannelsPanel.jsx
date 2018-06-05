@@ -1,6 +1,6 @@
 import React from 'react';
 import find from 'lodash/find';
-import { isValid } from 'redux-form';
+import { getFormSyncErrors } from 'redux-form';
 import ChannelsPanelHeader from './ChannelsPanelHeader';
 import ChannelsList from './ChannelsList';
 import ModalChannelNameEditor from './ModalChannelNameEditor';
@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
     addChannelState: state.addChannelState,
     renameChannelState: state.renameChannelState,
     removeChannelState: state.removeChannelState,
-    isValidModalInput: isValid('ModalEditor')(state),
+    modalInputErrors: getFormSyncErrors('ModalEditor')(state),
   };
   return props;
 };
@@ -61,6 +61,8 @@ class ChannelsPanel extends React.Component {
   }
 
   render() {
+    const isValidInput = Object.keys(this.props.modalInputErrors).length === 0;
+
     const channelsPanelHeaderProps = {
       editModeOn: this.state.editModeOn,
       handleToggleEditMode: this.toggleEditMode,
@@ -78,7 +80,7 @@ class ChannelsPanel extends React.Component {
       validate: this.validateChannelName,
       onSubmitHandler: this.onAddChannel,
       requestState: this.props.addChannelState,
-      isValidInput: this.props.isValidModalInput,
+      isValidInput,
     };
 
     const isAddModalOpen = this.state.addModal;
