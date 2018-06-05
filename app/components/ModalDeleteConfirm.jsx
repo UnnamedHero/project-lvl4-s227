@@ -1,35 +1,40 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import connect from '../connect';
 
-const mapStateToProps = (state) => {
-  const props = {
-    channelRemoveState: state.requestStates.channelRemoveState,
-  };
-  return props;
-};
+class ModalDeleteConfirm extends React.Component {
+  componentDidUpdate(prevProps) {
+    const prevRequestState = prevProps.requestState;
+    const { requestState } = this.props;
+    const stateChanged = prevRequestState !== requestState;
+    const requestPending = requestState === 'requested';
+    if (stateChanged && !requestPending) {
+      this.props.onCloseHandler();
+    }
+  }
 
-const DeleteConfirmDialog = (props) => {
-  const {
-    isOpen,
-    okHandler, cancelHandler,
-    bodyText,
-    channelRemoveState,
-  } = props;
-  const reqInPropgress = channelRemoveState === 'requested';
-  const bodyMessage = reqInPropgress ?
-    <ModalBody>Deleting channel <span className="font-weight-bold">{bodyText}</span>. Please wait.</ModalBody> :
-    <ModalBody>Are you sure to delete channel <span className="font-weight-bold">{bodyText}</span>?</ModalBody>;
-  return (
-    <Modal isOpen={isOpen} toggle={cancelHandler} backdrop="static">
-      <ModalHeader>Operation warning!</ModalHeader>
-      {bodyMessage}
-      <ModalFooter>
-        <Button color="danger" onClick={okHandler} disabled={reqInPropgress}>Delete</Button>
-        <Button color="secondary" onClick={cancelHandler} disabled={reqInPropgress}>Cancel</Button>
-      </ModalFooter>
-    </Modal>
-  );
-};
+  render() {
+    const {
+      channelToEdit,
+      onConfirmHandler,
+      onCloseHandler,
+      requestState,
+    } = this.props;
+    const reqInPropgress = requestState === 'requested';
+    const bodyMessage = reqInPropgress ?
+      <ModalBody>Deleting channel <span className="font-weight-bold">{channelToEdit.name}</span>. Please wait.</ModalBody> :
+      <ModalBody>Are you sure to delete channel <span className="font-weight-bold">{channelToEdit.name}</span>?</ModalBody>;
 
-export default connect(mapStateToProps)(DeleteConfirmDialog);
+    return (
+      <Modal isOpen backdrop="static">
+        <ModalHeader>Operation warning!</ModalHeader>
+        {bodyMessage}
+        <ModalFooter>
+          <Button color="danger" onClick={onConfirmHandler} disabled={reqInPropgress}>Delete</Button>
+          <Button color="secondary" onClick={onCloseHandler} disabled={reqInPropgress}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
+    );
+  }
+}
+
+export default ModalDeleteConfirm;
