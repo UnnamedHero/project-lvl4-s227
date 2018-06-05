@@ -8,7 +8,7 @@ const mapStateToProps = (state) => {
   const props = {
     currentChannelId: state.channels.currentChannelId,
     userName: state.user.name,
-    sendingState: state.requestStates.messageSendingState,
+    sendsendMessageState: state.sendMessageState,
     uiEditChannels: state.UI.editChannels,
   };
   return props;
@@ -22,7 +22,7 @@ class NewMessageForm extends React.Component {
   }
 
   componentDidMount() {
-    this.el.current.querySelector('input').focus();
+    // this.el.current.querySelector('input').focus();
   }
 
   componentDidUpdate(prevProps) {
