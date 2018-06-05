@@ -74,7 +74,8 @@ class ChannelsPanel extends React.Component {
       currentChannelId: this.props.currentChannelId,
       handleOnChannelClick: this.onChannelClick,
     };
-    const addChannelProps = this.state.addModal && {
+    const addChannelProps = this.state.addModal &&
+    {
       id: 'addChannelInput',
       handleToggleModal: this.toggleAddModal,
       validate: this.validateChannelName,
