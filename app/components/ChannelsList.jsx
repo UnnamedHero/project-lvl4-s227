@@ -23,11 +23,11 @@ class ChannelsList extends React.Component {
     if (!channel.removable) {
       return null;
     }
-    const { onRemoveClickHandler } = this.props;
+    const { onRemoveClickHandler, onRenameClickHandler } = this.props;
 
     return (
       <ButtonGroup size="sm" >
-        <Button color="primary">ren</Button>
+        <Button color="primary" onClick={onRenameClickHandler(channel)}>ren</Button>
         <Button color="danger" onClick={onRemoveClickHandler(channel)}>del</Button>
       </ButtonGroup>
     );
