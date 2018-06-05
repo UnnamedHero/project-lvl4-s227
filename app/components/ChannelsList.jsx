@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { ListGroup, ListGroupItem, Button, ButtonGroup } from 'reactstrap';
 import cn from 'classnames';
 
 class ChannelsList extends React.Component {
@@ -19,13 +19,28 @@ class ChannelsList extends React.Component {
     };
   }
 
+  renderChannelEditButtons(channel) {
+    if (!channel.removable) {
+      return null;
+    }
+    const { onRemoveClickHandler } = this.props;
+
+    return (
+      <ButtonGroup size="sm" >
+        <Button color="primary">ren</Button>
+        <Button color="danger" onClick={onRemoveClickHandler(channel)}>del</Button>
+      </ButtonGroup>
+    );
+  }
+
   renderChannelsList = () => {
-    const { channelsList } = this.props;
+    const { channelsList, editModeOn } = this.props;
     return channelsList.map((channel) => {
       const itemProps = this.makeItemProps(channel);
       return (
         <ListGroupItem key={channel.id} {...itemProps}>
           {channel.name}
+          { editModeOn && this.renderChannelEditButtons(channel) }
         </ListGroupItem>);
     });
   }
