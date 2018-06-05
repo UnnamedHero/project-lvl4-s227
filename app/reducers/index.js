@@ -39,7 +39,7 @@ const channels = handleActions({
   },
 }, {});
 
-const addChannelRequest = handleActions({
+const addChannelState = handleActions({
   [actions.addChannelRequest]() {
     return 'requested';
   },
@@ -163,7 +163,7 @@ export default combineReducers({
   messages,
   channels,
   form: formReducers,
-  addChannelRequest,
+  addChannelState,
   renameChannelState,
   removeChannelState,
   sendMessageState,
