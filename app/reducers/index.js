@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { handleActions } from 'redux-actions';
+import { handleActions, combineActions } from 'redux-actions';
 import { reducer as formReducer } from 'redux-form';
 import * as actions from '../actions';
 
@@ -111,14 +111,20 @@ const notification = handleActions({
   [actions.addChannelFailure](state, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Channel was not added, request failed' };
   },
-  [actions.addChannelSocket](_, { payload: { channel } }) {
-    return { type: 'success', message: `Channel '${channel.name}' added.` };
+  [actions.renameChannelFailure](_, { payload: { error } }) {
+    return { type: 'warning', headline: error, message: 'Channel was not renamed, request failed' };
+  },
+  [actions.removeChannelFailure](_, { payload: { error } }) {
+    return { type: 'warning', headline: error, message: 'Channel was not removed, request failed' };
   },
 }, null);
 
 const formReducers = formReducer.plugin({
   ModalEditor: handleActions({
-    [actions.addChannelSuccess](state) {
+    [combineActions(
+      actions.addChannelSuccess,
+      actions.renameChannelSuccess,
+    )](state) {
       return {
         ...state,
         values: {
@@ -134,7 +140,10 @@ const formReducers = formReducer.plugin({
         },
       };
     },
-    [actions.addChannelFailure](state) {
+    [combineActions(
+      actions.addChannelFailure,
+      actions.renameChannelFailure,
+    )](state) {
       return {
         ...state,
         fields: {
@@ -144,7 +153,10 @@ const formReducers = formReducer.plugin({
         },
       };
     },
-    [actions.addChannelRequest](state) {
+    [combineActions(
+      actions.addChannelRequest,
+      actions.renameChannelRequest,
+    )](state) {
       return {
         ...state,
         fields: {
@@ -167,7 +179,6 @@ export default combineReducers({
   renameChannelState,
   removeChannelState,
   sendMessageState,
-  // requestStates,
   notification,
 });
 
