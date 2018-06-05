@@ -38,10 +38,13 @@ class ModalChannelNameEditor extends React.Component {
       validate,
       isValidInput,
       onSubmitHandler,
+      requestState,
       id,
       // inputState,
       // requestStates, requestType,
     } = this.props;
+    console.log(requestState);
+    const isRequestPending = requestState === 'requested';
     // const hasError = has(inputState, 'ModalEditor.syncErrors');
     // const errorText = hasError ? inputState.ModalEditor.syncErrors.modalEditorInput.error : null;
     // const canSend = requestStates[requestType] !== 'requested';
@@ -51,8 +54,8 @@ class ModalChannelNameEditor extends React.Component {
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmitHandler)} className="d-flex">
             <Field name="modalInput" id={id} canSend validate={validate} component={InputField} />
-            <button type="submit" className="btn btn-primary" disabled={!isValidInput} >Add</button>
-            <Button color="secondary" onClick={handleToggleModal}>Cancel</Button>
+            <button type="submit" className="btn btn-primary" disabled={!isValidInput || isRequestPending} >Add</button>
+            <Button color="secondary" onClick={handleToggleModal} disabled={isRequestPending}>Cancel</Button>
           </form>
         </ModalBody>
       </Modal>
