@@ -27,7 +27,8 @@ class ChannelsPanel extends React.Component {
     addModal: false,
     removeModal: false,
     renameModal: false,
-    channelToEdit: {},
+    channelToRename: {},
+    channelToRemove: {},
   };
 
   onChannelClick = id => () => {
@@ -43,38 +44,38 @@ class ChannelsPanel extends React.Component {
   }
 
   onRenameChannel = ({ modalInput: newName }) => {
-    this.props.renameChannel(this.state.channelToEdit.id, newName);
+    this.props.renameChannel(this.state.channelToRename.id, newName);
   }
 
   onRemoveChannel = () => {
-    this.props.removeChannel(this.state.channelToEdit.id);
+    this.props.removeChannel(this.state.channelToRemove.id);
   }
 
   setChannelToRemove = channel => () => {
     this.setState({
       removeModal: true,
-      channelToEdit: channel,
+      channelToRemove: channel,
     });
   }
 
   setChannelToRename = channel => () => {
     this.setState({
       renameModal: true,
-      channelToEdit: channel,
+      channelToRename: channel,
     });
   }
 
   closeRemoveModal = () => {
     this.setState({
       removeModal: false,
-      channelToEdit: {},
+      channelToRemove: {},
     });
   }
 
   closeRenameModal = () => {
     this.setState({
       renameModal: false,
-      channelToEdit: {},
+      channelToRename: {},
     });
   }
 
@@ -129,7 +130,7 @@ class ChannelsPanel extends React.Component {
 
     const removeChannelProps = this.state.removeModal &&
     {
-      channelToEdit: this.state.channelToEdit,
+      channelToRemove: this.state.channelToRemove,
       onConfirmHandler: this.onRemoveChannel,
       onCloseHandler: this.closeRemoveModal,
       requestState: this.props.removeChannelState,
@@ -139,13 +140,13 @@ class ChannelsPanel extends React.Component {
     {
       id: 'renameChannelInput',
       submitLabel: 'Rename',
-      channelToEdit: this.state.channelToEdit,
+      channelToRename: this.state.channelToRename,
       onSubmitHandler: this.onRenameChannel,
       validate: this.validateChannelName,
       onCloseHandler: this.closeRenameModal,
       requestState: this.props.renameChannelState,
       enableReinitialize: true,
-      initialValues: { modalInput: this.state.channelToEdit.name },
+      initialValues: { modalInput: this.state.channelToRename.name },
       isValidInput,
     };
 
