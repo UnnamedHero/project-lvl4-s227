@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
     addChannelState: state.addChannelState,
     renameChannelState: state.renameChannelState,
     removeChannelState: state.removeChannelState,
-    modalInputErrors: getFormSyncErrors('ModalEditor')(state),
+    modalInputErrors: getFormSyncErrors('ModalEditor')(state), // isValid selector do not work properly for field type validation
   };
   return props;
 };
@@ -26,7 +26,7 @@ class ChannelsPanel extends React.Component {
     editModeOn: false,
     addModal: false,
     removeModal: false,
-    // renameModal: false,
+    renameModal: false,
     channelToEdit: {},
   };
 
@@ -42,6 +42,10 @@ class ChannelsPanel extends React.Component {
     this.props.addChannel(name);
   }
 
+  onRenameChannel = ({ modalInput: newName }) => {
+    this.props.renameChannel(this.state.channelToEdit.id, newName);
+  }
+
   onRemoveChannel = () => {
     this.props.removeChannel(this.state.channelToEdit.id);
   }
@@ -53,9 +57,23 @@ class ChannelsPanel extends React.Component {
     });
   }
 
+  setChannelToRename = channel => () => {
+    this.setState({
+      renameModal: true,
+      channelToEdit: channel,
+    });
+  }
+
   closeRemoveModal = () => {
     this.setState({
       removeModal: false,
+      channelToEdit: {},
+    });
+  }
+
+  closeRenameModal = () => {
+    this.setState({
+      renameModal: false,
       channelToEdit: {},
     });
   }
@@ -95,16 +113,17 @@ class ChannelsPanel extends React.Component {
       currentChannelId: this.props.currentChannelId,
       handleOnChannelClick: this.onChannelClick,
       onRemoveClickHandler: this.setChannelToRemove,
+      onRenameClickHandler: this.setChannelToRename,
     };
 
     const addChannelProps = this.state.addModal &&
     {
       id: 'addChannelInput',
+      submitLabel: 'Add',
       onCloseHandler: this.toggleAddModal,
       validate: this.validateChannelName,
       onSubmitHandler: this.onAddChannel,
       requestState: this.props.addChannelState,
-      // onRemoveClickHandler: this.setChannelToRemove,
       isValidInput,
     };
 
@@ -116,7 +135,20 @@ class ChannelsPanel extends React.Component {
       requestState: this.props.removeChannelState,
     };
 
-    const isAddModalOpen = this.state.addModal;
+    const renameChannelProps = this.state.renameModal &&
+    {
+      id: 'renameChannelInput',
+      submitLabel: 'Rename',
+      channelToEdit: this.state.channelToEdit,
+      onSubmitHandler: this.onRenameChannel,
+      validate: this.validateChannelName,
+      onCloseHandler: this.closeRenameModal,
+      requestState: this.props.renameChannelState,
+      enableReinitialize: true,
+      initialValues: { modalInput: this.state.channelToEdit.name },
+      isValidInput,
+    };
+
     return (
       <div className="d-flex flex-column vh-100">
         <div className="text-white-50">
@@ -125,7 +157,8 @@ class ChannelsPanel extends React.Component {
         <div className="scrollable">
           <ChannelsList {...channelsListProps} />
         </div>
-        { isAddModalOpen && <ModalChannelNameEditor {...addChannelProps} /> }
+        { this.state.addModal && <ModalChannelNameEditor {...addChannelProps} /> }
+        { this.state.renameModal && <ModalChannelNameEditor {...renameChannelProps} /> }
         { this.state.removeModal && <ModalDeleteConfirm {...removeChannelProps} /> }
       </div>
     );
