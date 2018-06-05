@@ -17,23 +17,21 @@ class ModalChannelNameEditor extends React.Component {
 
   // state = { errorPopover: false };
 
-  // componentDidUpdate(prevProps) {
-  //   const { requestType, closeOnSuccess, cancelHandler } = this.props;
-  //   const prevState = prevProps.requestStates[requestType];
-  //   const currState = this.props.requestStates[requestType];
-  //   if (prevState !== currState && currState !== 'requested') {
-  //     this.props.reset();
-  //     if (closeOnSuccess) {
-  //       cancelHandler();
-  //     }
-  //   }
-  // }
+  componentDidUpdate(prevProps) {
+    const prevRequestState = prevProps.requestState;
+    const { requestState } = this.props;
+    const stateChanged = prevRequestState !== requestState;
+    const requestPending = requestState === 'requested';
+    if (stateChanged && !requestPending) {
+      this.props.onCloseHandler();
+    }
+  }
 
   render() {
     const {
       // isOpen,
       // headerLabel,
-      handleToggleModal,
+      onCloseHandler,
       handleSubmit,
       validate,
       isValidInput,
@@ -43,7 +41,7 @@ class ModalChannelNameEditor extends React.Component {
       // inputState,
       // requestStates, requestType,
     } = this.props;
-    console.log(requestState);
+
     const isRequestPending = requestState === 'requested';
     // const hasError = has(inputState, 'ModalEditor.syncErrors');
     // const errorText = hasError ? inputState.ModalEditor.syncErrors.modalEditorInput.error : null;
@@ -55,7 +53,7 @@ class ModalChannelNameEditor extends React.Component {
           <form onSubmit={handleSubmit(onSubmitHandler)} className="d-flex">
             <Field name="modalInput" id={id} canSend validate={validate} component={InputField} />
             <button type="submit" className="btn btn-primary" disabled={!isValidInput || isRequestPending} >Add</button>
-            <Button color="secondary" onClick={handleToggleModal} disabled={isRequestPending}>Cancel</Button>
+            <Button color="secondary" onClick={onCloseHandler} disabled={isRequestPending}>Cancel</Button>
           </form>
         </ModalBody>
       </Modal>
