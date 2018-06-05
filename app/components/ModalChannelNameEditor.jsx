@@ -11,11 +11,6 @@ class ModalChannelNameEditor extends React.Component {
   static defaultProps = {
     isValidInput: true,
   };
-  // static getDerivedStateFromProps(nextProps) {
-  //   return { errorPopover: has(nextProps.inputState, 'ModalEditor.syncErrors') };
-  // }
-
-  // state = { errorPopover: false };
 
   componentDidUpdate(prevProps) {
     const prevRequestState = prevProps.requestState;
@@ -29,8 +24,7 @@ class ModalChannelNameEditor extends React.Component {
 
   render() {
     const {
-      // isOpen,
-      // headerLabel,
+      submitLabel,
       onCloseHandler,
       handleSubmit,
       validate,
@@ -38,21 +32,16 @@ class ModalChannelNameEditor extends React.Component {
       onSubmitHandler,
       requestState,
       id,
-      // inputState,
-      // requestStates, requestType,
     } = this.props;
-
     const isRequestPending = requestState === 'requested';
-    // const hasError = has(inputState, 'ModalEditor.syncErrors');
-    // const errorText = hasError ? inputState.ModalEditor.syncErrors.modalEditorInput.error : null;
-    // const canSend = requestStates[requestType] !== 'requested';
+
     return (
       <Modal isOpen fade={false} backdrop="static">
-        <ModalHeader>Add channel</ModalHeader>
+        <ModalHeader>{submitLabel} channel</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmitHandler)} className="d-flex">
             <Field name="modalInput" id={id} canSend validate={validate} component={InputField} />
-            <button type="submit" className="btn btn-primary" disabled={!isValidInput || isRequestPending} >Add</button>
+            <button type="submit" className="btn btn-primary" disabled={!isValidInput || isRequestPending} >{submitLabel}</button>
             <Button color="secondary" onClick={onCloseHandler} disabled={isRequestPending}>Cancel</Button>
           </form>
         </ModalBody>
