@@ -76,14 +76,14 @@ const removeChannelState = handleActions({
 }, 'none');
 
 const sendMessageState = handleActions({
-  [actions.sendMessageRequest](state) {
-    return { ...state, messageSendingState: 'requested' };
+  [actions.sendMessageRequest]() {
+    return 'requested';
   },
-  [actions.sendMessageSuccess](state) {
-    return { ...state, messageSendingState: 'success' };
+  [actions.sendMessageSuccess]() {
+    return 'success';
   },
-  [actions.sendMessageFailure](state) {
-    return { ...state, messageSendingState: 'failure' };
+  [actions.sendMessageFailure]() {
+    return 'failure';
   },
 }, 'none');
 
