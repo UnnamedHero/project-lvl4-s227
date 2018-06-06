@@ -22,16 +22,10 @@ class ChatWindow extends React.Component {
 
   render() {
     return (
-      <div className="d-flex flex-column vh-100">
-        <div>
-          <h2>{this.props.userName}{' @ '}{this.props.currentChannelName}</h2>
-        </div>
-        <div className="list-group scrollable">
-          {this.renderMessages()}
-          <div ref={this.scrollTarget} />
-        </div>
+      <div className="list-group scrollable">
+        {this.renderMessages()}
+        <div ref={this.scrollTarget} />
       </div>);
   }
 }
 export default ChatWindow;
-// export default connect(mapStateToProps)(ChatWindow);
