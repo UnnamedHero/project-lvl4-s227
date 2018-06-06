@@ -17,7 +17,7 @@ class NewMessageForm extends React.Component {
       disabled: requestPending,
     };
     return (
-      <form onSubmit={this.props.handleSubmit(sendMessageHandler)} className="d-flex">
+      <form onSubmit={this.props.handleSubmit(sendMessageHandler)} >
         <Field name="messageText" component={InputField} />
         <button type="submit" hidden className={cn(buttonClasses)} />
       </form>);
