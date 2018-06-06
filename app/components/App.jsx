@@ -5,7 +5,7 @@ import ChatPanel from './ChatPanel';
 import AlertNotifier from './AlertNotifier';
 
 const App = () => (
-  <div className="container-fluid">
+  <div className="container-fluid px-0">
     <div className="d-flex vh-100">
       <div className="col-3 bg-dark vh-100">
         <ChannelsPanelContainer />
