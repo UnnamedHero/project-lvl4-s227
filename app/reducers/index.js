@@ -35,6 +35,8 @@ const getFieldRequestSuccessState = fieldName => ({
   },
 });
 
+const getErrNotificationWithMessage = (error, message) => ({ type: 'warning', headline: error, message });
+
 const channels = handleActions({
   [actions.changeCurrentChannel](state, { payload: { id } }) {
     return { ...state, currentChannelId: id };
@@ -127,17 +129,17 @@ const notification = handleActions({
     const info = null;
     return info;
   },
-  [actions.sendMessageRequestFailure](state, { payload: { error } }) {
-    return { type: 'warning', headline: error, message: 'Message was not delivered to server' };
+  [actions.sendMessageRequestFailure](_, { payload: { error } }) {
+    return getErrNotificationWithMessage(error, 'Message was not delivered to server');
   },
-  [actions.addChannelRequestFailure](state, { payload: { error } }) {
-    return { type: 'warning', headline: error, message: 'Channel was not added, request failed' };
+  [actions.addChannelRequestFailure](_, { payload: { error } }) {
+    return getErrNotificationWithMessage(error, 'Channel was not added, request failed');
   },
   [actions.renameChannelRequestFailure](_, { payload: { error } }) {
-    return { type: 'warning', headline: error, message: 'Channel was not renamed, request failed' };
+    return getErrNotificationWithMessage(error, 'Channel was not renamed, request failed');
   },
   [actions.removeChannelRequestFailure](_, { payload: { error } }) {
-    return { type: 'warning', headline: error, message: 'Channel was not removed, request failed' };
+    return getErrNotificationWithMessage(error, 'Channel was not removed, request failed');
   },
 }, null);
 
