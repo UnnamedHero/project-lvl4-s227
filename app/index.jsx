@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import App from './components/App';
 import reducers from './reducers';
-import { addMessageSocket, addChannelSocket, removeChannelSocket, renameChannelSocket } from './actions';
+import { addMessage, addChannel, removeChannel, renameChannel } from './actions';
 
 const identity = p => p;
 const ext = window.__REDUX_DEVTOOLS_EXTENSION__; //eslint-disable-line
@@ -54,19 +54,19 @@ if (process.env.NODE_ENV !== 'production') {
 const socket = io();
 
 socket.on('newMessage', ({ data: { attributes: message } }) => {
-  store.dispatch(addMessageSocket({ message }));
+  store.dispatch(addMessage({ message }));
 });
 
 socket.on('newChannel', ({ data: { attributes: channel } }) => {
-  store.dispatch(addChannelSocket({ channel }));
+  store.dispatch(addChannel({ channel }));
 });
 
 socket.on('removeChannel', ({ data: { id } }) => {
-  store.dispatch(removeChannelSocket({ id }));
+  store.dispatch(removeChannel({ id }));
 });
 
 socket.on('renameChannel', ({ data: { attributes: channel } }) => {
-  store.dispatch(renameChannelSocket({ channel }));
+  store.dispatch(renameChannel({ channel }));
 });
 
 ReactDOM.render(

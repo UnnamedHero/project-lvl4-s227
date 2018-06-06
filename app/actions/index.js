@@ -2,76 +2,77 @@ import { createAction } from 'redux-actions';
 import axios from 'axios';
 import routes from '../routes';
 
-export const toggleEditChannelsUiState = createAction('UI/EDIT/CHANNELS/TOGGLE');
+// export const toggleEditChannelsUiState = createAction('UI/EDIT/CHANNELS/TOGGLE');
 
-export const sendMessageRequest = createAction('MESSAGE_SEND_REQUEST');
-export const sendMessageSuccess = createAction('MESSAGE_SEND_SUCCESS');
-export const sendMessageFailure = createAction('MESSAGE_SEND_FAILURE');
-export const addMessageSocket = createAction('MESSAGE_ADD_SOCKET');
+export const sendMessageRequestPending = createAction('REQUEST/MESSAGE/SEND/PENDING');
+export const sendMessageRequestSuccess = createAction('REQUEST/MESSAGE/SEND/SUCCESS');
+export const sendMessageRequestFailure = createAction('REQUEST/MESSAGE/SEND/FAILURE');
 
-export const changeCurrentChannel = createAction('CHANNEL_CHANGE');
+export const addChannelRequestPending = createAction('REQUEST/CHANNEL/ADD/PENDING');
+export const addChannelRequestSuccess = createAction('REQUEST/CHANNEL/ADD/SUCCESS');
+export const addChannelRequestFailure = createAction('REQUEST/CHANNEL/ADD/FAILURE');
 
-export const addChannelRequest = createAction('CHANNEL_ADD_REQUEST');
-export const addChannelSuccess = createAction('CHANNEL_ADD_SUCCESS');
-export const addChannelFailure = createAction('CHANNEL_ADD_FAILURE');
-export const addChannelSocket = createAction('CHANNEL_ADD_SOCKET');
+export const removeChannelRequestPending = createAction('REQUEST/CHANNEL/DELETE/REQUEST');
+export const removeChannelRequestSuccess = createAction('REQUEST/CHANNEL/DELETE/SUCCESS');
+export const removeChannelRequestFailure = createAction('REQUEST/CHANNEL/DELETE/FAILURE');
 
-export const removeChannelRequest = createAction('CHANNEL_DELETE_REQUEST');
-export const removeChannelSuccess = createAction('CHANNEL_DELETE_SUCCESS');
-export const removeChannelFailure = createAction('CHANNEL_DELETE_FAILURE');
-export const removeChannelSocket = createAction('CHANNEL_DELETE_SOCKET');
+export const renameChannelRequestPending = createAction('REQUEST/CHANNEL/RENAME/REQUEST');
+export const renameChannelRequestSuccess = createAction('REQUEST/CHANNEL/RENAME/SUCCESS');
+export const renameChannelRequestFailure = createAction('REQUEST/CHANNEL/RENAME/FAILURE');
 
-export const renameChannelRequest = createAction('CHANNEL_RENAME_REQUEST');
-export const renameChannelSuccess = createAction('CHANNEL_RENAME_SUCCESS');
-export const renameChannelFailure = createAction('CHANNEL_RENAME_FAILURE');
-export const renameChannelSocket = createAction('CHANNEL_RENAME_SOCKET');
+export const changeCurrentChannel = createAction('CHANNEL/CHANGE');
 
-export const dismissNotification = createAction('NOTIFICATION_DISMISS');
+export const addMessage = createAction('MESSAGE/ADD');
+export const addChannel = createAction('CHANNEL/ADD');
+export const removeChannel = createAction('CHANNEL/REMOVE');
+export const renameChannel = createAction('CHANNEL/RENAME');
 
-export const sendMessage = (messageText, channelId, userName) => async (dispatch) => {
-  dispatch(sendMessageRequest());
+export const dismissNotification = createAction('NOTIFICATION/DISMISS');
+
+export const sendMessageRequest = (messageText, channelId, userName) => async (dispatch) => {
+  dispatch(sendMessageRequestPending());
   try {
     const attributes = { author: userName, body: messageText.messageText };
     await axios.post(routes.addMessageToChannelUrl(channelId), { data: { attributes } });
-    dispatch(sendMessageSuccess());
+    dispatch(sendMessageRequestSuccess());
   } catch (e) {
     console.log(e);
-    dispatch(sendMessageFailure({ error: e.message }));
+    dispatch(sendMessageRequestFailure({ error: e.message }));
   }
 };
 
-export const addChannel = name => async (dispatch) => {
-  dispatch(addChannelRequest());
+export const addChannelRequest = name => async (dispatch) => {
+  dispatch(addChannelRequestPending());
   try {
     const attributes = { name };
     await axios.post(routes.addChannelUrl(), { data: { attributes } });
-    dispatch(addChannelSuccess());
+    dispatch(addChannelRequestSuccess());
   } catch (e) {
     console.log(e);
-    dispatch(addChannelFailure({ error: e.message }));
+    dispatch(addChannelRequestFailure({ error: e.message }));
   }
 };
 
-export const removeChannel = id => async (dispatch) => {
-  dispatch(removeChannelRequest());
+export const removeChannelRequest = id => async (dispatch) => {
+  dispatch(removeChannelRequestPending());
   try {
     await axios.delete(routes.editChannelUrl(id), { data: { id } });
-    dispatch(removeChannelSuccess());
+    dispatch(removeChannelRequestSuccess());
   } catch (e) {
     console.log(e);
-    dispatch(removeChannelFailure({ error: e.message }));
+    dispatch(removeChannelRequestFailure({ error: e.message }));
   }
 };
 
-export const renameChannel = (id, newName) => async (dispatch) => {
-  dispatch(renameChannelRequest());
+export const renameChannelRequest = (id, newName) => async (dispatch) => {
+  dispatch(renameChannelRequestPending());
   try {
     const attributes = { name: newName };
     await axios.patch(routes.editChannelUrl(id), { data: { id, attributes } });
-    dispatch(renameChannelSuccess());
+    dispatch(renameChannelRequestSuccess());
   } catch (e) {
     console.log(e);
-    dispatch(renameChannelFailure({ error: e.message }));
+    dispatch(renameChannelRequestFailure({ error: e.message }));
   }
 };
 

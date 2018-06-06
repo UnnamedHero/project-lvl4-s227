@@ -5,30 +5,22 @@ import * as actions from '../actions';
 
 const user = handleActions({}, {});
 
-const UI = handleActions({
-  [actions.toggleEditChannelsUiState](state) {
-    return { editChannels: !state.editChannels };
-  },
-}, {
-  editChannels: false,
-});
-
 const channels = handleActions({
   [actions.changeCurrentChannel](state, { payload: { id } }) {
     return { ...state, currentChannelId: id };
   },
-  [actions.addChannelSocket](state, { payload: { channel } }) {
+  [actions.addChannel](state, { payload: { channel } }) {
     const newChannels = [...state.channelsList, channel];
     return { ...state, channelsList: newChannels };
   },
-  [actions.removeChannelSocket](state, { payload: { id } }) {
+  [actions.removeChannel](state, { payload: { id } }) {
     const newChannels = state.channelsList.filter(ch => ch.id !== id);
     const newCurrentChannelId = state.currentChannelId === id ?
       state.defaultChannelId :
       state.currentChannelId;
     return { channelsList: newChannels, currentChannelId: newCurrentChannelId };
   },
-  [actions.renameChannelSocket](state, { payload: { channel: { id, name: newName } } }) {
+  [actions.renameChannel](state, { payload: { channel: { id, name: newName } } }) {
     const newChannels = state.channelsList.map((ch) => {
       if (ch.id === id) {
         return { ...ch, name: newName };
@@ -40,58 +32,58 @@ const channels = handleActions({
 }, {});
 
 const addChannelState = handleActions({
-  [actions.addChannelRequest]() {
+  [actions.addChannelRequestPending]() {
     return 'requested';
   },
-  [actions.addChannelSuccess]() {
+  [actions.addChannelRequestSuccess]() {
     return 'success';
   },
-  [actions.addChannelFailure]() {
+  [actions.addChannelRequestFailure]() {
     return 'failure';
   },
 }, 'none');
 
 const renameChannelState = handleActions({
-  [actions.renameChannelRequest]() {
+  [actions.renameChannelRequestPending]() {
     return 'requested';
   },
-  [actions.renameChannelSuccess]() {
+  [actions.renameChannelRequestSuccess]() {
     return 'success';
   },
-  [actions.renameChannelFailure]() {
+  [actions.renameChannelRequestFailure]() {
     return 'failure';
   },
 }, 'none');
 
 const removeChannelState = handleActions({
-  [actions.removeChannelRequest]() {
+  [actions.removeChannelRequestPending]() {
     return 'requested';
   },
-  [actions.removeChannelSuccess]() {
+  [actions.removeChannelRequestSuccess]() {
     return 'success';
   },
-  [actions.removeChannelFailure]() {
+  [actions.removeChannelRequestFailure]() {
     return 'failure';
   },
 }, 'none');
 
 const sendMessageState = handleActions({
-  [actions.sendMessageRequest]() {
+  [actions.sendMessageRequestPending]() {
     return 'requested';
   },
-  [actions.sendMessageSuccess]() {
+  [actions.sendMessageRequestSuccess]() {
     return 'success';
   },
-  [actions.sendMessageFailure]() {
+  [actions.sendMessageRequestFailure]() {
     return 'failure';
   },
 }, 'none');
 
 const messages = handleActions({
-  [actions.addMessageSocket](state, { payload: { message } }) {
+  [actions.addMessage](state, { payload: { message } }) {
     return [...state, message];
   },
-  [actions.removeChannelSocket](state, { payload: { id } }) {
+  [actions.removeChannel](state, { payload: { id } }) {
     return state.filter(m => m.id !== id);
   },
 }, []);
@@ -101,27 +93,27 @@ const notification = handleActions({
     const info = null;
     return info;
   },
-  [actions.sendMessageSuccess]() {
+  [actions.sendMessageRequestSuccess]() {
     const info = null;
     return info;
   },
-  [actions.sendMessageFailure](state, { payload: { error } }) {
+  [actions.sendMessageRequestFailure](state, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Message was not delivered to server' };
   },
-  [actions.addChannelFailure](state, { payload: { error } }) {
+  [actions.addChannelRequestFailure](state, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Channel was not added, request failed' };
   },
-  [actions.renameChannelFailure](_, { payload: { error } }) {
+  [actions.renameChannelRequestFailure](_, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Channel was not renamed, request failed' };
   },
-  [actions.removeChannelFailure](_, { payload: { error } }) {
+  [actions.removeChannelRequestFailure](_, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Channel was not removed, request failed' };
   },
 }, null);
 
 const formReducers = formReducer.plugin({
   NewMessage: handleActions({
-    [actions.sendMessageRequest](state) {
+    [actions.sendMessageRequestPending](state) {
       return {
         ...state,
         fields: {
@@ -131,7 +123,7 @@ const formReducers = formReducer.plugin({
         },
       };
     },
-    [actions.sendMessageFailure](state) {
+    [actions.sendMessageRequestFailure](state) {
       return {
         ...state,
         fields: {
@@ -141,7 +133,7 @@ const formReducers = formReducer.plugin({
         },
       };
     },
-    [actions.sendMessageSuccess](state) {
+    [actions.sendMessageRequestSuccess](state) {
       return {
         ...state,
         values: {
@@ -160,8 +152,8 @@ const formReducers = formReducer.plugin({
   }, {}),
   ModalEditor: handleActions({
     [combineActions(
-      actions.addChannelSuccess,
-      actions.renameChannelSuccess,
+      actions.addChannelRequestSuccess,
+      actions.renameChannelRequestSuccess,
     )](state) {
       return {
         ...state,
@@ -179,8 +171,8 @@ const formReducers = formReducer.plugin({
       };
     },
     [combineActions(
-      actions.addChannelFailure,
-      actions.renameChannelFailure,
+      actions.addChannelRequestFailure,
+      actions.renameChannelRequestFailure,
     )](state) {
       return {
         ...state,
@@ -192,8 +184,8 @@ const formReducers = formReducer.plugin({
       };
     },
     [combineActions(
-      actions.addChannelRequest,
-      actions.renameChannelRequest,
+      actions.addChannelRequestPending,
+      actions.renameChannelRequestPending,
     )](state) {
       return {
         ...state,
@@ -208,7 +200,6 @@ const formReducers = formReducer.plugin({
 });
 
 export default combineReducers({
-  UI,
   user,
   messages,
   channels,

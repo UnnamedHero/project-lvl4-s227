@@ -40,15 +40,15 @@ class ChannelsPanel extends React.Component {
   }
 
   onAddChannel = ({ modalInput: name }) => {
-    this.props.addChannel(name);
+    this.props.addChannelRequest(name);
   }
 
   onRenameChannel = ({ modalInput: newName }) => {
-    this.props.renameChannel(this.state.channelToRename.id, newName);
+    this.props.renameChannelRequest(this.state.channelToRename.id, newName);
   }
 
   onRemoveChannel = () => {
-    this.props.removeChannel(this.state.channelToRemove.id);
+    this.props.removeChannelRequest(this.state.channelToRemove.id);
   }
 
   setChannelToRemove = channel => () => {
