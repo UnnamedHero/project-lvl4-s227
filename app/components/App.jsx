@@ -1,8 +1,7 @@
 import React from 'react';
-import ChannelsPanelContainer from './ChannelsPanelContainer';
-import ChatPanel from './ChatPanel';
-
-import AlertNotifier from './AlertNotifier';
+import ChannelsPanelContainer from './ChannelsPanel/ChannelsPanelContainer';
+import ChatPanelContainer from './ChatPanel/ChatPanelContainer';
+import ModalAlertNotifier from './ModalAlertNotifier';
 
 const App = () => (
   <div className="container-fluid px-0">
@@ -11,9 +10,9 @@ const App = () => (
         <ChannelsPanelContainer />
       </div>
       <div className="d-flex col-9 flex-column vh-100 bg-secondary">
-        <ChatPanel />
+        <ChatPanelContainer />
       </div>
-      <AlertNotifier />
+      <ModalAlertNotifier />
     </div>
   </div>
 );
