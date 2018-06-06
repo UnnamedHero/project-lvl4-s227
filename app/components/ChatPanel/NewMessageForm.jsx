@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import cn from 'classnames';
-import InputField from './InputField';
+import InputField from '../InputField';
 
 @reduxForm({ form: 'NewMessage' })
 class NewMessageForm extends React.Component {

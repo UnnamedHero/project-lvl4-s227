@@ -2,8 +2,8 @@ import React from 'react';
 import ChatHeader from './ChatHeader';
 import ChatWindow from './ChatWindow';
 import NewMessageForm from './NewMessageForm';
-import { getCurrentChannelMessagesSelector, getCurrentChannelName } from '../selectors';
-import connect from '../connect';
+import { getCurrentChannelMessagesSelector, getCurrentChannelName } from '../../selectors';
+import connect from '../../connect';
 
 const mapStateToProps = (state) => {
   const props = {
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
 };
 
 @connect(mapStateToProps)
-class ChatPanel extends React.Component {
+class ChatPanelContainer extends React.Component {
   sendMessage = (messageText) => {
     this.props.sendMessage(messageText, this.props.currentChannelId, this.props.userName);
   }
@@ -54,4 +54,4 @@ class ChatPanel extends React.Component {
   }
 }
 
-export default ChatPanel;
+export default ChatPanelContainer;
