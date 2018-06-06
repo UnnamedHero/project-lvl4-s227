@@ -1,13 +1,10 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import isRequestFinished from './modalHelpers';
 
 class ModalDeleteConfirm extends React.Component {
   componentDidUpdate(prevProps) {
-    const prevRequestState = prevProps.requestState;
-    const { requestState } = this.props;
-    const stateChanged = prevRequestState !== requestState;
-    const requestPending = requestState === 'requested';
-    if (stateChanged && !requestPending) {
+    if (isRequestFinished(prevProps.requestState, this.props.requestState)) {
       this.props.onCloseHandler();
     }
   }
