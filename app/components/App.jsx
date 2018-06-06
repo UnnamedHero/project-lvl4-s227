@@ -1,8 +1,7 @@
 import React from 'react';
 import ChannelsPanelContainer from './ChannelsPanelContainer';
-// import ChatPanel from './ChatPanel';
-import ChatWindow from './ChatWindow';
-import NewMessageForm from './NewMessageForm';
+import ChatPanel from './ChatPanel';
+
 import AlertNotifier from './AlertNotifier';
 
 const App = () => (
@@ -12,13 +11,8 @@ const App = () => (
         <ChannelsPanelContainer />
       </div>
       <div className="d-flex col-9 flex-column justify-content-between vh-100 bg-secondary">
-        <div className="scrollable word-wrap-bw">
-          <ChatWindow />
-        </div>
-        <div>
-          <AlertNotifier />
-          <NewMessageForm />
-        </div>
+        <ChatPanel />
+        <AlertNotifier />
       </div>
     </div>
   </div>
