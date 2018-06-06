@@ -22,9 +22,7 @@ class InputField extends React.Component {
 
   render() {
     const {
-      id,
-      input,
-      type,
+      id, input, type,
       meta: { error, requestPending },
     } = this.props;
     const animationClass = {
