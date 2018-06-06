@@ -48,7 +48,7 @@ class ChannelsPanel extends React.Component {
   }
 
   onRemoveChannel = () => {
-    this.props.removeChannel(this.state.channelToRemove.id);
+    this.props.removeChannelRequest(this.state.channelToRemove.id);
   }
 
   setChannelToRemove = channel => () => {
