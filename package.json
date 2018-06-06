@@ -1,6 +1,6 @@
 {
   "name": "eem_frontend_l4_chat_project",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "",
   "main": "dist/index.js",
   "bin": {
@@ -31,14 +31,6 @@
   "license": "ISC",
   "homepage": "https://github.com/UnnamedHero/project-lvl4-s227",
   "dependencies": {
-    "@babel/cli": "^7.0.0-beta.49",
-    "@babel/core": "^7.0.0-beta.49",
-    "@babel/node": "^7.0.0-beta.49",
-    "@babel/polyfill": "^7.0.0-beta.49",
-    "@babel/preset-env": "^7.0.0-beta.49",
-    "@babel/preset-flow": "^7.0.0-beta.49",
-    "@babel/preset-react": "^7.0.0-beta.49",
-    "@babel/preset-stage-0": "^7.0.0-beta.49",
     "axios": "^0.18.0",
     "babel-loader": "^8.0.0-beta.3",
     "bootstrap": "^4.1.1",
@@ -69,12 +61,17 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "socket.io": "^2.1.1",
-    "socket.io-client": "^2.1.1",
-    "style-loader": "^0.21.0",
-    "webpack": "^4.8.3",
-    "webpack-cli": "^2.1.4"
+    "socket.io-client": "^2.1.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.49",
+    "@babel/core": "^7.0.0-beta.49",
+    "@babel/node": "^7.0.0-beta.49",
+    "@babel/polyfill": "^7.0.0-beta.49",
+    "@babel/preset-env": "^7.0.0-beta.49",
+    "@babel/preset-flow": "^7.0.0-beta.49",
+    "@babel/preset-react": "^7.0.0-beta.49",
+    "@babel/preset-stage-0": "^7.0.0-beta.49",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.3",
     "babel-jest": "^22.4.4",
@@ -92,6 +89,9 @@
     "jest": "^22.4.4",
     "jest-cli": "^22.4.4",
     "nodemon": "^1.17.5",
-    "webpack-bundle-analyzer": "^2.13.1"
+    "webpack-bundle-analyzer": "^2.13.1",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.4"
   }
 }

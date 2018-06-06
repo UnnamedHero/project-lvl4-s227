@@ -1,34 +1,18 @@
 import React from 'react';
-import ChannelsListHeader from './ChannelsListHeader';
-import ChannelsListRenderer from './ChannelsListRenderer';
-import UserPanel from './UserPanel';
-import ChatWindow from './ChatWindow';
-import NewMessageForm from './NewMessageForm';
-import AlertNotifier from './AlertNotifier';
+import ChannelsPanelContainer from './ChannelsPanel/ChannelsPanelContainer';
+import ChatPanelContainer from './ChatPanel/ChatPanelContainer';
+import ModalAlertNotifier from './ModalAlertNotifier';
 
 const App = () => (
-  <div className="container-fluid">
-    <div className="row d-flex vh-100">
-      <div className="col-3 d-flex flex-column bg-dark text-white-50 vh-100">
-        <div>
-          <UserPanel />
-        </div>
-        <div>
-          <ChannelsListHeader />
-        </div>
-        <div className="scrollable">
-          <ChannelsListRenderer />
-        </div>
+  <div className="container-fluid px-0">
+    <div className="d-flex vh-100">
+      <div className="col-3 bg-dark vh-100">
+        <ChannelsPanelContainer />
       </div>
-      <div className="d-flex col-9 flex-column justify-content-between vh-100 bg-secondary">
-        <div className="scrollable word-wrap-bw">
-          <ChatWindow />
-        </div>
-        <div>
-          <AlertNotifier />
-          <NewMessageForm />
-        </div>
+      <div className="d-flex col-9 flex-column vh-100 bg-secondary">
+        <ChatPanelContainer />
       </div>
+      <ModalAlertNotifier />
     </div>
   </div>
 );

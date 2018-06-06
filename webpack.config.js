@@ -8,7 +8,7 @@ module.exports = {
   devtool: isDevMode ? 'cheap-module-source-map' : 'none',
   entry: {
     vendor: ['babel-polyfill', './src/index.js'],
-    application: ['./app/index.js'],
+    application: ['./app/index.jsx'],
   },
   externals: {
     gon: 'gon',

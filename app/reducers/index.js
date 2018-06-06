@@ -1,34 +1,26 @@
 import { combineReducers } from 'redux';
-import { handleActions } from 'redux-actions';
+import { handleActions, combineActions } from 'redux-actions';
 import { reducer as formReducer } from 'redux-form';
 import * as actions from '../actions';
 
 const user = handleActions({}, {});
 
-const UI = handleActions({
-  [actions.toggleEditChannelsUiState](state) {
-    return { editChannels: !state.editChannels };
-  },
-}, {
-  editChannels: false,
-});
-
 const channels = handleActions({
   [actions.changeCurrentChannel](state, { payload: { id } }) {
     return { ...state, currentChannelId: id };
   },
-  [actions.addChannelSocket](state, { payload: { channel } }) {
+  [actions.addChannel](state, { payload: { channel } }) {
     const newChannels = [...state.channelsList, channel];
     return { ...state, channelsList: newChannels };
   },
-  [actions.removeChannelSocket](state, { payload: { id } }) {
+  [actions.removeChannel](state, { payload: { id } }) {
     const newChannels = state.channelsList.filter(ch => ch.id !== id);
     const newCurrentChannelId = state.currentChannelId === id ?
       state.defaultChannelId :
       state.currentChannelId;
     return { channelsList: newChannels, currentChannelId: newCurrentChannelId };
   },
-  [actions.renameChannelSocket](state, { payload: { channel: { id, name: newName } } }) {
+  [actions.renameChannel](state, { payload: { channel: { id, name: newName } } }) {
     const newChannels = state.channelsList.map((ch) => {
       if (ch.id === id) {
         return { ...ch, name: newName };
@@ -39,54 +31,59 @@ const channels = handleActions({
   },
 }, {});
 
-const requestStates = handleActions({
-  [actions.sendMessageRequest](state) {
-    return { ...state, messageSendingState: 'requested' };
+const addChannelState = handleActions({
+  [actions.addChannelRequestPending]() {
+    return 'requested';
   },
-  [actions.sendMessageSuccess](state) {
-    return { ...state, messageSendingState: 'success' };
+  [actions.addChannelRequestSuccess]() {
+    return 'success';
   },
-  [actions.sendMessageFailure](state) {
-    return { ...state, messageSendingState: 'failure' };
+  [actions.addChannelRequestFailure]() {
+    return 'failure';
   },
-  [actions.addChannelRequest](state) {
-    return { ...state, channelAddState: 'requested' };
+}, 'none');
+
+const renameChannelState = handleActions({
+  [actions.renameChannelRequestPending]() {
+    return 'requested';
   },
-  [actions.addChannelSuccess](state) {
-    return { ...state, channelAddState: 'success' };
+  [actions.renameChannelRequestSuccess]() {
+    return 'success';
   },
-  [actions.addChannelFailure](state) {
-    return { ...state, channelAddState: 'failure' };
+  [actions.renameChannelRequestFailure]() {
+    return 'failure';
   },
-  [actions.removeChannelRequest](state) {
-    return { ...state, channelRemoveState: 'requested' };
+}, 'none');
+
+const removeChannelState = handleActions({
+  [actions.removeChannelRequestPending]() {
+    return 'requested';
   },
-  [actions.removeChannelSuccess](state) {
-    return { ...state, channelRemoveState: 'success' };
+  [actions.removeChannelRequestSuccess]() {
+    return 'success';
   },
-  [actions.removeChannelFailure](state) {
-    return { ...state, channelRemoveState: 'failure' };
+  [actions.removeChannelRequestFailure]() {
+    return 'failure';
   },
-  [actions.renameChannelRequest](state) {
-    return { ...state, channelRenameState: 'requested' };
+}, 'none');
+
+const sendMessageState = handleActions({
+  [actions.sendMessageRequestPending]() {
+    return 'requested';
   },
-  [actions.renameChannelSuccess](state) {
-    return { ...state, channelRenameState: 'success' };
+  [actions.sendMessageRequestSuccess]() {
+    return 'success';
   },
-  [actions.renameChannelFailure](state) {
-    return { ...state, channelRenameState: 'failure' };
+  [actions.sendMessageRequestFailure]() {
+    return 'failure';
   },
-}, {
-  messageSendingState: 'none',
-  channelAddState: 'none',
-  channelRemoveState: 'none',
-});
+}, 'none');
 
 const messages = handleActions({
-  [actions.addMessageSocket](state, { payload: { message } }) {
+  [actions.addMessage](state, { payload: { message } }) {
     return [...state, message];
   },
-  [actions.removeChannelSocket](state, { payload: { id } }) {
+  [actions.removeChannel](state, { payload: { id } }) {
     return state.filter(m => m.id !== id);
   },
 }, []);
@@ -96,25 +93,121 @@ const notification = handleActions({
     const info = null;
     return info;
   },
-  [actions.sendMessageSuccess]() {
+  [actions.sendMessageRequestSuccess]() {
     const info = null;
     return info;
   },
-  [actions.sendMessageFailure](state, { payload: { error } }) {
+  [actions.sendMessageRequestFailure](state, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Message was not delivered to server' };
   },
-  [actions.addChannelFailure](state, { payload: { error } }) {
+  [actions.addChannelRequestFailure](state, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Channel was not added, request failed' };
+  },
+  [actions.renameChannelRequestFailure](_, { payload: { error } }) {
+    return { type: 'warning', headline: error, message: 'Channel was not renamed, request failed' };
+  },
+  [actions.removeChannelRequestFailure](_, { payload: { error } }) {
+    return { type: 'warning', headline: error, message: 'Channel was not removed, request failed' };
   },
 }, null);
 
+const formReducers = formReducer.plugin({
+  NewMessage: handleActions({
+    [actions.sendMessageRequestPending](state) {
+      return {
+        ...state,
+        fields: {
+          messageText: {
+            requestPending: true,
+          },
+        },
+      };
+    },
+    [actions.sendMessageRequestFailure](state) {
+      return {
+        ...state,
+        fields: {
+          messageText: {
+            requestPending: false,
+          },
+        },
+      };
+    },
+    [actions.sendMessageRequestSuccess](state) {
+      return {
+        ...state,
+        values: {
+          messageText: undefined,
+        },
+        registeredFields: {
+          messageText: undefined,
+        },
+        fields: {
+          newMessage: {
+            messageText: false,
+          },
+        },
+      };
+    },
+  }, {}),
+  ModalEditor: handleActions({
+    [combineActions(
+      actions.addChannelRequestSuccess,
+      actions.renameChannelRequestSuccess,
+    )](state) {
+      return {
+        ...state,
+        values: {
+          modalInput: undefined,
+        },
+        registeredFields: {
+          modalInput: undefined,
+        },
+        fields: {
+          modalInput: {
+            requestPending: false,
+          },
+        },
+      };
+    },
+    [combineActions(
+      actions.addChannelRequestFailure,
+      actions.renameChannelRequestFailure,
+    )](state) {
+      return {
+        ...state,
+        fields: {
+          modalInput: {
+            requestPending: false,
+          },
+        },
+      };
+    },
+    [combineActions(
+      actions.addChannelRequestPending,
+      actions.renameChannelRequestPending,
+    )](state) {
+      return {
+        ...state,
+        fields: {
+          modalInput: {
+            requestPending: true,
+          },
+        },
+      };
+    },
+  }, {}),
+});
+
 export default combineReducers({
-  UI,
   user,
   messages,
   channels,
-  form: formReducer,
-  requestStates,
+  form: formReducers,
+  addChannelState,
+  renameChannelState,
+  removeChannelState,
+  sendMessageState,
   notification,
 });
 
