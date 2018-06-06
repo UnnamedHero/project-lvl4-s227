@@ -35,6 +35,7 @@ export const sendMessage = (messageText, channelId, userName) => async (dispatch
     await axios.post(routes.addMessageToChannelUrl(channelId), { data: { attributes } });
     dispatch(sendMessageSuccess());
   } catch (e) {
+    console.log(e);
     dispatch(sendMessageFailure({ error: e.message }));
   }
 };
@@ -46,6 +47,7 @@ export const addChannel = name => async (dispatch) => {
     await axios.post(routes.addChannelUrl(), { data: { attributes } });
     dispatch(addChannelSuccess());
   } catch (e) {
+    console.log(e);
     dispatch(addChannelFailure({ error: e.message }));
   }
 };
@@ -56,6 +58,7 @@ export const removeChannel = id => async (dispatch) => {
     await axios.delete(routes.editChannelUrl(id), { data: { id } });
     dispatch(removeChannelSuccess());
   } catch (e) {
+    console.log(e);
     dispatch(removeChannelFailure({ error: e.message }));
   }
 };
@@ -67,6 +70,7 @@ export const renameChannel = (id, newName) => async (dispatch) => {
     await axios.patch(routes.editChannelUrl(id), { data: { id, attributes } });
     dispatch(renameChannelSuccess());
   } catch (e) {
+    console.log(e);
     dispatch(renameChannelFailure({ error: e.message }));
   }
 };
