@@ -2,21 +2,21 @@ import { createAction } from 'redux-actions';
 import axios from 'axios';
 import routes from '../routes';
 
-export const toggleEditChannelsUiState = createAction('UI/EDIT/CHANNELS/TOGGLE');
+// export const toggleEditChannelsUiState = createAction('UI/EDIT/CHANNELS/TOGGLE');
 
 export const sendMessageRequestPending = createAction('REQUEST/MESSAGE/SEND/PENDING');
 export const sendMessageRequestSuccess = createAction('REQUEST/MESSAGE/SEND/SUCCESS');
 export const sendMessageRequestFailure = createAction('REQUEST/MESSAGE/SEND/FAILURE');
 
-export const addMessage = createAction('MESSAGE/ADD');
-
-export const changeCurrentChannel = createAction('CHANNEL_CHANGE');
-
 export const addChannelRequestPending = createAction('REQUEST/CHANNEL/ADD/PENDING');
 export const addChannelRequestSuccess = createAction('REQUEST/CHANNEL/ADD/SUCCESS');
 export const addChannelRequestFailure = createAction('REQUEST/CHANNEL/ADD/FAILURE');
 
-export const addChannelSocket = createAction('CHANNEL_ADD_SOCKET');
+export const addMessage = createAction('MESSAGE/ADD');
+
+export const changeCurrentChannel = createAction('CHANNEL/CHANGE');
+
+export const addChannel = createAction('CHANNEL/ADD');
 
 export const removeChannelRequest = createAction('CHANNEL_DELETE_REQUEST');
 export const removeChannelSuccess = createAction('CHANNEL_DELETE_SUCCESS');
