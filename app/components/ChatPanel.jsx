@@ -1,4 +1,5 @@
 import React from 'react';
+import ChatHeader from './ChatHeader';
 import ChatWindow from './ChatWindow';
 import NewMessageForm from './NewMessageForm';
 import { getCurrentChannelMessagesSelector, getCurrentChannelName } from '../selectors';
@@ -24,9 +25,12 @@ class ChatPanel extends React.Component {
   render() {
     const { userName, currentChannelName, messages } = this.props;
 
-    const chatWindowsProps = {
+    const chatHeaderProps = {
       userName,
       currentChannelName,
+    };
+
+    const chatWindowsProps = {
       messages,
     };
 
@@ -37,6 +41,7 @@ class ChatPanel extends React.Component {
 
     return (
       <div className="d-flex flex-column vh-100">
+        <ChatHeader {...chatHeaderProps} />
         <ChatWindow {...chatWindowsProps} />
         <NewMessageForm {...newMessageFormProps} />
       </div>);
