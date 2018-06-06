@@ -12,8 +12,8 @@ const App = () => (
       </div>
       <div className="d-flex col-9 flex-column vh-100 bg-secondary">
         <ChatPanel />
-        <AlertNotifier />
       </div>
+      <AlertNotifier />
     </div>
   </div>
 );

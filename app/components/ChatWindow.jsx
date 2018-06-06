@@ -22,7 +22,7 @@ class ChatWindow extends React.Component {
 
   render() {
     return (
-      <div className="list-group scrollable">
+      <div className="list-group">
         {this.renderMessages()}
         <div ref={this.scrollTarget} />
       </div>);

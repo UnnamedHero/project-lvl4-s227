@@ -40,10 +40,16 @@ class ChatPanel extends React.Component {
     };
 
     return (
-      <div className="d-flex flex-column vh-100">
-        <ChatHeader {...chatHeaderProps} />
-        <ChatWindow {...chatWindowsProps} />
-        <NewMessageForm {...newMessageFormProps} />
+      <div className="d-flex flex-column vh-100 justify-content-between">
+        <div>
+          <ChatHeader {...chatHeaderProps} />
+        </div>
+        <div className="scrollable">
+          <ChatWindow {...chatWindowsProps} />
+        </div>
+        <div className="mt-auto">
+          <NewMessageForm {...newMessageFormProps} />
+        </div>
       </div>);
   }
 }
