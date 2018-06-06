@@ -76,14 +76,14 @@ const removeChannelState = handleActions({
 }, 'none');
 
 const sendMessageState = handleActions({
-  [actions.sendMessageRequest](state) {
-    return { ...state, messageSendingState: 'requested' };
+  [actions.sendMessageRequest]() {
+    return 'requested';
   },
-  [actions.sendMessageSuccess](state) {
-    return { ...state, messageSendingState: 'success' };
+  [actions.sendMessageSuccess]() {
+    return 'success';
   },
-  [actions.sendMessageFailure](state) {
-    return { ...state, messageSendingState: 'failure' };
+  [actions.sendMessageFailure]() {
+    return 'failure';
   },
 }, 'none');
 
@@ -120,6 +120,44 @@ const notification = handleActions({
 }, null);
 
 const formReducers = formReducer.plugin({
+  NewMessage: handleActions({
+    [actions.sendMessageRequest](state) {
+      return {
+        ...state,
+        fields: {
+          messageText: {
+            requestPending: true,
+          },
+        },
+      };
+    },
+    [actions.sendMessageFailure](state) {
+      return {
+        ...state,
+        fields: {
+          messageText: {
+            requestPending: false,
+          },
+        },
+      };
+    },
+    [actions.sendMessageSuccess](state) {
+      return {
+        ...state,
+        values: {
+          messageText: undefined,
+        },
+        registeredFields: {
+          messageText: undefined,
+        },
+        fields: {
+          newMessage: {
+            messageText: false,
+          },
+        },
+      };
+    },
+  }, {}),
   ModalEditor: handleActions({
     [combineActions(
       actions.addChannelSuccess,
