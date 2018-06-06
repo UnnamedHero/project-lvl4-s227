@@ -20,7 +20,7 @@ const channels = handleActions({
       state.currentChannelId;
     return { channelsList: newChannels, currentChannelId: newCurrentChannelId };
   },
-  [actions.renameChannelSocket](state, { payload: { channel: { id, name: newName } } }) {
+  [actions.renameChannel](state, { payload: { channel: { id, name: newName } } }) {
     const newChannels = state.channelsList.map((ch) => {
       if (ch.id === id) {
         return { ...ch, name: newName };
@@ -47,10 +47,10 @@ const renameChannelState = handleActions({
   [actions.renameChannelRequestPending]() {
     return 'requested';
   },
-  [actions.renameChannelSuccess]() {
+  [actions.renameChannelRequestSuccess]() {
     return 'success';
   },
-  [actions.renameChannelFailure]() {
+  [actions.renameChannelRequestFailure]() {
     return 'failure';
   },
 }, 'none');
@@ -103,7 +103,7 @@ const notification = handleActions({
   [actions.addChannelRequestFailure](state, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Channel was not added, request failed' };
   },
-  [actions.renameChannelFailure](_, { payload: { error } }) {
+  [actions.renameChannelRequestFailure](_, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Channel was not renamed, request failed' };
   },
   [actions.removeChannelRequestFailure](_, { payload: { error } }) {
@@ -153,7 +153,7 @@ const formReducers = formReducer.plugin({
   ModalEditor: handleActions({
     [combineActions(
       actions.addChannelRequestSuccess,
-      actions.renameChannelSuccess,
+      actions.renameChannelRequestSuccess,
     )](state) {
       return {
         ...state,
@@ -172,7 +172,7 @@ const formReducers = formReducer.plugin({
     },
     [combineActions(
       actions.addChannelRequestFailure,
-      actions.renameChannelFailure,
+      actions.renameChannelRequestFailure,
     )](state) {
       return {
         ...state,
