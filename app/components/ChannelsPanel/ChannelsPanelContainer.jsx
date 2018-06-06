@@ -5,7 +5,7 @@ import ChannelsPanelHeader from './ChannelsPanelHeader';
 import ChannelsList from './ChannelsList';
 import ModalChannelNameEditor from './ModalChannelNameEditor';
 import ModalDeleteConfirm from './ModalDeleteConfirm';
-import connect from '../connect';
+import connect from '../../connect';
 
 const mapStateToProps = (state) => {
   const props = {
