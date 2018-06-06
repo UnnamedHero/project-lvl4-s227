@@ -12,18 +12,17 @@ export const addChannelRequestPending = createAction('REQUEST/CHANNEL/ADD/PENDIN
 export const addChannelRequestSuccess = createAction('REQUEST/CHANNEL/ADD/SUCCESS');
 export const addChannelRequestFailure = createAction('REQUEST/CHANNEL/ADD/FAILURE');
 
-export const addMessage = createAction('MESSAGE/ADD');
+export const removeChannelRequestPending = createAction('REQUEST/CHANNEL/DELETE/REQUEST');
+export const removeChannelRequestSuccess = createAction('REQUEST/CHANNEL/DELETE/SUCCESS');
+export const removeChannelRequestFailure = createAction('REQUEST/CHANNEL/DELETE/FAILURE');
 
 export const changeCurrentChannel = createAction('CHANNEL/CHANGE');
 
+export const addMessage = createAction('MESSAGE/ADD');
 export const addChannel = createAction('CHANNEL/ADD');
+export const removeChannel = createAction('CHANNEL/REMOVE');
 
-export const removeChannelRequest = createAction('CHANNEL_DELETE_REQUEST');
-export const removeChannelSuccess = createAction('CHANNEL_DELETE_SUCCESS');
-export const removeChannelFailure = createAction('CHANNEL_DELETE_FAILURE');
-export const removeChannelSocket = createAction('CHANNEL_DELETE_SOCKET');
-
-export const renameChannelRequest = createAction('CHANNEL_RENAME_REQUEST');
+export const renameChannelRequestPending = createAction('CHANNEL_RENAME_REQUEST');
 export const renameChannelSuccess = createAction('CHANNEL_RENAME_SUCCESS');
 export const renameChannelFailure = createAction('CHANNEL_RENAME_FAILURE');
 export const renameChannelSocket = createAction('CHANNEL_RENAME_SOCKET');
@@ -54,19 +53,19 @@ export const addChannelRequest = name => async (dispatch) => {
   }
 };
 
-export const removeChannel = id => async (dispatch) => {
-  dispatch(removeChannelRequest());
+export const removeChannelRequest = id => async (dispatch) => {
+  dispatch(removeChannelRequestPending());
   try {
     await axios.delete(routes.editChannelUrl(id), { data: { id } });
-    dispatch(removeChannelSuccess());
+    dispatch(removeChannelRequestSuccess());
   } catch (e) {
     console.log(e);
-    dispatch(removeChannelFailure({ error: e.message }));
+    dispatch(removeChannelRequestFailure({ error: e.message }));
   }
 };
 
-export const renameChannel = (id, newName) => async (dispatch) => {
-  dispatch(renameChannelRequest());
+export const renameChannelRequest = (id, newName) => async (dispatch) => {
+  dispatch(renameChannelRequestPending());
   try {
     const attributes = { name: newName };
     await axios.patch(routes.editChannelUrl(id), { data: { id, attributes } });
