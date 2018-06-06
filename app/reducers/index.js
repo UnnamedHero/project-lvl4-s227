@@ -120,6 +120,44 @@ const notification = handleActions({
 }, null);
 
 const formReducers = formReducer.plugin({
+  NewMessage: handleActions({
+    [actions.sendMessageRequest](state) {
+      return {
+        ...state,
+        fields: {
+          messageText: {
+            requestPending: true,
+          },
+        },
+      };
+    },
+    [actions.sendMessageFailure](state) {
+      return {
+        ...state,
+        fields: {
+          messageText: {
+            requestPending: false,
+          },
+        },
+      };
+    },
+    [actions.sendMessageSuccess](state) {
+      return {
+        ...state,
+        values: {
+          messageText: undefined,
+        },
+        registeredFields: {
+          messageText: undefined,
+        },
+        fields: {
+          newMessage: {
+            messageText: false,
+          },
+        },
+      };
+    },
+  }, {}),
   ModalEditor: handleActions({
     [combineActions(
       actions.addChannelSuccess,
