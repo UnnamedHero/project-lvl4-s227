@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 @connect(mapStateToProps)
 class ChatPanelContainer extends React.Component {
   sendMessage = (messageText) => {
-    this.props.sendMessage(messageText, this.props.currentChannelId, this.props.userName);
+    this.props.sendMessageRequest(messageText, this.props.currentChannelId, this.props.userName);
   }
 
   render() {
