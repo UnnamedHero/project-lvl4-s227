@@ -5,6 +5,36 @@ import * as actions from '../actions';
 
 const user = handleActions({}, {});
 
+const getFieldRequestPendingState = fieldName => ({
+  fields: {
+    [fieldName]: {
+      requestPending: true,
+    },
+  },
+});
+
+const getFieldRequestFailureState = fieldName => ({
+  fields: {
+    [fieldName]: {
+      requestPending: false,
+    },
+  },
+});
+
+const getFieldRequestSuccessState = fieldName => ({
+  values: {
+    [fieldName]: undefined,
+  },
+  registeredFields: {
+    [fieldName]: undefined,
+  },
+  fields: {
+    [fieldName]: {
+      requestPending: false,
+    },
+  },
+});
+
 const channels = handleActions({
   [actions.changeCurrentChannel](state, { payload: { id } }) {
     return { ...state, currentChannelId: id };
@@ -116,37 +146,19 @@ const formReducers = formReducer.plugin({
     [actions.sendMessageRequestPending](state) {
       return {
         ...state,
-        fields: {
-          messageText: {
-            requestPending: true,
-          },
-        },
+        ...getFieldRequestPendingState('messageText'),
       };
     },
     [actions.sendMessageRequestFailure](state) {
       return {
         ...state,
-        fields: {
-          messageText: {
-            requestPending: false,
-          },
-        },
+        ...getFieldRequestFailureState('messageText'),
       };
     },
     [actions.sendMessageRequestSuccess](state) {
       return {
         ...state,
-        values: {
-          messageText: undefined,
-        },
-        registeredFields: {
-          messageText: undefined,
-        },
-        fields: {
-          newMessage: {
-            messageText: false,
-          },
-        },
+        ...getFieldRequestSuccessState('messageText'),
       };
     },
   }, {}),
@@ -157,17 +169,7 @@ const formReducers = formReducer.plugin({
     )](state) {
       return {
         ...state,
-        values: {
-          modalInput: undefined,
-        },
-        registeredFields: {
-          modalInput: undefined,
-        },
-        fields: {
-          modalInput: {
-            requestPending: false,
-          },
-        },
+        ...getFieldRequestSuccessState('modalInput'),
       };
     },
     [combineActions(
@@ -176,11 +178,7 @@ const formReducers = formReducer.plugin({
     )](state) {
       return {
         ...state,
-        fields: {
-          modalInput: {
-            requestPending: false,
-          },
-        },
+        ...getFieldRequestFailureState('modalInput'),
       };
     },
     [combineActions(
@@ -189,11 +187,7 @@ const formReducers = formReducer.plugin({
     )](state) {
       return {
         ...state,
-        fields: {
-          modalInput: {
-            requestPending: true,
-          },
-        },
+        ...getFieldRequestPendingState('modalInput'),
       };
     },
   }, {}),
