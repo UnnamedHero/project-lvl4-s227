@@ -16,20 +16,20 @@ export const removeChannelRequestPending = createAction('REQUEST/CHANNEL/DELETE/
 export const removeChannelRequestSuccess = createAction('REQUEST/CHANNEL/DELETE/SUCCESS');
 export const removeChannelRequestFailure = createAction('REQUEST/CHANNEL/DELETE/FAILURE');
 
+export const renameChannelRequestPending = createAction('REQUEST/CHANNEL/RENAME/REQUEST');
+export const renameChannelRequestSuccess = createAction('REQUEST/CHANNEL/RENAME/SUCCESS');
+export const renameChannelRequestFailure = createAction('REQUEST/CHANNEL/RENAME/FAILURE');
+
 export const changeCurrentChannel = createAction('CHANNEL/CHANGE');
 
 export const addMessage = createAction('MESSAGE/ADD');
 export const addChannel = createAction('CHANNEL/ADD');
 export const removeChannel = createAction('CHANNEL/REMOVE');
+export const renameChannel = createAction('CHANNEL/RENAME');
 
-export const renameChannelRequestPending = createAction('CHANNEL_RENAME_REQUEST');
-export const renameChannelSuccess = createAction('CHANNEL_RENAME_SUCCESS');
-export const renameChannelFailure = createAction('CHANNEL_RENAME_FAILURE');
-export const renameChannelSocket = createAction('CHANNEL_RENAME_SOCKET');
+export const dismissNotification = createAction('NOTIFICATION/DISMISS');
 
-export const dismissNotification = createAction('NOTIFICATION_DISMISS');
-
-export const sendMessage = (messageText, channelId, userName) => async (dispatch) => {
+export const sendMessageRequest = (messageText, channelId, userName) => async (dispatch) => {
   dispatch(sendMessageRequestPending());
   try {
     const attributes = { author: userName, body: messageText.messageText };
@@ -69,10 +69,10 @@ export const renameChannelRequest = (id, newName) => async (dispatch) => {
   try {
     const attributes = { name: newName };
     await axios.patch(routes.editChannelUrl(id), { data: { id, attributes } });
-    dispatch(renameChannelSuccess());
+    dispatch(renameChannelRequestSuccess());
   } catch (e) {
     console.log(e);
-    dispatch(renameChannelFailure({ error: e.message }));
+    dispatch(renameChannelRequestFailure({ error: e.message }));
   }
 };
 
