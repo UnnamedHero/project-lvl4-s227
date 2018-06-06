@@ -7,7 +7,7 @@ class ChatWindow extends React.Component {
   }
 
   componentDidUpdate() {
-    this.scrollTarget.current.scrollIntoView({ behavior: 'smooth' });
+    this.scrollTarget.current.scrollIntoView();
   }
 
   renderMessages() {
