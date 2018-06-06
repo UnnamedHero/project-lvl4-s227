@@ -99,26 +99,9 @@ class ChannelsPanel extends React.Component {
     return undefined;
   }
 
-  render() {
+  makeAddChannelProps() {
     const isValidInput = Object.keys(this.props.modalInputErrors).length === 0;
-
-    const channelsPanelHeaderProps = {
-      editModeOn: this.state.editModeOn,
-      handleToggleEditMode: this.toggleEditMode,
-      handleToggleAddModal: this.toggleAddModal,
-    };
-
-    const channelsListProps = {
-      editModeOn: this.state.editModeOn,
-      channelsList: this.props.channelsList,
-      currentChannelId: this.props.currentChannelId,
-      handleOnChannelClick: this.onChannelClick,
-      onRemoveClickHandler: this.setChannelToRemove,
-      onRenameClickHandler: this.setChannelToRename,
-    };
-
-    const addChannelProps = this.state.addModal &&
-    {
+    return {
       id: 'addChannelInput',
       submitLabel: 'Add',
       onCloseHandler: this.toggleAddModal,
@@ -127,17 +110,11 @@ class ChannelsPanel extends React.Component {
       requestState: this.props.addChannelState,
       isValidInput,
     };
+  }
 
-    const removeChannelProps = this.state.removeModal &&
-    {
-      channelToRemove: this.state.channelToRemove,
-      onConfirmHandler: this.onRemoveChannel,
-      onCloseHandler: this.closeRemoveModal,
-      requestState: this.props.removeChannelState,
-    };
-
-    const renameChannelProps = this.state.renameModal &&
-    {
+  makeRenameChannelProps() {
+    const isValidInput = Object.keys(this.props.modalInputErrors).length === 0;
+    return {
       id: 'renameChannelInput',
       submitLabel: 'Rename',
       channelToRename: this.state.channelToRename,
@@ -149,18 +126,47 @@ class ChannelsPanel extends React.Component {
       initialValues: { modalInput: this.state.channelToRename.name },
       isValidInput,
     };
+  }
 
+  makeRemoveChannelProps() {
+    return {
+      channelToRemove: this.state.channelToRemove,
+      onConfirmHandler: this.onRemoveChannel,
+      onCloseHandler: this.closeRemoveModal,
+      requestState: this.props.removeChannelState,
+    };
+  }
+
+  makeChannelsListProps() {
+    return {
+      editModeOn: this.state.editModeOn,
+      channelsList: this.props.channelsList,
+      currentChannelId: this.props.currentChannelId,
+      handleOnChannelClick: this.onChannelClick,
+      onRemoveClickHandler: this.setChannelToRemove,
+      onRenameClickHandler: this.setChannelToRename,
+    };
+  }
+  makeChannelsPanelHeaderProps() {
+    return {
+      editModeOn: this.state.editModeOn,
+      handleToggleEditMode: this.toggleEditMode,
+      handleToggleAddModal: this.toggleAddModal,
+    };
+  }
+
+  render() {
     return (
       <div className="d-flex flex-column vh-100">
         <div className="text-white-50">
-          <ChannelsPanelHeader {...channelsPanelHeaderProps} />
+          <ChannelsPanelHeader {...this.makeChannelsPanelHeaderProps()} />
         </div>
         <div className="scrollable">
-          <ChannelsList {...channelsListProps} />
+          <ChannelsList {...this.makeChannelsListProps()} />
         </div>
-        { this.state.addModal && <ModalChannelNameEditor {...addChannelProps} /> }
-        { this.state.renameModal && <ModalChannelNameEditor {...renameChannelProps} /> }
-        { this.state.removeModal && <ModalDeleteConfirm {...removeChannelProps} /> }
+        { this.state.addModal && <ModalChannelNameEditor {...this.makeAddChannelProps()} /> }
+        { this.state.renameModal && <ModalChannelNameEditor {...this.makeRenameChannelProps()} /> }
+        { this.state.removeModal && <ModalDeleteConfirm {...this.makeRemoveChannelProps()} /> }
       </div>
     );
   }
