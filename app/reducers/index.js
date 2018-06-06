@@ -17,7 +17,7 @@ const channels = handleActions({
   [actions.changeCurrentChannel](state, { payload: { id } }) {
     return { ...state, currentChannelId: id };
   },
-  [actions.addChannelSocket](state, { payload: { channel } }) {
+  [actions.addChannel](state, { payload: { channel } }) {
     const newChannels = [...state.channelsList, channel];
     return { ...state, channelsList: newChannels };
   },
