@@ -6,11 +6,11 @@ import AlertNotifier from './AlertNotifier';
 
 const App = () => (
   <div className="container-fluid">
-    <div className="row d-flex vh-100">
+    <div className="d-flex vh-100">
       <div className="col-3 bg-dark vh-100">
         <ChannelsPanelContainer />
       </div>
-      <div className="d-flex col-9 flex-column justify-content-between vh-100 bg-secondary">
+      <div className="d-flex col-9 flex-column vh-100 bg-secondary">
         <ChatPanel />
         <AlertNotifier />
       </div>
