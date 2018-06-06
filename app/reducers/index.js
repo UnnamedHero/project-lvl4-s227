@@ -5,6 +5,38 @@ import * as actions from '../actions';
 
 const user = handleActions({}, {});
 
+const getFieldRequestPendingState = fieldName => ({
+  fields: {
+    [fieldName]: {
+      requestPending: true,
+    },
+  },
+});
+
+const getFieldRequestFailureState = fieldName => ({
+  fields: {
+    [fieldName]: {
+      requestPending: false,
+    },
+  },
+});
+
+const getFieldRequestSuccessState = fieldName => ({
+  values: {
+    [fieldName]: undefined,
+  },
+  registeredFields: {
+    [fieldName]: undefined,
+  },
+  fields: {
+    [fieldName]: {
+      requestPending: false,
+    },
+  },
+});
+
+const getErrNotificationWithMessage = (error, message) => ({ type: 'warning', headline: error, message });
+
 const channels = handleActions({
   [actions.changeCurrentChannel](state, { payload: { id } }) {
     return { ...state, currentChannelId: id };
@@ -97,17 +129,17 @@ const notification = handleActions({
     const info = null;
     return info;
   },
-  [actions.sendMessageRequestFailure](state, { payload: { error } }) {
-    return { type: 'warning', headline: error, message: 'Message was not delivered to server' };
+  [actions.sendMessageRequestFailure](_, { payload: { error } }) {
+    return getErrNotificationWithMessage(error, 'Message was not delivered to server');
   },
-  [actions.addChannelRequestFailure](state, { payload: { error } }) {
-    return { type: 'warning', headline: error, message: 'Channel was not added, request failed' };
+  [actions.addChannelRequestFailure](_, { payload: { error } }) {
+    return getErrNotificationWithMessage(error, 'Channel was not added, request failed');
   },
   [actions.renameChannelRequestFailure](_, { payload: { error } }) {
-    return { type: 'warning', headline: error, message: 'Channel was not renamed, request failed' };
+    return getErrNotificationWithMessage(error, 'Channel was not renamed, request failed');
   },
   [actions.removeChannelRequestFailure](_, { payload: { error } }) {
-    return { type: 'warning', headline: error, message: 'Channel was not removed, request failed' };
+    return getErrNotificationWithMessage(error, 'Channel was not removed, request failed');
   },
 }, null);
 
@@ -116,37 +148,19 @@ const formReducers = formReducer.plugin({
     [actions.sendMessageRequestPending](state) {
       return {
         ...state,
-        fields: {
-          messageText: {
-            requestPending: true,
-          },
-        },
+        ...getFieldRequestPendingState('messageText'),
       };
     },
     [actions.sendMessageRequestFailure](state) {
       return {
         ...state,
-        fields: {
-          messageText: {
-            requestPending: false,
-          },
-        },
+        ...getFieldRequestFailureState('messageText'),
       };
     },
     [actions.sendMessageRequestSuccess](state) {
       return {
         ...state,
-        values: {
-          messageText: undefined,
-        },
-        registeredFields: {
-          messageText: undefined,
-        },
-        fields: {
-          newMessage: {
-            messageText: false,
-          },
-        },
+        ...getFieldRequestSuccessState('messageText'),
       };
     },
   }, {}),
@@ -157,17 +171,7 @@ const formReducers = formReducer.plugin({
     )](state) {
       return {
         ...state,
-        values: {
-          modalInput: undefined,
-        },
-        registeredFields: {
-          modalInput: undefined,
-        },
-        fields: {
-          modalInput: {
-            requestPending: false,
-          },
-        },
+        ...getFieldRequestSuccessState('modalInput'),
       };
     },
     [combineActions(
@@ -176,11 +180,7 @@ const formReducers = formReducer.plugin({
     )](state) {
       return {
         ...state,
-        fields: {
-          modalInput: {
-            requestPending: false,
-          },
-        },
+        ...getFieldRequestFailureState('modalInput'),
       };
     },
     [combineActions(
@@ -189,11 +189,7 @@ const formReducers = formReducer.plugin({
     )](state) {
       return {
         ...state,
-        fields: {
-          modalInput: {
-            requestPending: true,
-          },
-        },
+        ...getFieldRequestPendingState('modalInput'),
       };
     },
   }, {}),
