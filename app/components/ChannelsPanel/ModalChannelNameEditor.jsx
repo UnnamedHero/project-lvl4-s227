@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
 
-import InputField from './InputField';
+import InputField from '../InputField';
 
 @reduxForm({
   form: 'ModalEditor',
