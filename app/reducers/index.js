@@ -40,13 +40,13 @@ const channels = handleActions({
 }, {});
 
 const addChannelState = handleActions({
-  [actions.addChannelRequest]() {
+  [actions.addChannelRequestPending]() {
     return 'requested';
   },
-  [actions.addChannelSuccess]() {
+  [actions.addChannelRequestSuccess]() {
     return 'success';
   },
-  [actions.addChannelFailure]() {
+  [actions.addChannelRequestFailure]() {
     return 'failure';
   },
 }, 'none');
@@ -76,19 +76,19 @@ const removeChannelState = handleActions({
 }, 'none');
 
 const sendMessageState = handleActions({
-  [actions.sendMessageRequest]() {
+  [actions.sendMessageRequestPending]() {
     return 'requested';
   },
-  [actions.sendMessageSuccess]() {
+  [actions.sendMessageRequestSuccess]() {
     return 'success';
   },
-  [actions.sendMessageFailure]() {
+  [actions.sendMessageRequestFailure]() {
     return 'failure';
   },
 }, 'none');
 
 const messages = handleActions({
-  [actions.addMessageSocket](state, { payload: { message } }) {
+  [actions.addMessage](state, { payload: { message } }) {
     return [...state, message];
   },
   [actions.removeChannelSocket](state, { payload: { id } }) {
@@ -101,14 +101,14 @@ const notification = handleActions({
     const info = null;
     return info;
   },
-  [actions.sendMessageSuccess]() {
+  [actions.sendMessageRequestSuccess]() {
     const info = null;
     return info;
   },
-  [actions.sendMessageFailure](state, { payload: { error } }) {
+  [actions.sendMessageRequestFailure](state, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Message was not delivered to server' };
   },
-  [actions.addChannelFailure](state, { payload: { error } }) {
+  [actions.addChannelRequestFailure](state, { payload: { error } }) {
     return { type: 'warning', headline: error, message: 'Channel was not added, request failed' };
   },
   [actions.renameChannelFailure](_, { payload: { error } }) {
@@ -121,7 +121,7 @@ const notification = handleActions({
 
 const formReducers = formReducer.plugin({
   NewMessage: handleActions({
-    [actions.sendMessageRequest](state) {
+    [actions.sendMessageRequestPending](state) {
       return {
         ...state,
         fields: {
@@ -131,7 +131,7 @@ const formReducers = formReducer.plugin({
         },
       };
     },
-    [actions.sendMessageFailure](state) {
+    [actions.sendMessageRequestFailure](state) {
       return {
         ...state,
         fields: {
@@ -141,7 +141,7 @@ const formReducers = formReducer.plugin({
         },
       };
     },
-    [actions.sendMessageSuccess](state) {
+    [actions.sendMessageRequestSuccess](state) {
       return {
         ...state,
         values: {
@@ -160,7 +160,7 @@ const formReducers = formReducer.plugin({
   }, {}),
   ModalEditor: handleActions({
     [combineActions(
-      actions.addChannelSuccess,
+      actions.addChannelRequestSuccess,
       actions.renameChannelSuccess,
     )](state) {
       return {
@@ -179,7 +179,7 @@ const formReducers = formReducer.plugin({
       };
     },
     [combineActions(
-      actions.addChannelFailure,
+      actions.addChannelRequestFailure,
       actions.renameChannelFailure,
     )](state) {
       return {
@@ -192,7 +192,7 @@ const formReducers = formReducer.plugin({
       };
     },
     [combineActions(
-      actions.addChannelRequest,
+      actions.addChannelRequestPending,
       actions.renameChannelRequest,
     )](state) {
       return {
