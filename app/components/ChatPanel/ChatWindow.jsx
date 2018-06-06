@@ -16,7 +16,7 @@ class ChatWindow extends React.Component {
         <div className="d-flex w-100">
           <p className="mb-1 font-weight-bold">{message.author}:</p>
         </div>
-        <p className="mb-1">{message.body}</p>
+        <p className="mb-1 word-wrap-bw">{message.body}</p>
       </div>));
   }
 
