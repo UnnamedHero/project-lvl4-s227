@@ -15,5 +15,8 @@ env:
   node: true
   jest: true
 
+# rules:
+#   react/prop-types: 0
 rules:
-  react/prop-types: 0
+  react/forbid-prop-types: 
+    forbid: [any, array]

@@ -1,1 +1,1 @@
-web: NODE_ENV='production' npm run babel-node -- dist/bin/slack.js
+web: NODE_ENV='production' node -- dist/bin/slack.js

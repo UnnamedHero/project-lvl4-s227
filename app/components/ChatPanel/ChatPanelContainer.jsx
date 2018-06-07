@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ChatHeader from './ChatHeader';
 import ChatWindow from './ChatWindow';
 import NewMessageForm from './NewMessageForm';
@@ -18,6 +19,19 @@ const mapStateToProps = (state) => {
 
 @connect(mapStateToProps)
 class ChatPanelContainer extends React.Component {
+  static propTypes = {
+    currentChannelId: PropTypes.number.isRequired,
+    messages: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      author: PropTypes.string,
+      body: PropTypes.string,
+    })).isRequired,
+    currentChannelName: PropTypes.string.isRequired,
+    userName: PropTypes.string.isRequired,
+    sendMessageState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
+    sendMessageRequest: PropTypes.func.isRequired,
+  }
+
   sendMessage = (messageText) => {
     this.props.sendMessageRequest(messageText, this.props.currentChannelId, this.props.userName);
   }

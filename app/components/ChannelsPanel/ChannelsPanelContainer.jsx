@@ -1,6 +1,7 @@
 import React from 'react';
 import find from 'lodash/find';
 import { getFormSyncErrors } from 'redux-form';
+import PropTypes from 'prop-types';
 import ChannelsPanelHeader from './ChannelsPanelHeader';
 import ChannelsList from './ChannelsList';
 import ModalChannelNameEditor from './ModalChannelNameEditor';
@@ -10,7 +11,6 @@ import connect from '../../connect';
 const mapStateToProps = (state) => {
   const props = {
     channelsList: state.channels.channelsList,
-    defaultChannelId: state.channels.defaultChannelId,
     currentChannelId: state.channels.currentChannelId,
     addChannelState: state.addChannelState,
     renameChannelState: state.renameChannelState,
@@ -21,7 +21,24 @@ const mapStateToProps = (state) => {
 };
 
 @connect(mapStateToProps)
-class ChannelsPanel extends React.Component {
+class ChannelsPanelContainer extends React.Component {
+  static propTypes = {
+    channelsList: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      removable: PropTypes.bool.isRequired,
+    })).isRequired,
+    currentChannelId: PropTypes.number.isRequired,
+    addChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
+    renameChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
+    removeChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
+    modalInputErrors: PropTypes.object.isRequired,
+    changeCurrentChannel: PropTypes.func.isRequired,
+    addChannelRequest: PropTypes.func.isRequired,
+    renameChannelRequest: PropTypes.func.isRequired,
+    removeChannelRequest: PropTypes.func.isRequired,
+  }
+
   state = {
     editModeOn: false,
     addModal: false,
@@ -172,4 +189,4 @@ class ChannelsPanel extends React.Component {
   }
 }
 
-export default ChannelsPanel;
+export default ChannelsPanelContainer;

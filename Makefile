@@ -19,7 +19,7 @@ check-types:
 	npm run flow
 
 lint:
-	npm run eslint .
+	npm run eslint . -- --ext .js --ext .jsx
 
 publish:
 	git push heroku master
