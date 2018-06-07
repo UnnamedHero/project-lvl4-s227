@@ -50,7 +50,7 @@ const channels = handleActions({
     const newCurrentChannelId = state.currentChannelId === id ?
       state.defaultChannelId :
       state.currentChannelId;
-    return { channelsList: newChannels, currentChannelId: newCurrentChannelId };
+    return { ...state, channelsList: newChannels, currentChannelId: newCurrentChannelId };
   },
   [actions.renameChannel](state, { payload: { channel: { id, name: newName } } }) {
     const newChannels = state.channelsList.map((ch) => {
