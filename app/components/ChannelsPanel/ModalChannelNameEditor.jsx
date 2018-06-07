@@ -3,7 +3,7 @@ import { Field, reduxForm, propTypes as reduxPropTypes } from 'redux-form';
 import { Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import InputField from '../InputField';
-import isRequestFinished from './modalHelpers';
+import isRequestSuccess from './modalHelpers';
 
 @reduxForm({ form: 'ModalEditor' })
 class ModalChannelNameEditor extends React.Component {
@@ -27,7 +27,7 @@ class ModalChannelNameEditor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (isRequestFinished(prevProps.requestState, this.props.requestState)) {
+    if (isRequestSuccess(prevProps.requestState, this.props.requestState)) {
       this.props.onCloseHandler();
     }
   }
