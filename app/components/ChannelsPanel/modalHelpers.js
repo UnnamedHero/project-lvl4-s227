@@ -1,7 +1,4 @@
-const isRequestSuccess = (prevState, currentState) => {
-  const stateChanged = prevState !== currentState;
-  const requestSuccess = currentState === 'success';
-  return stateChanged && requestSuccess;
-};
+const isRequestSuccess = (prevState, currentState) =>
+  prevState === 'requested' && currentState === 'success';
 
 export default isRequestSuccess;
