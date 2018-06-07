@@ -7,14 +7,17 @@ class InputField extends React.Component {
   static defaultProps = {
     id: null,
     requestPending: false,
+    meta: {},
+    type: 'input',
+    input: {},
   }
 
   static propTypes = {
     id: PropTypes.string,
     requestPending: PropTypes.bool,
-    input: PropTypes.any, // eslint-disable-line
-    type: PropTypes.any, // eslint-disable-line
-    meta: PropTypes.any, // eslint-disable-line
+    input: PropTypes.object,
+    type: PropTypes.string,
+    meta: PropTypes.object,
   }
 
   constructor(props) {

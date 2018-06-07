@@ -9,7 +9,7 @@ import isRequestFinished from './modalHelpers';
 class ModalChannelNameEditor extends React.Component {
   static defaultProps = {
     isValidInput: true,
-    initialValues: '',
+    initialValues: {},
     enableReinitialize: false,
   };
 
@@ -17,17 +17,12 @@ class ModalChannelNameEditor extends React.Component {
     ...reduxPropTypes,
     id: PropTypes.string.isRequired,
     submitLabel: PropTypes.string.isRequired,
-    channelToRename: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      removable: PropTypes.bool.isRequired,
-    }).isRequired,
     onSubmitHandler: PropTypes.func.isRequired,
     validate: PropTypes.func.isRequired,
     onCloseHandler: PropTypes.func.isRequired,
     requestState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
     enableReinitialize: PropTypes.bool,
-    initialValues: PropTypes.string,
+    initialValues: PropTypes.object,
     isValidInput: PropTypes.bool,
   }
 
