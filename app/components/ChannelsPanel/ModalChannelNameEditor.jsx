@@ -1,16 +1,35 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, propTypes as reduxPropTypes } from 'redux-form';
 import { Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
+import PropTypes from 'prop-types';
 import InputField from '../InputField';
 import isRequestFinished from './modalHelpers';
 
-@reduxForm({
-  form: 'ModalEditor',
-})
+@reduxForm({ form: 'ModalEditor' })
 class ModalChannelNameEditor extends React.Component {
   static defaultProps = {
     isValidInput: true,
+    initialValues: '',
+    enableReinitialize: false,
   };
+
+  static propTypes = {
+    ...reduxPropTypes,
+    id: PropTypes.string.isRequired,
+    submitLabel: PropTypes.string.isRequired,
+    channelToRename: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      removable: PropTypes.bool.isRequired,
+    }).isRequired,
+    onSubmitHandler: PropTypes.func.isRequired,
+    validate: PropTypes.func.isRequired,
+    onCloseHandler: PropTypes.func.isRequired,
+    requestState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
+    enableReinitialize: PropTypes.bool,
+    initialValues: PropTypes.string,
+    isValidInput: PropTypes.bool,
+  }
 
   componentDidUpdate(prevProps) {
     if (isRequestFinished(prevProps.requestState, this.props.requestState)) {

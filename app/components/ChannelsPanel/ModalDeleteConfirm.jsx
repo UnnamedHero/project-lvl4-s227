@@ -1,8 +1,20 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import PropTypes from 'prop-types';
 import isRequestFinished from './modalHelpers';
 
 class ModalDeleteConfirm extends React.Component {
+  static propTypes = {
+    channelToRemove: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      removable: PropTypes.bool.isRequired,
+    }).isRequired,
+    onConfirmHandler: PropTypes.func.isRequired,
+    onCloseHandler: PropTypes.func.isRequired,
+    requestState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
+  }
+
   componentDidUpdate(prevProps) {
     if (isRequestFinished(prevProps.requestState, this.props.requestState)) {
       this.props.onCloseHandler();

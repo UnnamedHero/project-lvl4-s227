@@ -1,8 +1,22 @@
 import React from 'react';
 import { ListGroup, ListGroupItem, Button, ButtonGroup } from 'reactstrap';
 import cn from 'classnames';
+import PropTypes from 'prop-types';
 
 class ChannelsList extends React.Component {
+  static propTypes = {
+    editModeOn: PropTypes.bool.isRequired,
+    channelsList: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      removable: PropTypes.bool.isRequired,
+    })).isRequired,
+    currentChannelId: PropTypes.number.isRequired,
+    handleOnChannelClick: PropTypes.func.isRequired,
+    onRemoveClickHandler: PropTypes.func.isRequired,
+    onRenameClickHandler: PropTypes.func.isRequired,
+  }
+
   makeItemProps(channel) {
     const isCurrentChannel = this.props.currentChannelId === channel.id;
     return this.props.editModeOn ? {

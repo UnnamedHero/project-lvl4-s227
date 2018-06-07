@@ -1,6 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class ChatWindow extends React.Component {
+  static propTypes = {
+    messages: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      author: PropTypes.string,
+      body: PropTypes.string,
+    })).isRequired,
+  }
+
   constructor(props) {
     super(props);
     this.scrollTarget = React.createRef();
@@ -28,4 +37,5 @@ class ChatWindow extends React.Component {
       </div>);
   }
 }
+
 export default ChatWindow;

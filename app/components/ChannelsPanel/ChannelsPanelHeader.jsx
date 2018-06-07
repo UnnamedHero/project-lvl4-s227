@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { Button } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 const ChannelsPanelHeader = (props) => {
   const { editModeOn, handleToggleEditMode, handleToggleAddModal } = props;
@@ -21,6 +22,12 @@ const ChannelsPanelHeader = (props) => {
       </div>
     </div>
   );
+};
+
+ChannelsPanelHeader.propTypes = {
+  editModeOn: PropTypes.bool.isRequired,
+  handleToggleEditMode: PropTypes.func.isRequired,
+  handleToggleAddModal: PropTypes.func.isRequired,
 };
 
 export default ChannelsPanelHeader;

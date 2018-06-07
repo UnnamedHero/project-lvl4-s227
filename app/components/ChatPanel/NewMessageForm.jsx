@@ -1,23 +1,26 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, propTypes as reduxPropTypes } from 'redux-form';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 import InputField from '../InputField';
 
 @reduxForm({ form: 'NewMessage' })
 class NewMessageForm extends React.Component {
-  sendMessage = (values) => {
-    this.props.sendMessage(values, this.props.currentChannelId, this.props.userName);
+  static propTypes = {
+    ...reduxPropTypes,
+    sendMessageHandler: PropTypes.func.isRequired,
+    sendMessageState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
   }
 
   render() {
-    const { sendMessageHandler, sendMessageState } = this.props;
+    const { sendMessageState, handleSubmit, sendMessageHandler } = this.props;
     const requestPending = sendMessageState !== 'requested';
 
     const buttonClasses = {
       disabled: requestPending,
     };
     return (
-      <form onSubmit={this.props.handleSubmit(sendMessageHandler)} >
+      <form onSubmit={handleSubmit(sendMessageHandler)}>
         <Field name="messageText" component={InputField} />
         <button type="submit" hidden className={cn(buttonClasses)} />
       </form>);
