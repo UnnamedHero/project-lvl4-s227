@@ -11,7 +11,6 @@ import connect from '../../connect';
 const mapStateToProps = (state) => {
   const props = {
     channelsList: state.channels.channelsList,
-    defaultChannelId: state.channels.defaultChannelId,
     currentChannelId: state.channels.currentChannelId,
     addChannelState: state.addChannelState,
     renameChannelState: state.renameChannelState,
@@ -29,12 +28,11 @@ class ChannelsPanelContainer extends React.Component {
       name: PropTypes.string.isRequired,
       removable: PropTypes.bool.isRequired,
     })).isRequired,
-    defaultChannelId: PropTypes.number.isRequired,
     currentChannelId: PropTypes.number.isRequired,
     addChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
     renameChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
     removeChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
-    modalInputErrors: PropTypes.object.isRequired, // eslint-disable-line
+    modalInputErrors: PropTypes.object.isRequired,
     changeCurrentChannel: PropTypes.func.isRequired,
     addChannelRequest: PropTypes.func.isRequired,
     renameChannelRequest: PropTypes.func.isRequired,
