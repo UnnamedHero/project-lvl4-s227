@@ -17,3 +17,6 @@ env:
 
 # rules:
 #   react/prop-types: 0
+rules:
+  react/forbid-prop-types: 
+    forbid: [any, array]
