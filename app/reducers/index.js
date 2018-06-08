@@ -8,7 +8,7 @@ const user = handleActions({}, {});
 const getFieldRequestPendingState = fieldName => ({
   fields: {
     [fieldName]: {
-      requestPending: true,
+      isRequestPending: true,
     },
   },
 });
@@ -16,7 +16,7 @@ const getFieldRequestPendingState = fieldName => ({
 const getFieldRequestFailureState = fieldName => ({
   fields: {
     [fieldName]: {
-      requestPending: false,
+      isRequestPending: false,
     },
   },
 });
@@ -30,7 +30,7 @@ const getFieldRequestSuccessState = fieldName => ({
   },
   fields: {
     [fieldName]: {
-      requestPending: false,
+      isRequestPending: false,
     },
   },
 });
