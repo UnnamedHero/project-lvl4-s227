@@ -11,7 +11,7 @@ export const getCurrentChannelMessagesSelector = createSelector(
   (messages, currentChannelId) => messages.filter(m => m.channelId === currentChannelId),
 );
 
-export const getCurrentChannelName = createSelector(
+export const getCurrentChannelNameSelector = createSelector(
   getChannels,
   getCurrentChannel,
   (channels, currentChannelId) => find(channels, channel => channel.id === currentChannelId).name,

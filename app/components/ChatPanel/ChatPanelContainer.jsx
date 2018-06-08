@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import ChatHeader from './ChatHeader';
 import ChatWindow from './ChatWindow';
 import NewMessageForm from './NewMessageForm';
-import { getCurrentChannelMessagesSelector, getCurrentChannelName } from '../../selectors';
+import { getCurrentChannelMessagesSelector, getCurrentChannelNameSelector } from '../../selectors';
 import connect from '../../connect';
 
 const mapStateToProps = (state) => {
   const props = {
     currentChannelId: state.channels.currentChannelId,
     messages: getCurrentChannelMessagesSelector(state),
-    currentChannelName: getCurrentChannelName(state),
+    currentChannelName: getCurrentChannelNameSelector(state),
     userName: state.user.name,
     sendMessageState: state.sendMessageState,
   };
