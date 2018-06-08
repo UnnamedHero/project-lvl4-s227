@@ -143,56 +143,60 @@ const notification = handleActions({
   },
 }, null);
 
+const NewMessage = handleActions({
+  [actions.sendMessageRequestPending](state) {
+    return {
+      ...state,
+      ...getFieldRequestPendingState('messageText'),
+    };
+  },
+  [actions.sendMessageRequestFailure](state) {
+    return {
+      ...state,
+      ...getFieldRequestFailureState('messageText'),
+    };
+  },
+  [actions.sendMessageRequestSuccess](state) {
+    return {
+      ...state,
+      ...getFieldRequestSuccessState('messageText'),
+    };
+  },
+}, {});
+
+const ModalEditor = handleActions({
+  [combineActions(
+    actions.addChannelRequestSuccess,
+    actions.renameChannelRequestSuccess,
+  )](state) {
+    return {
+      ...state,
+      ...getFieldRequestSuccessState('modalInput'),
+    };
+  },
+  [combineActions(
+    actions.addChannelRequestFailure,
+    actions.renameChannelRequestFailure,
+  )](state) {
+    return {
+      ...state,
+      ...getFieldRequestFailureState('modalInput'),
+    };
+  },
+  [combineActions(
+    actions.addChannelRequestPending,
+    actions.renameChannelRequestPending,
+  )](state) {
+    return {
+      ...state,
+      ...getFieldRequestPendingState('modalInput'),
+    };
+  },
+}, {});
+
 const formReducers = formReducer.plugin({
-  NewMessage: handleActions({
-    [actions.sendMessageRequestPending](state) {
-      return {
-        ...state,
-        ...getFieldRequestPendingState('messageText'),
-      };
-    },
-    [actions.sendMessageRequestFailure](state) {
-      return {
-        ...state,
-        ...getFieldRequestFailureState('messageText'),
-      };
-    },
-    [actions.sendMessageRequestSuccess](state) {
-      return {
-        ...state,
-        ...getFieldRequestSuccessState('messageText'),
-      };
-    },
-  }, {}),
-  ModalEditor: handleActions({
-    [combineActions(
-      actions.addChannelRequestSuccess,
-      actions.renameChannelRequestSuccess,
-    )](state) {
-      return {
-        ...state,
-        ...getFieldRequestSuccessState('modalInput'),
-      };
-    },
-    [combineActions(
-      actions.addChannelRequestFailure,
-      actions.renameChannelRequestFailure,
-    )](state) {
-      return {
-        ...state,
-        ...getFieldRequestFailureState('modalInput'),
-      };
-    },
-    [combineActions(
-      actions.addChannelRequestPending,
-      actions.renameChannelRequestPending,
-    )](state) {
-      return {
-        ...state,
-        ...getFieldRequestPendingState('modalInput'),
-      };
-    },
-  }, {}),
+  NewMessage,
+  ModalEditor,
 });
 
 export default combineReducers({
