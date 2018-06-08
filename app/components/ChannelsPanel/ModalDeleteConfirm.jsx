@@ -28,18 +28,18 @@ class ModalDeleteConfirm extends React.Component {
       onCloseHandler,
       requestState,
     } = this.props;
-    const reqInPropgress = requestState === 'requested';
-    const bodyMessage = reqInPropgress ?
+    const requestPending = requestState === 'requested';
+    const modalBody = requestPending ?
       <ModalBody>Deleting channel <span className="font-weight-bold">{channelToRemove.name}</span>. Please wait.</ModalBody> :
       <ModalBody>Are you sure to delete channel <span className="font-weight-bold">{channelToRemove.name}</span>?</ModalBody>;
 
     return (
       <Modal isOpen backdrop="static">
         <ModalHeader>Operation warning!</ModalHeader>
-        {bodyMessage}
+        {modalBody}
         <ModalFooter>
-          <Button color="danger" onClick={onConfirmHandler} disabled={reqInPropgress}>Delete</Button>
-          <Button color="secondary" onClick={onCloseHandler} disabled={reqInPropgress}>Cancel</Button>
+          <Button color="danger" onClick={onConfirmHandler} disabled={requestPending}>Delete</Button>
+          <Button color="secondary" onClick={onCloseHandler} disabled={requestPending}>Cancel</Button>
         </ModalFooter>
       </Modal>
     );
