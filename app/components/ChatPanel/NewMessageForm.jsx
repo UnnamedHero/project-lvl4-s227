@@ -14,10 +14,10 @@ class NewMessageForm extends React.Component {
 
   render() {
     const { sendMessageState, handleSubmit, sendMessageHandler } = this.props;
-    const requestPending = sendMessageState !== 'requested';
+    const isRequestPending = sendMessageState !== 'requested';
 
     const buttonClasses = {
-      disabled: requestPending,
+      disabled: isRequestPending,
     };
     return (
       <form onSubmit={handleSubmit(sendMessageHandler)}>

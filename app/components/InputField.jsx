@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 class InputField extends React.Component {
   static defaultProps = {
     id: null,
-    requestPending: false,
+    isRequestPending: false,
     meta: {},
     type: 'input',
     input: {},
@@ -14,7 +14,7 @@ class InputField extends React.Component {
 
   static propTypes = {
     id: PropTypes.string,
-    requestPending: PropTypes.bool,
+    isRequestPending: PropTypes.bool,
     input: PropTypes.object,
     type: PropTypes.string,
     meta: PropTypes.object,
@@ -42,10 +42,10 @@ class InputField extends React.Component {
       id, input, type, meta,
     } = this.props;
     const animationClass = {
-      'request-sending': meta.requestPending,
+      'request-sending': meta.isRequestPending,
     };
     const disabledProp = {
-      disabled: meta.requestPending,
+      disabled: meta.isRequestPending,
     };
     return (
       <div className="input-group">

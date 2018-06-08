@@ -17,7 +17,7 @@ class ChannelsList extends React.Component {
     onRenameClickHandler: PropTypes.func.isRequired,
   }
 
-  makeItemProps(channel) {
+  makeChannelItemProps(channel) {
     const isCurrentChannel = this.props.currentChannelId === channel.id;
     return this.props.editModeOn ? {
       className: 'text-body d-flex justify-content-between align-items-center',
@@ -49,14 +49,12 @@ class ChannelsList extends React.Component {
 
   renderChannelsList = () => {
     const { channelsList, editModeOn } = this.props;
-    return channelsList.map((channel) => {
-      const itemProps = this.makeItemProps(channel);
-      return (
-        <ListGroupItem key={channel.id} {...itemProps}>
-          {channel.name}
-          { editModeOn && this.renderChannelEditButtons(channel) }
-        </ListGroupItem>);
-    });
+    return channelsList.map(channel => (
+      <ListGroupItem key={channel.id} {...this.makeChannelItemProps(channel)}>
+        {channel.name}
+        { editModeOn && this.renderChannelEditButtons(channel) }
+      </ListGroupItem>
+    ));
   }
 
   render() {
