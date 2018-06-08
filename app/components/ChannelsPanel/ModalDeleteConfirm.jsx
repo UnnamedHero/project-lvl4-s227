@@ -28,8 +28,8 @@ class ModalDeleteConfirm extends React.Component {
       onCloseHandler,
       requestState,
     } = this.props;
-    const requestPending = requestState === 'requested';
-    const modalBody = requestPending ?
+    const isRequestPending = requestState === 'requested';
+    const modalBody = isRequestPending ?
       <ModalBody>Deleting channel <span className="font-weight-bold">{channelToRemove.name}</span>. Please wait.</ModalBody> :
       <ModalBody>Are you sure to delete channel <span className="font-weight-bold">{channelToRemove.name}</span>?</ModalBody>;
 
@@ -38,8 +38,8 @@ class ModalDeleteConfirm extends React.Component {
         <ModalHeader>Operation warning!</ModalHeader>
         {modalBody}
         <ModalFooter>
-          <Button color="danger" onClick={onConfirmHandler} disabled={requestPending}>Delete</Button>
-          <Button color="secondary" onClick={onCloseHandler} disabled={requestPending}>Cancel</Button>
+          <Button color="danger" onClick={onConfirmHandler} disabled={isRequestPending}>Delete</Button>
+          <Button color="secondary" onClick={onCloseHandler} disabled={isRequestPending}>Cancel</Button>
         </ModalFooter>
       </Modal>
     );
