@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
-import isRequestFinished from './modalHelpers';
+import isRequestSuccess from './modalHelpers';
 
 class ModalDeleteConfirm extends React.Component {
   static propTypes = {
@@ -16,7 +16,7 @@ class ModalDeleteConfirm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (isRequestFinished(prevProps.requestState, this.props.requestState)) {
+    if (isRequestSuccess(prevProps.requestState, this.props.requestState)) {
       this.props.onCloseHandler();
     }
   }

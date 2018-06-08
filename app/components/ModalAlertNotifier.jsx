@@ -34,7 +34,7 @@ AlertNotifier.defaultProps = {
 };
 
 AlertNotifier.propTypes = {
-  type: PropTypes.oneOf(['danger', 'none']),
+  type: PropTypes.oneOf(['warning', 'none']),
   headline: PropTypes.string,
   message: PropTypes.string,
   dismissNotification: PropTypes.func,

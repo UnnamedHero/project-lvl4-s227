@@ -1,7 +1,4 @@
-const isRequestFinished = (prevState, currentState) => {
-  const stateChanged = prevState !== currentState;
-  const requestPending = currentState === 'requested';
-  return stateChanged && !requestPending;
-};
+const isRequestSuccess = (prevState, currentState) =>
+  prevState === 'requested' && currentState === 'success';
 
-export default isRequestFinished;
+export default isRequestSuccess;
