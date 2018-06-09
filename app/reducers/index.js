@@ -121,13 +121,15 @@ const messages = handleActions({
 }, []);
 
 const notification = handleActions({
-  [actions.dismissNotification]() {
-    const info = null;
-    return info;
-  },
-  [actions.sendMessageRequestSuccess]() {
-    const info = null;
-    return info;
+  [combineActions(
+    actions.dismissNotification,
+    actions.sendMessageRequestSuccess,
+    actions.addChannelRequestSuccess,
+    actions.removeChannelRequestSuccess,
+    actions.renameChannelRequestSuccess,
+  )]() {
+    const errNotification = { type: 'none' };
+    return errNotification;
   },
   [actions.sendMessageRequestFailure](_, { payload: { error } }) {
     return getErrNotificationWithMessage(error, 'Message was not delivered to server');
@@ -141,7 +143,7 @@ const notification = handleActions({
   [actions.removeChannelRequestFailure](_, { payload: { error } }) {
     return getErrNotificationWithMessage(error, 'Channel was not removed, request failed');
   },
-}, null);
+}, { type: 'none' });
 
 const NewMessage = handleActions({
   [actions.sendMessageRequestPending](state) {
