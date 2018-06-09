@@ -1,1 +1,1 @@
-web: NODE_ENV='production' node -- dist/bin/slack.js
+web: NODE_ENV='production' node --optimize_for_size --max_old_space_size=460 dist/bin/slack.js
