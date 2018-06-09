@@ -27,17 +27,15 @@ const AlertNotifier = (props) => {
 };
 
 AlertNotifier.defaultProps = {
-  type: 'none',
   headline: '',
   message: '',
-  dismissNotification: () => {},
 };
 
 AlertNotifier.propTypes = {
-  type: PropTypes.oneOf(['warning', 'none']),
+  type: PropTypes.oneOf(['warning', 'none']).isRequired,
   headline: PropTypes.string,
   message: PropTypes.string,
-  dismissNotification: PropTypes.func,
+  dismissNotification: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps)(AlertNotifier);
