@@ -23,7 +23,7 @@ class ChannelsList extends React.Component {
 
     return (
       <ButtonGroup size="sm" >
-        <Button color="primary" onClick={onRenameClickHandler(channel)}>ren</Button>
+        <Button color="info" onClick={onRenameClickHandler(channel)}>ren</Button>
         <Button color="danger" onClick={onRemoveClickHandler(channel)}>del</Button>
       </ButtonGroup>
     );
