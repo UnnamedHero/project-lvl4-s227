@@ -166,10 +166,10 @@ class ChannelsPanelContainer extends React.Component {
   render() {
     return (
       <div className="d-flex flex-column vh-100">
-        <div className="text-white-50">
+        <div className="text-white-50 m-2">
           <ChannelsPanelHeader {...this.makeChannelsPanelHeaderProps()} />
         </div>
-        <div className="scrollable">
+        <div className="scrollable mb-2">
           <ChannelsList {...this.makeChannelsListProps()} />
         </div>
         { this.state.addModal && <ModalChannelNameEditor {...this.makeAddChannelProps()} /> }
