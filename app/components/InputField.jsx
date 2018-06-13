@@ -56,7 +56,7 @@ class InputField extends React.Component {
         </div>
         <input ref={this.inputEl} {...input} id={id} required type={type} className="form-control" autoComplete="off" {...disabledProp} />
         { meta.error &&
-        <Popover placement="top" isOpen target={id}>
+        <Popover placement="bottom" isOpen target={id}>
           <PopoverHeader className="bg-danger text-white">Error!</PopoverHeader>
           <PopoverBody>{meta.error}</PopoverBody>
         </Popover> }
