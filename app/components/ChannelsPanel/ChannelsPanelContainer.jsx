@@ -38,7 +38,6 @@ class ChannelsPanelContainer extends React.Component {
   }
 
   state = {
-    editModeOn: false,
     addModal: false,
     removeModal: false,
     renameModal: false,
@@ -58,14 +57,16 @@ class ChannelsPanelContainer extends React.Component {
     this.props.removeChannelRequest(this.state.channelToRemove.id);
   }
 
-  setChannelToRemove = channel => () => {
+  setChannelToRemove = channel => (event) => {
+    event.stopPropagation();
     this.setState({
       removeModal: true,
       channelToRemove: channel,
     });
   }
 
-  setChannelToRename = channel => () => {
+  setChannelToRename = channel => (event) => {
+    event.stopPropagation();
     this.setState({
       renameModal: true,
       channelToRename: channel,
@@ -88,10 +89,6 @@ class ChannelsPanelContainer extends React.Component {
       renameModal: false,
       channelToRename: {},
     });
-  }
-
-  toggleEditMode = () => {
-    this.setState({ editModeOn: !this.state.editModeOn });
   }
 
   toggleAddModal = () => {
@@ -153,7 +150,6 @@ class ChannelsPanelContainer extends React.Component {
 
   makeChannelsListProps() {
     return {
-      editModeOn: this.state.editModeOn,
       channelsList: this.props.channelsList,
       currentChannelId: this.props.currentChannelId,
       handleOnChannelClick: this.onChannelClick,
@@ -163,8 +159,6 @@ class ChannelsPanelContainer extends React.Component {
   }
   makeChannelsPanelHeaderProps() {
     return {
-      editModeOn: this.state.editModeOn,
-      handleToggleEditMode: this.toggleEditMode,
       handleToggleAddModal: this.toggleAddModal,
     };
   }
