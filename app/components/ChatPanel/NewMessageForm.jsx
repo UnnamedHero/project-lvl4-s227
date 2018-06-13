@@ -8,19 +8,19 @@ import InputField from '../InputField';
 class NewMessageForm extends React.Component {
   static propTypes = {
     ...reduxPropTypes,
-    sendMessageHandler: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
     sendMessageState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
   }
 
   render() {
-    const { sendMessageState, handleSubmit, sendMessageHandler } = this.props;
+    const { sendMessageState, handleSubmit } = this.props;
     const isRequestPending = sendMessageState !== 'requested';
 
     const buttonClasses = {
       disabled: isRequestPending,
     };
     return (
-      <form onSubmit={handleSubmit(sendMessageHandler)}>
+      <form onSubmit={handleSubmit}>
         <Field name="messageText" component={InputField} />
         <button type="submit" hidden className={cn(buttonClasses)} />
       </form>);

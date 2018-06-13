@@ -17,8 +17,7 @@ class ModalChannelNameEditor extends React.Component {
     ...reduxPropTypes,
     id: PropTypes.string.isRequired,
     submitLabel: PropTypes.string.isRequired,
-    onSubmitHandler: PropTypes.func.isRequired,
-    validate: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
     onCloseHandler: PropTypes.func.isRequired,
     requestState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
     enableReinitialize: PropTypes.bool,
@@ -39,7 +38,6 @@ class ModalChannelNameEditor extends React.Component {
       handleSubmit,
       validate,
       isValidInput,
-      onSubmitHandler,
       requestState,
       id,
     } = this.props;
@@ -49,7 +47,7 @@ class ModalChannelNameEditor extends React.Component {
       <Modal isOpen fade={false} backdrop="static">
         <ModalHeader>{submitLabel} channel</ModalHeader>
         <ModalBody>
-          <form onSubmit={handleSubmit(onSubmitHandler)} className="d-flex">
+          <form onSubmit={handleSubmit} className="d-flex">
             <Field name="modalInput" id={id} canSend validate={validate} component={InputField} />
             <button type="submit" className="btn btn-primary" disabled={!isValidInput || isRequestPending} >{submitLabel}</button>
             <Button color="secondary" onClick={onCloseHandler} disabled={isRequestPending}>Cancel</Button>

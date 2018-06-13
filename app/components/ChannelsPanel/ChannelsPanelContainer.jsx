@@ -1,6 +1,6 @@
 import React from 'react';
 import find from 'lodash/find';
-import { getFormSyncErrors } from 'redux-form';
+import { SubmissionError } from 'redux-form';
 import PropTypes from 'prop-types';
 import ChannelsPanelHeader from './ChannelsPanelHeader';
 import ChannelsList from './ChannelsList';
@@ -15,7 +15,6 @@ const mapStateToProps = (state) => {
     addChannelState: state.addChannelState,
     renameChannelState: state.renameChannelState,
     removeChannelState: state.removeChannelState,
-    modalInputErrors: getFormSyncErrors('ModalEditor')(state), // isValid selector do not work properly for field type validation
   };
   return props;
 };
@@ -32,7 +31,6 @@ class ChannelsPanelContainer extends React.Component {
     addChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
     renameChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
     removeChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
-    modalInputErrors: PropTypes.object.isRequired,
     changeCurrentChannel: PropTypes.func.isRequired,
     addChannelRequest: PropTypes.func.isRequired,
     renameChannelRequest: PropTypes.func.isRequired,
@@ -57,10 +55,12 @@ class ChannelsPanelContainer extends React.Component {
   }
 
   onAddChannel = ({ modalInput: name }) => {
+    this.validateChannelName(name);
     this.props.addChannelRequest(name);
   }
 
   onRenameChannel = ({ modalInput: newName }) => {
+    this.validateChannelName(newName);
     this.props.renameChannelRequest(this.state.channelToRename.id, newName);
   }
 
@@ -107,41 +107,37 @@ class ChannelsPanelContainer extends React.Component {
   validateChannelName = (name = '') => {
     const trimmedName = name.toString().trim();
     if (trimmedName.length === 0) {
-      return 'Channel name cannot be blank';
+      throw new SubmissionError({ modalInput: 'Channel name cannot be blank' });
     }
-    const isExists = find(this.props.channelsList, ch => ch.name === trimmedName);
-    if (isExists) {
-      return 'Channel name already exist';
+    const isNameExists = find(this.props.channelsList, ch => ch.name === trimmedName);
+    if (isNameExists) {
+      throw new SubmissionError({ modalInput: 'Channel name already exist' });
     }
-    return undefined;
+    if (name !== trimmedName) {
+      throw new SubmissionError({ modalInput: 'Channel name cannot contain whitespaces on both ends' });
+    }
   }
 
   makeAddChannelProps() {
-    const isValidInput = Object.keys(this.props.modalInputErrors).length === 0;
     return {
       id: 'addChannelInput',
       submitLabel: 'Add',
       onCloseHandler: this.toggleAddModal,
-      validate: this.validateChannelName,
-      onSubmitHandler: this.onAddChannel,
+      onSubmit: this.onAddChannel,
       requestState: this.props.addChannelState,
-      isValidInput,
     };
   }
 
   makeRenameChannelProps() {
-    const isValidInput = Object.keys(this.props.modalInputErrors).length === 0;
     return {
       id: 'renameChannelInput',
       submitLabel: 'Rename',
       channelToRename: this.state.channelToRename,
-      onSubmitHandler: this.onRenameChannel,
-      validate: this.validateChannelName,
+      onSubmit: this.onRenameChannel,
       onCloseHandler: this.closeRenameModal,
       requestState: this.props.renameChannelState,
       enableReinitialize: true,
       initialValues: { modalInput: this.state.channelToRename.name },
-      isValidInput,
     };
   }
 

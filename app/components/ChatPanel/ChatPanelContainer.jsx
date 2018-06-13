@@ -49,7 +49,7 @@ class ChatPanelContainer extends React.Component {
     };
 
     const newMessageFormProps = {
-      sendMessageHandler: this.sendMessage,
+      onSubmit: this.sendMessage,
       sendMessageState: this.props.sendMessageState,
     };
 
