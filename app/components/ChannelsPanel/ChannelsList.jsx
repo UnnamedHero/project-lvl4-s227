@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import { ListGroup, ListGroupItem, Button, ButtonGroup } from 'reactstrap';
 import PropTypes from 'prop-types';
 
@@ -22,7 +23,7 @@ class ChannelsList extends React.Component {
     const { onRemoveClickHandler, onRenameClickHandler } = this.props;
 
     return (
-      <ButtonGroup size="sm" >
+      <ButtonGroup size="sm">
         <Button color="info" onClick={onRenameClickHandler(channel)}>ren</Button>
         <Button color="danger" onClick={onRemoveClickHandler(channel)}>del</Button>
       </ButtonGroup>
@@ -37,8 +38,19 @@ class ChannelsList extends React.Component {
         active: isCurrentChannel,
         onClick: this.props.handleOnChannelClick(channel.id),
       };
+
+      const itemClasses = [
+        'text-white', 'd-flex',
+        'justify-content-between',
+        'align-items-center', 'px-2', 'text-white',
+        {
+          'bg-secondary': !isCurrentChannel,
+          'font-weight-bold': isCurrentChannel,
+        },
+      ];
+
       return (
-        <ListGroupItem key={channel.id} {...itemProps} className="text-body d-flex justify-content-between align-items-center">
+        <ListGroupItem key={channel.id} {...itemProps} className={cn(itemClasses)}>
           <span className="text-truncate">
             {channel.name}
           </span>

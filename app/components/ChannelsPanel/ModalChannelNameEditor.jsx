@@ -8,7 +8,6 @@ import isRequestSuccess from './modalHelpers';
 @reduxForm({ form: 'ModalEditor' })
 class ModalChannelNameEditor extends React.Component {
   static defaultProps = {
-    isValidInput: true,
     initialValues: {},
     enableReinitialize: false,
   };
@@ -22,7 +21,6 @@ class ModalChannelNameEditor extends React.Component {
     requestState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
     enableReinitialize: PropTypes.bool,
     initialValues: PropTypes.object,
-    isValidInput: PropTypes.bool,
   }
 
   componentDidUpdate(prevProps) {
@@ -37,7 +35,6 @@ class ModalChannelNameEditor extends React.Component {
       onCloseHandler,
       handleSubmit,
       validate,
-      isValidInput,
       requestState,
       id,
     } = this.props;
@@ -49,7 +46,7 @@ class ModalChannelNameEditor extends React.Component {
         <ModalBody>
           <form onSubmit={handleSubmit} className="d-flex">
             <Field name="modalInput" id={id} canSend validate={validate} component={InputField} />
-            <button type="submit" className="btn btn-primary" disabled={!isValidInput || isRequestPending} >{submitLabel}</button>
+            <button type="submit" className="btn btn-primary mx-2" disabled={isRequestPending} >{submitLabel}</button>
             <Button color="secondary" onClick={onCloseHandler} disabled={isRequestPending}>Cancel</Button>
           </form>
         </ModalBody>

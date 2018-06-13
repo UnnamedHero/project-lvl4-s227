@@ -3,7 +3,7 @@ import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 const ChannelsPanelHeader = props => (
-  <div className="flex-row">
+  <div className="flex-row text-white">
     Channels:{' '}
     <Button size="sm" onClick={props.handleToggleAddModal}>+</Button>
   </div>);
