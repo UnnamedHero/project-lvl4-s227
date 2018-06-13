@@ -54,16 +54,6 @@ class ChannelsPanelContainer extends React.Component {
     changeCurrentChannel({ id });
   }
 
-  onAddChannel = ({ modalInput: name }) => {
-    this.validateChannelName(name);
-    this.props.addChannelRequest(name);
-  }
-
-  onRenameChannel = ({ modalInput: newName }) => {
-    this.validateChannelName(newName);
-    this.props.renameChannelRequest(this.state.channelToRename.id, newName);
-  }
-
   onRemoveChannel = () => {
     this.props.removeChannelRequest(this.state.channelToRemove.id);
   }
@@ -80,6 +70,10 @@ class ChannelsPanelContainer extends React.Component {
       renameModal: true,
       channelToRename: channel,
     });
+  }
+
+  renameChannel = (newName) => {
+    this.props.renameChannelRequest(this.state.channelToRename.id, newName);
   }
 
   closeRemoveModal = () => {
@@ -104,7 +98,7 @@ class ChannelsPanelContainer extends React.Component {
     this.setState({ addModal: !this.state.addModal });
   }
 
-  validateChannelName = (name = '') => {
+  validateChannelName = (submitAction, { modalInput: name }) => {
     const trimmedName = name.toString().trim();
     if (trimmedName.length === 0) {
       throw new SubmissionError({ modalInput: 'Channel name cannot be blank' });
@@ -116,14 +110,18 @@ class ChannelsPanelContainer extends React.Component {
     if (name !== trimmedName) {
       throw new SubmissionError({ modalInput: 'Channel name cannot contain whitespaces on both ends' });
     }
+    submitAction(name);
   }
+
+  submitAddChannel = this.validateChannelName.bind(null, this.props.addChannelRequest);
+  submitRenameChannel = this.validateChannelName.bind(null, this.renameChannel);
 
   makeAddChannelProps() {
     return {
       id: 'addChannelInput',
       submitLabel: 'Add',
       onCloseHandler: this.toggleAddModal,
-      onSubmit: this.onAddChannel,
+      onSubmit: this.submitAddChannel,
       requestState: this.props.addChannelState,
     };
   }
@@ -133,7 +131,7 @@ class ChannelsPanelContainer extends React.Component {
       id: 'renameChannelInput',
       submitLabel: 'Rename',
       channelToRename: this.state.channelToRename,
-      onSubmit: this.onRenameChannel,
+      onSubmit: this.submitRenameChannel,
       onCloseHandler: this.closeRenameModal,
       requestState: this.props.renameChannelState,
       enableReinitialize: true,
