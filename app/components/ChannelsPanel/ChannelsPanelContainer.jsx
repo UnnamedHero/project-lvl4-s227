@@ -103,13 +103,16 @@ class ChannelsPanelContainer extends React.Component {
     if (trimmedName.length === 0) {
       throw new SubmissionError({ modalInput: 'Channel name cannot be blank' });
     }
+
+    if (name !== trimmedName) {
+      throw new SubmissionError({ modalInput: 'Channel name cannot contain whitespaces on both ends' });
+    }
+
     const isNameExists = find(this.props.channelsList, ch => ch.name === trimmedName);
     if (isNameExists) {
       throw new SubmissionError({ modalInput: 'Channel name already exist' });
     }
-    if (name !== trimmedName) {
-      throw new SubmissionError({ modalInput: 'Channel name cannot contain whitespaces on both ends' });
-    }
+
     submitAction(name);
   }
 
