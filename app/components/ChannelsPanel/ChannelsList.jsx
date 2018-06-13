@@ -1,11 +1,9 @@
 import React from 'react';
 import { ListGroup, ListGroupItem, Button, ButtonGroup } from 'reactstrap';
-import cn from 'classnames';
 import PropTypes from 'prop-types';
 
 class ChannelsList extends React.Component {
   static propTypes = {
-    editModeOn: PropTypes.bool.isRequired,
     channelsList: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
@@ -17,22 +15,6 @@ class ChannelsList extends React.Component {
     onRenameClickHandler: PropTypes.func.isRequired,
   }
 
-  makeChannelItemProps(channel) {
-    const isCurrentChannel = this.props.currentChannelId === channel.id;
-    return this.props.editModeOn ? {
-      className: 'text-body d-flex justify-content-between align-items-center',
-    } : {
-      tag: 'button',
-      action: true,
-      onClick: this.props.handleOnChannelClick(channel.id),
-      className: cn({
-        'text-white': isCurrentChannel,
-        'text-body': !isCurrentChannel,
-        active: isCurrentChannel,
-      }),
-    };
-  }
-
   renderChannelEditButtons(channel) {
     if (!channel.removable) {
       return null;
@@ -41,26 +23,34 @@ class ChannelsList extends React.Component {
 
     return (
       <ButtonGroup size="sm" >
-        <Button color="primary" onClick={onRenameClickHandler(channel)}>ren</Button>
+        <Button color="info" onClick={onRenameClickHandler(channel)}>ren</Button>
         <Button color="danger" onClick={onRemoveClickHandler(channel)}>del</Button>
       </ButtonGroup>
     );
   }
 
-  renderChannelsList = () => {
-    const { channelsList, editModeOn } = this.props;
-    return channelsList.map(channel => (
-      <ListGroupItem key={channel.id} {...this.makeChannelItemProps(channel)}>
-        {channel.name}
-        { editModeOn && this.renderChannelEditButtons(channel) }
-      </ListGroupItem>
-    ));
+  renderChannelsList() {
+    return this.props.channelsList.map((channel) => {
+      const isCurrentChannel = this.props.currentChannelId === channel.id;
+      const itemProps = {
+        action: true,
+        active: isCurrentChannel,
+        onClick: this.props.handleOnChannelClick(channel.id),
+      };
+      return (
+        <ListGroupItem key={channel.id} {...itemProps} className="text-body d-flex justify-content-between align-items-center">
+          <span className="text-truncate">
+            {channel.name}
+          </span>
+          { this.renderChannelEditButtons(channel) }
+        </ListGroupItem>);
+    });
   }
 
   render() {
     return (
       <div>
-        <ListGroup className="word-wrap-bw ">
+        <ListGroup>
           {this.renderChannelsList()}
         </ListGroup>
       </div>
