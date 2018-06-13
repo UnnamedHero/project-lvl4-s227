@@ -42,10 +42,11 @@ class ChannelsList extends React.Component {
       const itemClasses = [
         'text-white', 'd-flex',
         'justify-content-between',
-        'align-items-center', 'px-2', 'text-white',
+        'align-items-center', 'px-2',
         {
+          'text-dark': isCurrentChannel,
           'bg-secondary': !isCurrentChannel,
-          'font-weight-bold': isCurrentChannel,
+          'bg-light': isCurrentChannel,
         },
       ];
 
