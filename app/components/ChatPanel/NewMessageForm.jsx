@@ -22,7 +22,7 @@ class NewMessageForm extends React.Component {
       <form onSubmit={handleSubmit}>
         <div className="d-flex">
           <Field name="messageText" component={InputField} />
-          <button type="submit" {...disabledProp} >Send</button>
+          <button type="submit" className="ml-2" {...disabledProp} >Send</button>
         </div>
       </form>);
   }
