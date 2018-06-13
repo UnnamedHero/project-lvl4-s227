@@ -1,7 +1,6 @@
 import React from 'react';
 import { Field, reduxForm, propTypes as reduxPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
-import cn from 'classnames';
 import InputField from '../InputField';
 
 @reduxForm({ form: 'NewMessage' })
@@ -14,15 +13,17 @@ class NewMessageForm extends React.Component {
 
   render() {
     const { sendMessageState, handleSubmit } = this.props;
-    const isRequestPending = sendMessageState !== 'requested';
+    const isRequestPending = sendMessageState === 'requested';
 
-    const buttonClasses = {
+    const disabledProp = {
       disabled: isRequestPending,
     };
     return (
       <form onSubmit={handleSubmit}>
-        <Field name="messageText" component={InputField} />
-        <button type="submit" hidden className={cn(buttonClasses)} />
+        <div className="d-flex">
+          <Field name="messageText" component={InputField} />
+          <button type="submit" {...disabledProp} >Send</button>
+        </div>
       </form>);
   }
 }
