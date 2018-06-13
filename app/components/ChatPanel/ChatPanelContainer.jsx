@@ -58,10 +58,10 @@ class ChatPanelContainer extends React.Component {
         <div>
           <ChatHeader {...chatHeaderProps} />
         </div>
-        <div className="scrollable">
+        <div className="scrollable mb-2">
           <ChatWindow {...chatWindowsProps} />
         </div>
-        <div className="my-2">
+        <div className="mb-2 mt-auto">
           <NewMessageForm {...newMessageFormProps} />
         </div>
       </div>);
