@@ -5,6 +5,7 @@ import ChatWindow from './ChatWindow';
 import NewMessageForm from './NewMessageForm';
 import { getCurrentChannelMessagesSelector, getCurrentChannelNameSelector } from '../../selectors';
 import connect from '../../connect';
+import { messagesType, requestStateType } from '../../types';
 
 const mapStateToProps = (state) => {
   const props = {
@@ -21,14 +22,10 @@ const mapStateToProps = (state) => {
 class ChatPanelContainer extends React.Component {
   static propTypes = {
     currentChannelId: PropTypes.number.isRequired,
-    messages: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number,
-      author: PropTypes.string,
-      body: PropTypes.string,
-    })).isRequired,
+    messages: messagesType.isRequired,
     currentChannelName: PropTypes.string.isRequired,
     userName: PropTypes.string.isRequired,
-    sendMessageState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
+    sendMessageState: requestStateType.isRequired,
     sendMessageRequest: PropTypes.func.isRequired,
   }
 

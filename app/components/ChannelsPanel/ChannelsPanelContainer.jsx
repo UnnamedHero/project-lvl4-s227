@@ -7,6 +7,7 @@ import ChannelsList from './ChannelsList';
 import ModalChannelNameEditor from './ModalChannelNameEditor';
 import ModalDeleteConfirm from './ModalDeleteConfirm';
 import connect from '../../connect';
+import { channelsListType, requestStateType } from '../../types';
 
 const mapStateToProps = (state) => {
   const props = {
@@ -22,15 +23,11 @@ const mapStateToProps = (state) => {
 @connect(mapStateToProps)
 class ChannelsPanelContainer extends React.Component {
   static propTypes = {
-    channelsList: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      removable: PropTypes.bool.isRequired,
-    })).isRequired,
+    channelsList: channelsListType.isRequired,
     currentChannelId: PropTypes.number.isRequired,
-    addChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
-    renameChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
-    removeChannelState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
+    addChannelState: requestStateType.isRequired,
+    renameChannelState: requestStateType.isRequired,
+    removeChannelState: requestStateType.isRequired,
     changeCurrentChannel: PropTypes.func.isRequired,
     addChannelRequest: PropTypes.func.isRequired,
     renameChannelRequest: PropTypes.func.isRequired,

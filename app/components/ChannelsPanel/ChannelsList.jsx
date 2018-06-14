@@ -2,14 +2,11 @@ import React from 'react';
 import cn from 'classnames';
 import { ListGroup, ListGroupItem, Button, ButtonGroup } from 'reactstrap';
 import PropTypes from 'prop-types';
+import { channelsListType } from '../../types';
 
 class ChannelsList extends React.Component {
   static propTypes = {
-    channelsList: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      removable: PropTypes.bool.isRequired,
-    })).isRequired,
+    channelsList: channelsListType.isRequired,
     currentChannelId: PropTypes.number.isRequired,
     handleOnChannelClick: PropTypes.func.isRequired,
     onRemoveClickHandler: PropTypes.func.isRequired,
