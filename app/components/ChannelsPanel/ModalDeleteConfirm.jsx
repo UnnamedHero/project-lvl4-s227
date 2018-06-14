@@ -28,7 +28,7 @@ class ModalDeleteConfirm extends React.Component {
     const isRequestPending = requestState === 'requested';
     const modalBody = isRequestPending ?
       <ModalBody>Deleting channel <span className="font-weight-bold">{channelToRemove.name}</span>. Please wait.</ModalBody> :
-      <ModalBody>Are you sure to delete channel <span className="font-weight-bold">{channelToRemove.name}</span>?</ModalBody>;
+      <ModalBody>Are you sure to delete channel <span className="font-weight-bold word-wrap-bw">{channelToRemove.name}</span>?</ModalBody>;
 
     return (
       <Modal isOpen backdrop="static">
