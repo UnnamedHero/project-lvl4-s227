@@ -17,11 +17,11 @@ class ChatWindow extends React.Component {
 
   renderMessages() {
     return this.props.messages.map(message => (
-      <div className="list-group-item flex-column align-items-start w-100 bg-light" key={message.id}>
-        <div className="d-flex w-100">
-          <p className="mb-1 font-weight-bold">{message.author}:</p>
+      <div key={message.id} className="list-group-item flex-column align-items-start w-100 bg-light p-1 m-0">
+        <div className="d-flex w-100  ">
+          <p className="font-weight-bold p-0 m-0">{message.author}:</p>
         </div>
-        <p className="mb-1 word-wrap-bw">{message.body}</p>
+        <p className="word-wrap-bw p-0 m-0">{message.body}</p>
       </div>));
   }
 

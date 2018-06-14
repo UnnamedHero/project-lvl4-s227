@@ -14,6 +14,12 @@
   height: 100vh;  
 }
 
+@media (max-width: 575px) {
+  .vh-100 {
+    height: 50vh;
+  }
+}
+
 .request-sending {
   animation-name: request-animation;
   animation-duration: 1s;
