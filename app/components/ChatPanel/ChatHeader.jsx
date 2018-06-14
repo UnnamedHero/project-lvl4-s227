@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ChatHeader = props => (
-  <div>
+  <div className="word-wrap-bw">
     <h2>{props.userName}{' @ '}{props.currentChannelName}</h2>
   </div>);
 
