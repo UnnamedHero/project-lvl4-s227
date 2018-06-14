@@ -1,13 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { messagesType } from '../../types';
 
 class ChatWindow extends React.Component {
   static propTypes = {
-    messages: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number,
-      author: PropTypes.string,
-      body: PropTypes.string,
-    })).isRequired,
+    messages: messagesType.isRequired,
   }
 
   constructor(props) {
