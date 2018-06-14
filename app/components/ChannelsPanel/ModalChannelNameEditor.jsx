@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, reduxForm, propTypes as reduxPropTypes } from 'redux-form';
-import { Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import InputField from '../InputField';
 import isRequestSuccess from './modalHelpers';
@@ -46,11 +46,13 @@ class ModalChannelNameEditor extends React.Component {
         <ModalHeader>{submitLabel} channel</ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit} className="d-flex">
-            <Field name="modalInput" id={id} canSend validate={validate} component={InputField} />
-            <button type="submit" className="btn btn-primary mx-2" disabled={isRequestPending} >{submitLabel}</button>
-            <Button color="secondary" onClick={onCloseHandler} disabled={isRequestPending}>Cancel</Button>
+            <Field name="modalInput" id={id} validate={validate} component={InputField} />
           </form>
         </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={handleSubmit} disabled={isRequestPending}>{submitLabel}</Button>
+          <Button color="secondary" onClick={onCloseHandler} disabled={isRequestPending}>Cancel</Button>
+        </ModalFooter>
       </Modal>
     );
   }
