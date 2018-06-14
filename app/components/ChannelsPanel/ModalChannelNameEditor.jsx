@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import InputField from '../InputField';
 import isRequestSuccess from './modalHelpers';
+import { requestStateType } from '../../types';
 
 @reduxForm({ form: 'ModalEditor' })
 class ModalChannelNameEditor extends React.Component {
@@ -18,7 +19,7 @@ class ModalChannelNameEditor extends React.Component {
     submitLabel: PropTypes.string.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCloseHandler: PropTypes.func.isRequired,
-    requestState: PropTypes.oneOf(['none', 'requested', 'failure', 'success']).isRequired,
+    requestState: requestStateType.isRequired,
     enableReinitialize: PropTypes.bool,
     initialValues: PropTypes.object,
   }
