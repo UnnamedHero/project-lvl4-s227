@@ -92,7 +92,7 @@ class ChannelsPanelContainer extends React.Component {
     this.setState({ addModal: !this.state.addModal });
   }
 
-  validateChannelName = (submitAction, { modalInput: name }) => {
+  validateChannelName = (submitAction, { modalInput: name = '' }) => {
     const trimmedName = name.toString().trim();
     if (trimmedName.length === 0) {
       throw new SubmissionError({ modalInput: 'Channel name cannot be blank' });
