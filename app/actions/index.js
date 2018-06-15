@@ -2,8 +2,6 @@ import { createAction } from 'redux-actions';
 import axios from 'axios';
 import routes from '../routes';
 
-// export const toggleEditChannelsUiState = createAction('UI/EDIT/CHANNELS/TOGGLE');
-
 export const sendMessageRequestPending = createAction('REQUEST/MESSAGE/SEND/PENDING');
 export const sendMessageRequestSuccess = createAction('REQUEST/MESSAGE/SEND/SUCCESS');
 export const sendMessageRequestFailure = createAction('REQUEST/MESSAGE/SEND/FAILURE');
@@ -27,7 +25,7 @@ export const addChannel = createAction('CHANNEL/ADD');
 export const removeChannel = createAction('CHANNEL/REMOVE');
 export const renameChannel = createAction('CHANNEL/RENAME');
 
-export const dismissNotification = createAction('NOTIFICATION/DISMISS');
+export const dismissNotification = createAction('UI/NOTIFICATION/DISMISS');
 
 export const sendMessageRequest = (messageText, channelId, userName) => async (dispatch) => {
   dispatch(sendMessageRequestPending());
