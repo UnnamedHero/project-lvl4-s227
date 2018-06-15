@@ -34,7 +34,7 @@ class InputField extends React.Component {
   }
 
   setInputFocus() {
-    this.inputEl.current.focus({ preventFocus: true });
+    this.inputEl.current.focus({ preventScroll: true });
   }
 
   render() {
